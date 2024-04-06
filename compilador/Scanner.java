@@ -166,11 +166,11 @@ public class Scanner{
         return new Token(currentKind, currentSpelling.toString(), currentLine, currentColumn - currentSpelling.length());
     }
 
-    public Scanner(String fileName) throws IOException {
+    public Scanner() throws IOException {
         logger = new Logger("Scanner");
-        logger.debug("Scanner(%s)\n", fileName);
+        logger.debug("Scanner()");
 
-        bufferedReader = new BufferedReader(new FileReader(fileName));
+        bufferedReader = new BufferedReader(new FileReader(ArgsParser.fileName));
         currentSpelling = new StringBuffer("");
         readNextChar();
     }

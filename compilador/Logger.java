@@ -1,13 +1,11 @@
 package compilador;
 
 public class Logger {
-    public static byte loglevel;
     public String className;
 
-    public Logger(byte loglevel){
-        Logger.loglevel = loglevel;
+    public Logger(){
         className = "";
-        debug("Logger started with loglevel: %d\n", loglevel);
+        debug("Logger started with loglevel: %d\n", ArgsParser.loglevel);
     }
 
     public Logger(String className){
@@ -23,42 +21,42 @@ public class Logger {
     }
 
     public void error(String string){
-        if(loglevel >= Logger.ERROR)
+        if(ArgsParser.loglevel >= Logger.ERROR)
             log(string);
     }
 
     public void error(String format, Object... args){
-        if(loglevel >= Logger.ERROR)
+        if(ArgsParser.loglevel >= Logger.ERROR)
             log(format, args);
     }
 
     public void info(String string){
-        if(loglevel >= Logger.INFO)
+        if(ArgsParser.loglevel >= Logger.INFO)
             log(string);
     }
 
     public void info(String format, Object... args){
-        if(loglevel >= Logger.INFO)
+        if(ArgsParser.loglevel >= Logger.INFO)
             log(format, args);
     }
 
     public void debug(String string){
-        if(loglevel >= Logger.DEBUG)
+        if(ArgsParser.loglevel >= Logger.DEBUG)
             log(string);
     }
 
     public void debug(String format, Object... args){
-        if(loglevel >= Logger.DEBUG)
+        if(ArgsParser.loglevel >= Logger.DEBUG)
             log(format, args);
     }
 
     public void trace(String string){
-        if(loglevel >= Logger.TRACE)
+        if(ArgsParser.loglevel >= Logger.TRACE)
             log(string);
     }
 
     public void trace(String format, Object... args){
-        if(loglevel >= Logger.TRACE)
+        if(ArgsParser.loglevel >= Logger.TRACE)
             log(format, args);
     }
 
