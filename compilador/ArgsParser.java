@@ -2,13 +2,15 @@ package compilador;
 
 public class ArgsParser {
     public static String fileName;
-    public static byte loglevel = Logger.INFO;
-    public static byte step = ArgsParser.BUILD;
+    public static byte loglevel = Logger.ERROR;
+    public static byte step = ArgsParser.LEXICAL;
+    public static boolean stopAtFirstError = false;
 
     private static void printHelp(){
         System.out.println("To compile some file, pass the souce code file name followed by the optional args");
-        System.out.println("\t-l <loglevel>: set the loglevel to ERROR, INFO(default), DEBUG or TRACE");
-        System.out.println("\t-s <step>: set the to go until LEXICAL, SYNTATIC, TREE, CONTENT or BUILD(default)");
+        System.out.println("\t-l <loglevel>: set the loglevel to ERROR(default), INFO, DEBUG or TRACE");
+        System.out.println("\t-s <step>: set the to go until LEXICAL(default), SYNTATIC, TREE, CONTENT or BUILD");
+        System.out.println("\t--stop-at-first-error to stop when some error is found");
     }
 
     public ArgsParser(String[] args) {
@@ -72,6 +74,10 @@ public class ArgsParser {
                         System.out.println("Invalid step, run without any parameters to see the accepted ones");
                         break;
                 }
+            }
+
+            if(args[i].equals("--stop-at-first-error")){
+                stopAtFirstError = true;
             }
         }
     }

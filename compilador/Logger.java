@@ -12,11 +12,11 @@ public class Logger {
         this.className = className + "::";
     }
 
-    private void log(String string){
+    public void log(String string){
         System.out.println(className + string);
     }
 
-    private void log(String format, Object... args){
+    public void log(String format, Object... args){
         System.out.printf(className + format, args);
     }
 

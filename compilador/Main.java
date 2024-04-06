@@ -1,11 +1,10 @@
 package compilador;
 
 public class Main {
-    public static void main(String[] args) {
-        new ArgsParser(args);
+    private static void runLexicalAnalysis(){
         Logger logger = new Logger();
-        logger.info("Compiling file %s\n", ArgsParser.fileName);
-
+        logger.log("Performing lexical analysis at %s\n", ArgsParser.fileName);
+        int errors = 0;
         try {
             Scanner scanner = new Scanner();
             Token nextToken;
@@ -14,6 +13,16 @@ public class Main {
                 logger.debug("\nScanning a token");
                 nextToken = scanner.scan();
                 logger.info("Token scanned: %s\n", nextToken.toString());
+
+                if(nextToken.kind != Token.ERROR){
+                    continue;
+                }
+
+                logger.error("%s at line %d column %d\n", nextToken.spelling, nextToken.line, nextToken.column);
+                if(ArgsParser.stopAtFirstError){
+                    System.exit(2);
+                }
+                errors++;
             } while (nextToken.kind != Token.EOT);
         } catch (Exception e) {
             logger.error("Error: %s\n", e.getMessage());
@@ -21,5 +30,23 @@ public class Main {
                 e.printStackTrace();
             System.exit(2);
         }
+
+        if(errors != 0){
+            logger.log("%d lexical errors found\n", errors);
+            System.exit(2);
+        }
+
+        logger.log("No lexical errors found");
+        System.exit(0);
+    }
+
+    public static void main(String[] args) {
+        new ArgsParser(args);
+
+        if(ArgsParser.step == ArgsParser.LEXICAL){
+            runLexicalAnalysis();
+        }
+
+        // TODO
     }
 }
