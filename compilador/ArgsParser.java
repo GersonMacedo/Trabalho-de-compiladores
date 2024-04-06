@@ -3,10 +3,12 @@ package compilador;
 public class ArgsParser {
     public static String fileName;
     public static byte loglevel = Logger.INFO;
+    public static byte step = ArgsParser.BUILD;
 
     private static void printHelp(){
-        System.out.println("The args need to be the souce code file name followed by one or more optional args");
-        System.out.println("-l <loglevel>: set the loglevel to ERROR, INFO(default), DEBUG or TRACE");
+        System.out.println("To compile some file, pass the souce code file name followed by the optional args");
+        System.out.println("\t-l <loglevel>: set the loglevel to ERROR, INFO(default), DEBUG or TRACE");
+        System.out.println("\t-s <step>: set the to go until LEXICAL, SYNTATIC, TREE, CONTENT or BUILD(default)");
     }
 
     public ArgsParser(String[] args) {
@@ -42,6 +44,38 @@ public class ArgsParser {
                         System.exit(1);;
                 }
             }
+
+            if(args[i].equals("-s")){
+                if(i + 1 == args.length){
+                    System.out.println("Expected step after -s");
+                    System.exit(1);;
+                }
+                i++;
+
+                switch (args[i]) {
+                    case "LEXICAL":
+                        step = LEXICAL;
+                        break;
+                    case "SYNTATIC":
+                        step = SYNTATIC;
+                        break;
+                    case "TREE":
+                        step = TREE;
+                        break;
+                    case "CONTENT":
+                        step = CONTENT;
+                        break;
+                    case "BUILD":
+                        step = BUILD;
+                        break;
+                    default:
+                        System.out.println("Invalid step, run without any parameters to see the accepted ones");
+                        break;
+                }
+            }
         }
     }
+
+    public final static byte
+        LEXICAL = 0, SYNTATIC = 1, TREE = 2, CONTENT = 3, BUILD = 4;
 }
