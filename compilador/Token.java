@@ -11,23 +11,23 @@ public class Token {
         this.line = line;
         this.column = column;
 
-        // If kind is IDENTIFIER and spelling matches one
-        // of the keywords, change the token's kind accordingly:
-        if (kind < BEGIN || kind > WHILE)
+        if (kind != Token.IDENTIFIER)
             return;
 
+        // If kind is IDENTIFIER and spelling matches one
+        // of the keywords, change the token's kind accordingly:
         for (int k = BEGIN; k <= WHILE; k++){
             if (spelling.equals(spellings[k])) {
                 this.kind = (byte) k;
                 return;
             }
         }
-
-        // throw new Exception(String.format("Invalid spelling for %d kind: %s", kind, spelling));
     }
 
     public String toString(){
-        return String.format("Token(\"%s\", \"%s\", %d, %d)", spellings[kind], spelling, line, column);
+        if(spelling.equals(spellings[kind]))
+            return String.format("Token(\"%s\", %d, %d)", spelling, line, column);
+        return String.format("Token(%s, \"%s\", %d, %d)", spellings[kind], spelling, line, column);
     }
     // Constants denoting different kinds of token:
     public final static byte
