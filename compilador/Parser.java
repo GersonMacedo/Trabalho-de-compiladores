@@ -8,54 +8,155 @@ public class Parser {
     private Token currentToken;
     public int errors;
 
-    @SuppressWarnings("unused")
+    private void handleUnexpectedToken(){
+        logger.error("Unexpected '%s' at line %d column %d\n", currentToken.spelling, currentToken.line,
+            currentToken.column);
+        if(ArgsParser.stopAtFirstError)
+            System.exit(3);
+        errors++;
+    }
+
     private void parseProgram(){
         logger.debug("parseProgram()");
+        parseSigleCommand();
     }
 
-    @SuppressWarnings("unused")
     private void parseCommand(){
         logger.debug("parseCommand()");
+        parseSigleCommand();
+        while (currentToken.kind == Token.SEMICOLON) {
+            acceptIt();
+            parseSigleCommand();
+        }
     }
     
-    @SuppressWarnings("unused")
     private void parseSigleCommand(){
         logger.debug("parseSigleCommand()");
+        switch (currentToken.kind) {
+        case Token.IDENTIFIER:
+            parseIdentifier();
+            switch (currentToken.kind) {
+            case Token.BECOMES:
+                acceptIt();
+                parseExpression();
+                break;
+            case Token.LPAREN:
+                acceptIt();
+                parseExpression();
+                accept(Token.RPAREN);
+                break;
+            default:
+                handleUnexpectedToken();
+                break;
+            }
+            break;
+        case Token.IF:
+            acceptIt();
+            parseExpression();
+            accept(Token.THEN);
+            parseSigleCommand();
+            accept(Token.ELSE);
+            parseSigleCommand();
+            break;
+        case Token.WHILE:
+            acceptIt();
+            parseExpression();
+            accept(Token.DO);
+            parseSigleCommand();
+            break;
+        case Token.LET:
+            acceptIt();
+            parseDeclaration();
+            accept(Token.IN);
+            parseSigleCommand();
+            break;
+        case Token.BEGIN:
+            acceptIt();
+            parseCommand();
+            accept(Token.END);
+            break;
+        default:
+            handleUnexpectedToken();
+            break;
+        }
     }
 
-    @SuppressWarnings("unused")
-    private void parseExpression(){
+    private void parseExpression(){ // Still need to take precedence into account
         logger.debug("parseExpression()");
+        parsePrimaryExpression();
+        while(currentToken.kind == Token.OPERATOR){
+            acceptIt();
+            parsePrimaryExpression();
+        }
     }
 
-    @SuppressWarnings("unused")
     private void parsePrimaryExpression(){
         logger.debug("parsePrimaryExpression()");
+        switch (currentToken.kind) {
+        case Token.INTLITERAL:
+            parseIntegerLiteral();
+            break;
+        case Token.IDENTIFIER:
+            acceptIt();
+            break;
+        case Token.OPERATOR: // Need to accept only unary operators
+            acceptIt();
+            parsePrimaryExpression();
+            break;
+        case Token.LPAREN:
+            acceptIt();
+            parseExpression();
+            accept(Token.RPAREN);
+            break;
+        default:
+            handleUnexpectedToken();
+            break;
+        }
     }
 
-    @SuppressWarnings("unused")
     private void parseDeclaration(){
         logger.debug("parseDeclaration()");
+        parseSingleDeclaration();
+        while(currentToken.kind == Token.SEMICOLON){
+            acceptIt();
+            parseSingleDeclaration();
+        }
     }
 
-    @SuppressWarnings("unused")
     private void parseSingleDeclaration(){
         logger.debug("parseSingleDeclaration()");
+        switch (currentToken.kind) {
+        case Token.CONST:
+            acceptIt();
+            parseIdentifier();
+            accept(Token.IS);
+            parseExpression();
+            break;
+        case Token.VAR:
+            acceptIt();
+            parseIdentifier();
+            accept(Token.COLON);
+            parseTypeDenoter();
+            break;
+        default:
+            handleUnexpectedToken();
+            break;
+        }
     }
 
-    @SuppressWarnings("unused")
     private void parseTypeDenoter(){
         logger.debug("parseTypeDenoter()");
+        parseIdentifier();
     }
 
-    @SuppressWarnings("unused")
     private void parseIdentifier(){
         logger.debug("parseIdentifier()");
+        accept(Token.IDENTIFIER);
     }
 
-    @SuppressWarnings("unused")
     private void parseIntegerLiteral(){
         logger.debug("parseIntegerLiteral()");
+        accept(Token.INTLITERAL);
     }
 
     @SuppressWarnings("unused")
@@ -63,14 +164,12 @@ public class Parser {
         logger.debug("parseOperator()");
     }
 
-    @SuppressWarnings("unused")
     private void acceptIt() {
         logger.debug("acceptIt()");
         currentToken = scanner.scan();
     }
 
-    @SuppressWarnings("unused")
-    private void accept(byte expectedKind) throws Exception{
+    private void accept(byte expectedKind) {
         logger.debug("accept(%d)\n", expectedKind);
         if(currentToken.kind == Token.ERROR){
             logger.error("%s at line %d column %d\n", currentToken.spelling, currentToken.line, currentToken.column);
@@ -81,8 +180,8 @@ public class Parser {
         }
             
         if(ArgsParser.step >= ArgsParser.LEXICAL && currentToken.kind != expectedKind){
-            logger.error("Expeted %s at line %d column %d but %s was found", Token.spellings[expectedKind],
-                currentToken.line, currentToken.column, currentToken.spelling);
+            logger.error("Expected '%s' but '%s' was found at line %d column %d\n", Token.spellings[expectedKind],
+                currentToken.spelling, currentToken.line, currentToken.column);
             if(ArgsParser.stopAtFirstError){
                 System.exit(3);
             }
@@ -92,9 +191,18 @@ public class Parser {
         currentToken = scanner.scan();
     }
 
+    public void parse(){
+        currentToken = scanner.scan();
+        parseProgram();
+        if (currentToken.kind != Token.EOT) {
+            handleUnexpectedToken();
+            System.exit(3);
+        }
+    }
+
     public Parser() throws IOException {
         logger = new Logger("Parser");
         scanner = new Scanner();
-        logger.info("Parser()");
+        logger.debug("Parser()");
     }
 }

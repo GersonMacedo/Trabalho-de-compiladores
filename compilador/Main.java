@@ -47,8 +47,7 @@ public class Main {
 
         try {
             parser = new Parser();
-    
-            logger.error("TODO: syntactic analysis");
+            parser.parse();
         } catch (Exception e) {
             logger.error("Error: %s\n", e.getMessage());
             if (ArgsParser.loglevel >= Logger.DEBUG)
@@ -58,7 +57,7 @@ public class Main {
         }
 
         if(parser.errors != 0){
-            logger.log("%d errors found");
+            logger.log("%d errors found\n", parser.errors);
             System.exit(3);
         }
 
