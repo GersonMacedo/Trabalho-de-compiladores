@@ -3,7 +3,7 @@ package compilador;
 public class Main {
     private static void runLexicalAnalysis(){
         Logger logger = new Logger();
-        logger.log("Performing lexical analysis at %s\n", ArgsParser.fileName);
+        logger.log("\nPerforming lexical analysis at %s\n", ArgsParser.fileName);
         int errors = 0;
         try {
             Scanner scanner = new Scanner();
@@ -32,11 +32,37 @@ public class Main {
         }
 
         if(errors != 0){
-            logger.log("%d lexical errors found\n", errors);
+            logger.log("%d errors found\n", errors);
             System.exit(2);
         }
 
         logger.log("No lexical errors found");
+        System.exit(0);
+    }
+
+    private static void runSyntacticAnalysis(){
+        Logger logger = new Logger();
+        Parser parser;
+        logger.log("\nPerforming syntactic analysis at %s\n", ArgsParser.fileName);
+
+        try {
+            parser = new Parser();
+    
+            logger.error("TODO: syntactic analysis");
+        } catch (Exception e) {
+            logger.error("Error: %s\n", e.getMessage());
+            if (ArgsParser.loglevel >= Logger.DEBUG)
+                e.printStackTrace();
+            System.exit(3);
+            return; // Dumb compiler
+        }
+
+        if(parser.errors != 0){
+            logger.log("%d errors found");
+            System.exit(3);
+        }
+
+        logger.log("No syntactic errors found");
         System.exit(0);
     }
 
@@ -45,6 +71,10 @@ public class Main {
 
         if(ArgsParser.step == ArgsParser.LEXICAL){
             runLexicalAnalysis();
+        }
+
+        if(ArgsParser.step == ArgsParser.SYNTACTIC){
+            runSyntacticAnalysis();
         }
 
         // TODO

@@ -5,7 +5,7 @@ public class Token {
     public String spelling;
     public int line;
     public int column;
-    public Token(byte kind, String spelling, int line, int column) throws Exception {
+    public Token(byte kind, String spelling, int line, int column) {
         this.kind = kind;
         this.spelling = spelling;
         this.line = line;
@@ -36,7 +36,7 @@ public class Token {
         COLON = 15, BECOMES = 16, IS = 17, LPAREN = 18, RPAREN = 19, EOT = 20, ERROR = 21;
     
     // Spellings of different kinds of token (must correspond to the token kinds above):
-    private final static String[] spellings = {
+    public final static String[] spellings = {
         "<identifier>", "<integer-literal>", "<operator>", "begin", "const", "do", "else", "end",
         "if", "in", "let", "then", "var", "while", ";", ":", ":=", "~", "(", ")", "<eot>", "<error>"
     };

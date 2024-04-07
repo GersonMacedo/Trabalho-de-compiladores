@@ -58,8 +58,8 @@ public class ArgsParser {
                     case "LEXICAL":
                         step = LEXICAL;
                         break;
-                    case "SYNTATIC":
-                        step = SYNTATIC;
+                    case "SYNTACTIC":
+                        step = SYNTACTIC;
                         break;
                     case "TREE":
                         step = TREE;
@@ -72,7 +72,7 @@ public class ArgsParser {
                         break;
                     default:
                         System.out.println("Invalid step, run without any parameters to see the accepted ones");
-                        break;
+                        System.exit(1);
                 }
             }
 
@@ -83,5 +83,5 @@ public class ArgsParser {
     }
 
     public final static byte
-        LEXICAL = 0, SYNTATIC = 1, TREE = 2, CONTENT = 3, BUILD = 4;
+        LEXICAL = 0, SYNTACTIC = 1, TREE = 2, CONTENT = 3, BUILD = 4;
 }

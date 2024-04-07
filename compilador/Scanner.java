@@ -31,7 +31,7 @@ public class Scanner{
         readNextChar();
     }
     
-    private void takeIt () throws IOException {
+    private void takeIt () {
         logger.debug("takeit()");
         currentSpelling.append(currentChar);
         logger.trace("currentSpelling is now: %s\n", currentSpelling);
@@ -126,7 +126,7 @@ public class Scanner{
         }
     }
 
-    private void readNextChar() throws IOException{
+    private void readNextChar(){
         logger.debug("readNextChar()");
 
         if(currentChar == '\n'){
@@ -136,18 +136,22 @@ public class Scanner{
             currentColumn++;
         }
         
-        int charCode = bufferedReader.read();
-        if(charCode == -1){
-            currentChar = '\000';
-        }else{
-            currentChar = (char) charCode;
+        int charCode;
+        try{
+            charCode = bufferedReader.read();
+        }catch(IOException e){
+            logger.error(e.getMessage());
+            if(ArgsParser.loglevel >= Logger.DEBUG)
+                e.printStackTrace();
+            charCode = -1;
         }
         
+        currentChar = (charCode == -1 ? '\000' : (char) charCode);
         logger.debug("Current char is '%s' (Line %d, Column %d)\n",
             printableChar(currentChar), currentLine, currentColumn);
     }
     
-    public Token scan() throws Exception  {
+    public Token scan() {
         logger.debug("scan()");
 
         try {
