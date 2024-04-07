@@ -1,18 +1,22 @@
 package compilador;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ArgsParser {
     public static String fileName;
     public static byte loglevel = Logger.ERROR;
     public static byte step = ArgsParser.LEXICAL;
     public static boolean stopAtFirstError = false;
-    public static boolean disableScannerLogs = false;
+    public static Set<String> disableLog = new HashSet<String>();
 
-    private static void printHelp(){
+    public static void printHelp(){
         System.out.println("To compile some file, pass the souce code file name followed by the optional args");
+        System.out.println("\t--disable-logs <className>*: disable logs from all the listed <className> class");
         System.out.println("\t-l <loglevel>: set the loglevel to ERROR(default), INFO, DEBUG or TRACE");
-        System.out.println("\t-s <step>: set the to go until LEXICAL(default), SYNTATIC, TREE, CONTENT or BUILD");
+        System.out.println("\t-s <step>: set to go until LEXICAL(default), SYNTATIC, TREE, CONTENT or BUILD");
         System.out.println("\t--stop-at-first-error to stop when some error is found");
-        System.out.println("\t--disble-scanner-logs");
+
     }
 
     public ArgsParser(String[] args) {
@@ -85,8 +89,16 @@ public class ArgsParser {
                 continue;
             }
 
-            if(args[i].equals("--disble-scanner-logs")){
-                disableScannerLogs = true;
+            if(args[i].equals("--disble-logs")){
+                if(i + 1 == args.length){
+                    System.out.println("Expected class names after --disble-logs");
+                    System.exit(1);;
+                }
+                i++;
+                while(i < args.length && args[i].charAt(0) != '-'){
+                    disableLog.add(args[i].toLowerCase());
+                    i++;
+                }
                 continue;
             }
 

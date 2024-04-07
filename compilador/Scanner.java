@@ -196,7 +196,7 @@ public class Scanner{
     }
 
     public Scanner() throws IOException {
-        logger = new Logger("Scanner", ArgsParser.disableScannerLogs);
+        logger = new Logger("Scanner");
         logger.debug("Scanner()");
 
         bufferedReader = new BufferedReader(new FileReader(ArgsParser.fileName));

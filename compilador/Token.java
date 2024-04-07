@@ -17,7 +17,7 @@ public class Token {
         this.line = line;
         this.column = column;
 
-        Logger logger = new Logger("Token", false);
+        Logger logger = new Logger("Token");
         if (kind != Kind.IDENTIFIER){
             logger.debug(toString());
             return;

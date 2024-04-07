@@ -10,9 +10,9 @@ public class Logger {
         debug("Logger started with loglevel: %d\n", ArgsParser.loglevel);
     }
 
-    public Logger(String className, boolean disble){
+    public Logger(String className){
         this.className = className + "::";
-        this.disable = disble;
+        this.disable = ArgsParser.disableLog.contains(className.toLowerCase());
     }
 
     public void log(String string){
