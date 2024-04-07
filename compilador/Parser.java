@@ -24,7 +24,7 @@ public class Parser {
     private void parseCommand(){
         logger.debug("parseCommand()");
         parseSigleCommand();
-        while (currentToken.kind == Token.SEMICOLON) {
+        while (currentToken.kind == Kind.SEMICOLON) {
             acceptIt();
             parseSigleCommand();
         }
@@ -33,47 +33,47 @@ public class Parser {
     private void parseSigleCommand(){
         logger.debug("parseSigleCommand()");
         switch (currentToken.kind) {
-        case Token.IDENTIFIER:
+        case IDENTIFIER:
             parseIdentifier();
             switch (currentToken.kind) {
-            case Token.BECOMES:
+            // case BECOMES:
+            //     acceptIt();
+            //     parseExpression();
+            //     break;
+            case LPAREN:
                 acceptIt();
                 parseExpression();
-                break;
-            case Token.LPAREN:
-                acceptIt();
-                parseExpression();
-                accept(Token.RPAREN);
+                accept(Kind.RPAREN);
                 break;
             default:
                 handleUnexpectedToken();
                 break;
             }
             break;
-        case Token.IF:
+        case IF:
             acceptIt();
             parseExpression();
-            accept(Token.THEN);
+            accept(Kind.THEN);
             parseSigleCommand();
-            accept(Token.ELSE);
+            accept(Kind.ELSE);
             parseSigleCommand();
             break;
-        case Token.WHILE:
+        case WHILE:
             acceptIt();
             parseExpression();
-            accept(Token.DO);
+            accept(Kind.DO);
             parseSigleCommand();
             break;
-        case Token.LET:
-            acceptIt();
-            parseDeclaration();
-            accept(Token.IN);
-            parseSigleCommand();
-            break;
-        case Token.BEGIN:
+        // case LET:
+        //     acceptIt();
+        //     parseDeclaration();
+        //     accept(Kind.IN);
+        //     parseSigleCommand();
+        //     break;
+        case BEGIN:
             acceptIt();
             parseCommand();
-            accept(Token.END);
+            accept(Kind.END);
             break;
         default:
             handleUnexpectedToken();
@@ -81,32 +81,32 @@ public class Parser {
         }
     }
 
-    private void parseExpression(){ // Still need to take precedence into account
+    private void parseExpression(){
         logger.debug("parseExpression()");
         parsePrimaryExpression();
-        while(currentToken.kind == Token.OPERATOR){
-            acceptIt();
-            parsePrimaryExpression();
-        }
+        // while(currentToken.kind == Kind.OPERATOR){
+        //     acceptIt();
+        //     parsePrimaryExpression();
+        // }
     }
 
     private void parsePrimaryExpression(){
         logger.debug("parsePrimaryExpression()");
         switch (currentToken.kind) {
-        case Token.INTLITERAL:
+        case INTLITERAL:
             parseIntegerLiteral();
             break;
-        case Token.IDENTIFIER:
+        case IDENTIFIER:
             acceptIt();
             break;
-        case Token.OPERATOR: // Need to accept only unary operators
-            acceptIt();
-            parsePrimaryExpression();
-            break;
-        case Token.LPAREN:
+        // case OPERATOR:
+        //     acceptIt();
+        //     parsePrimaryExpression();
+        //     break;
+        case LPAREN:
             acceptIt();
             parseExpression();
-            accept(Token.RPAREN);
+            accept(Kind.RPAREN);
             break;
         default:
             handleUnexpectedToken();
@@ -117,7 +117,7 @@ public class Parser {
     private void parseDeclaration(){
         logger.debug("parseDeclaration()");
         parseSingleDeclaration();
-        while(currentToken.kind == Token.SEMICOLON){
+        while(currentToken.kind == Kind.SEMICOLON){
             acceptIt();
             parseSingleDeclaration();
         }
@@ -126,18 +126,18 @@ public class Parser {
     private void parseSingleDeclaration(){
         logger.debug("parseSingleDeclaration()");
         switch (currentToken.kind) {
-        case Token.CONST:
-            acceptIt();
-            parseIdentifier();
-            accept(Token.IS);
-            parseExpression();
-            break;
-        case Token.VAR:
-            acceptIt();
-            parseIdentifier();
-            accept(Token.COLON);
-            parseTypeDenoter();
-            break;
+        // case Kind.CONST:
+        //     acceptIt();
+        //     parseIdentifier();
+        //     accept(Token.IS);
+        //     parseExpression();
+        //     break;
+        // case Kind.VAR:
+        //     acceptIt();
+        //     parseIdentifier();
+        //     accept(Kind.COLON);
+        //     parseTypeDenoter();
+        //     break;
         default:
             handleUnexpectedToken();
             break;
@@ -151,12 +151,12 @@ public class Parser {
 
     private void parseIdentifier(){
         logger.debug("parseIdentifier()");
-        accept(Token.IDENTIFIER);
+        accept(Kind.IDENTIFIER);
     }
 
     private void parseIntegerLiteral(){
         logger.debug("parseIntegerLiteral()");
-        accept(Token.INTLITERAL);
+        accept(Kind.INTLITERAL);
     }
 
     @SuppressWarnings("unused")
@@ -169,18 +169,11 @@ public class Parser {
         currentToken = scanner.scan();
     }
 
-    private void accept(byte expectedKind) {
+    private void accept(Kind expectedKind) {
         logger.debug("accept(%d)\n", expectedKind);
-        if(currentToken.kind == Token.ERROR){
-            logger.error("%s at line %d column %d\n", currentToken.spelling, currentToken.line, currentToken.column);
-            if(ArgsParser.stopAtFirstError){
-                System.exit(2);
-            }
-            errors++;
-        }
             
         if(ArgsParser.step >= ArgsParser.LEXICAL && currentToken.kind != expectedKind){
-            logger.error("Expected '%s' but '%s' was found at line %d column %d\n", Token.spellings[expectedKind],
+            logger.error("Expected '%s' but '%s' was found at line %d column %d\n", Token.spellings[expectedKind.ordinal()],
                 currentToken.spelling, currentToken.line, currentToken.column);
             if(ArgsParser.stopAtFirstError){
                 System.exit(3);
@@ -194,7 +187,7 @@ public class Parser {
     public void parse(){
         currentToken = scanner.scan();
         parseProgram();
-        if (currentToken.kind != Token.EOT) {
+        if (currentToken.kind != Kind.EOT) {
             handleUnexpectedToken();
             System.exit(3);
         }

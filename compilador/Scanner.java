@@ -8,28 +8,30 @@ public class Scanner{
     private int currentLine = 1;
     private int currentColumn = 0;
     private char currentChar = '\000';
-    private byte currentKind;
+    private Kind currentKind;
     private StringBuffer currentSpelling;
+
+    public int errors;
 
     private String printableChar(char c){
         if(c == '\n')
             return "EOL";
-        if(c == '\000')
+        if(c == '\0')
             return "EOF";
         return String.format("%c", c);
     }
 
-    private void take (char expectedChar) throws Exception {
-        logger.debug("take(%s)\n", printableChar(expectedChar));
-        if (currentChar != expectedChar) {
-            throw new Exception(String.format("Expected '%s' but '%s' was found",
-                printableChar(expectedChar), printableChar(currentChar)));
-        }
+    // private void take (char expectedChar) throws Exception {
+    //     logger.debug("take(%s)\n", printableChar(expectedChar));
+    //     if (currentChar != expectedChar) {
+    //         throw new Exception(String.format("Expected '%s' but '%s' was found",
+    //             printableChar(expectedChar), printableChar(currentChar)));
+    //     }
 
-        currentSpelling.append(currentChar);
-        logger.trace("currentSpelling is now: %s\n", currentSpelling);
-        readNextChar();
-    }
+    //     currentSpelling.append(currentChar);
+    //     logger.trace("currentSpelling is now: %s\n", currentSpelling);
+    //     readNextChar();
+    // }
     
     private void takeIt () {
         logger.debug("takeit()");
@@ -47,78 +49,93 @@ public class Scanner{
     private boolean isLetter (char c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
-
-    // Returns true if the character c is an operator
-    private boolean isOperator (char c) {
-        return c == '+' || c == '-' || c == '*' || c == '/' || c == '<' || c == '>' || c == '=';
-    }
     
     // Returns true if the character c is a graphic.
     private boolean isGraphic (char c) {
-        return c != '\n' && c != '\000';
+        return c != '\n' && c != '\0';
     }
     
-    private byte scanToken () throws Exception {
+    private Kind scanToken () {
         logger.debug("ScanToken()");
         logger.trace("Current char is '%s'\n", printableChar(currentChar));
         if (isLetter(currentChar)) {
             takeIt();
             while (isLetter(currentChar) || isDigit(currentChar))
                 takeIt();
-            return Token.IDENTIFIER;
+            return Kind.IDENTIFIER;
         }
         
         if (isDigit(currentChar)) {
             takeIt();
             while (isDigit (currentChar))
                 takeIt();
-            return Token.INTLITERAL;
-        }
-
-        if (isOperator(currentChar)) {
-            takeIt();
-            return Token.OPERATOR;
+            
+            // TODO? show error if next char is letter
+            // if(isLetter(currentChar)){
+            //     while(isDigit(currentChar) || isLetter(currentChar))
+            //         takeIt();
+            //     show error
+            // }
+            return Kind.INTLITERAL;
         }
 
         switch (currentChar) {
+            case '+':
+                takeIt();
+                return Kind.PLUS;
+            case '-':
+                takeIt();
+                return Kind.MINUS;
+            case '*':
+                takeIt();
+                return Kind.MULT;
+            case '/':
+                takeIt();
+                return Kind.DIV;
+            case '<':
+                takeIt();
+                return Kind.LESS;
+            case '>':
+                takeIt();
+                return Kind.GREATER;
             case ';':
                 takeIt();
-                return Token.SEMICOLON;
+                return Kind.SEMICOLON;
             case ':':
                 takeIt();
                 if (currentChar == '=') {
                     takeIt();
-                    return Token.BECOMES;
+                    return Kind.BECOMES;
                 }
-                return Token.COLON;
-            case '~':
-                takeIt();
-                return Token.IS;
+                return Kind.COLON;
             case '(':
                 takeIt();
-                return Token.LPAREN;
-            case')':
+                return Kind.LPAREN;
+            case ')':
                 takeIt();
-                return Token.RPAREN;
-            case '\000':
-                return Token.EOT;
+                return Kind.RPAREN;
+            case '.':
+                takeIt();
+                return Kind.DOT;
+            case ',':
+                takeIt();
+                return Kind.COMMA;
+            case '\0':
+                return Kind.EOT;
             default:
-                throw new Exception(String.format("Invalid char '%s'",
-                    printableChar(currentChar)));
+                return Kind.ERROR;
         }
     }
     
-    private void scanSeparator() throws Exception {
+    private void scanSeparator() {
         logger.debug("scanSeparator()");
         logger.trace("Current char is '%s'\n", printableChar(currentChar));
         switch (currentChar) {
-            case'!': {
+            case'!': 
                 takeIt();
                 while (isGraphic(currentChar))
-                    takeIt ();
-                take('\n');
+                    takeIt();
                 break;
-            }
             case ' ':
             case '\n':
                 takeIt();
@@ -146,7 +163,7 @@ public class Scanner{
             charCode = -1;
         }
         
-        currentChar = (charCode == -1 ? '\000' : (char) charCode);
+        currentChar = (charCode == -1 ? '\0' : (char) charCode);
         logger.debug("Current char is '%s' (Line %d, Column %d)\n",
             printableChar(currentChar), currentLine, currentColumn);
     }
@@ -154,17 +171,23 @@ public class Scanner{
     public Token scan() {
         logger.debug("scan()");
 
-        try {
+        while(true){
             while (currentChar == '!' || currentChar == ' ' || currentChar == '\n')
                 scanSeparator();
             currentSpelling = new StringBuffer("");
             currentKind = scanToken();
-        }
-        catch (Exception e) {
-            int line = currentLine;
-            int column = currentColumn;
+
+            if(currentKind != Kind.ERROR)
+                break;
+            
+            int line = currentLine, column = currentColumn;
+            char c = currentChar;
             takeIt();
-            return new Token(Token.ERROR, e.getMessage(), line, column);
+            logger.error("Invalid char '%s' at line %d column %d\n", printableChar(c), line, column);
+            if(ArgsParser.stopAtFirstError){
+                System.exit(2);
+            }
+            errors++;
         }
 
         return new Token(currentKind, currentSpelling.toString(), currentLine, currentColumn - currentSpelling.length());

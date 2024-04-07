@@ -13,17 +13,9 @@ public class Main {
                 logger.debug("\nScanning a token");
                 nextToken = scanner.scan();
                 logger.info("Token scanned: %s\n", nextToken.toString());
+            } while (nextToken.kind != Kind.EOT);
 
-                if(nextToken.kind != Token.ERROR){
-                    continue;
-                }
-
-                logger.error("%s at line %d column %d\n", nextToken.spelling, nextToken.line, nextToken.column);
-                if(ArgsParser.stopAtFirstError){
-                    System.exit(2);
-                }
-                errors++;
-            } while (nextToken.kind != Token.EOT);
+            errors = scanner.errors;
         } catch (Exception e) {
             logger.error("Error: %s\n", e.getMessage());
             if (ArgsParser.loglevel >= Logger.DEBUG)
@@ -32,7 +24,7 @@ public class Main {
         }
 
         if(errors != 0){
-            logger.log("%d errors found\n", errors);
+            logger.log("%d error%s found\n", errors, (errors > 1 ? "s" : ""));
             System.exit(2);
         }
 
