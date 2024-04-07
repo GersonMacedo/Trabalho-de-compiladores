@@ -1,5 +1,6 @@
 package compilador;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,11 @@ public class ArgsParser {
         System.out.println("\t-l <loglevel>: set the loglevel to ERROR(default), INFO, DEBUG or TRACE");
         System.out.println("\t-s <step>: set to go until LEXICAL(default), SYNTATIC, TREE, CONTENT or BUILD");
         System.out.println("\t--stop-at-first-error to stop when some error is found");
+    }
 
+    public boolean checkIfFileExists(String path){
+        File file = new File(path);
+        return file.exists() && file.isFile();
     }
 
     public ArgsParser(String[] args) {
@@ -26,6 +31,11 @@ public class ArgsParser {
         }
 
         fileName = args[0];
+        if(!checkIfFileExists(fileName)){
+            System.out.printf("The file '%s' doesn't exists\n", fileName);
+            System.exit(1);
+        }
+
         for(int i = 1; i < args.length; i++) {
             if(args[i].equals("-l")){
                 if(i + 1 == args.length){

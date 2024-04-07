@@ -17,15 +17,8 @@ public class Main {
         Logger logger = new Logger();
         logger.log("\n%s at %s\n", getStepMessage(), ArgsParser.fileName);
 
-        try {
-            Parser parser = new Parser();
-            parser.parse();
-        } catch (Exception e) {
-            logger.error("Error: %s\n", e.getMessage());
-            if (ArgsParser.loglevel >= Logger.DEBUG)
-                e.printStackTrace();
-            System.exit(2);
-        } 
+        Parser parser = new Parser();
+        parser.parse();
 
         if(Scanner.errors != 0)
             logger.log("%d lexical error%s found\n", Scanner.errors, (Scanner.errors > 1 ? "s" : ""));

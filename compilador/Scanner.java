@@ -195,12 +195,17 @@ public class Scanner{
         return new Token(currentKind, currentSpelling.toString(), currentLine, currentColumn - currentSpelling.length());
     }
 
-    public Scanner() throws IOException {
+    public Scanner() {
         logger = new Logger("Scanner");
         logger.debug("Scanner()");
 
-        bufferedReader = new BufferedReader(new FileReader(ArgsParser.fileName));
-        currentSpelling = new StringBuffer("");
-        readNextChar();
+        try {
+            bufferedReader = new BufferedReader(new FileReader(ArgsParser.fileName));
+            currentSpelling = new StringBuffer("");
+            readNextChar();
+        } catch(IOException e) {
+            logger.error("Unable to open ArgsParser.fileName");
+            currentChar = '\0';
+        }
     }
 }

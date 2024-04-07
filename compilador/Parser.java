@@ -251,7 +251,7 @@ public class Parser {
         }
     }
 
-    public Parser() throws IOException {
+    public Parser() {
         logger = new Logger("Parser");
         scanner = new Scanner();
         logger.debug("Parser()");
