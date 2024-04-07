@@ -11,7 +11,7 @@ public class Scanner{
     private Kind currentKind;
     private StringBuffer currentSpelling;
 
-    public int errors;
+    public static int errors;
 
     private String printableChar(char c){
         if(c == '\n')

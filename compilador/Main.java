@@ -1,73 +1,39 @@
 package compilador;
 
 public class Main {
-    private static void runLexicalAnalysis(){
-        Logger logger = new Logger();
-        logger.log("\nPerforming lexical analysis at %s\n", ArgsParser.fileName);
-        int errors = 0;
-        try {
-            Scanner scanner = new Scanner();
-            Token nextToken;
-
-            do {
-                logger.debug("\nScanning a token");
-                nextToken = scanner.scan();
-                logger.info("Token scanned: %s\n", nextToken.toString());
-            } while (nextToken.kind != Kind.EOT);
-
-            errors = scanner.errors;
-        } catch (Exception e) {
-            logger.error("Error: %s\n", e.getMessage());
-            if (ArgsParser.loglevel >= Logger.DEBUG)
-                e.printStackTrace();
-            System.exit(2);
+    private static String getStepMessage(){
+        switch (ArgsParser.step) {
+        case ArgsParser.LEXICAL:
+            return "Performing only lexical analysis";
+        case ArgsParser.SYNTACTIC:
+            return "Performing up to syntactic analysis";
+        default:
+            throw new UnsupportedOperationException("Unimplemented step " + ArgsParser.step);
         }
-
-        if(errors != 0){
-            logger.log("%d error%s found\n", errors, (errors > 1 ? "s" : ""));
-            System.exit(2);
-        }
-
-        logger.log("No lexical errors found");
-        System.exit(0);
     }
 
-    private static void runSyntacticAnalysis(){
+    public static void main(String[] args) {
+        new ArgsParser(args);
         Logger logger = new Logger();
-        Parser parser;
-        logger.log("\nPerforming syntactic analysis at %s\n", ArgsParser.fileName);
+        logger.log("\n%s at %s\n", getStepMessage(), ArgsParser.fileName);
 
         try {
-            parser = new Parser();
+            Parser parser = new Parser();
             parser.parse();
         } catch (Exception e) {
             logger.error("Error: %s\n", e.getMessage());
             if (ArgsParser.loglevel >= Logger.DEBUG)
                 e.printStackTrace();
-            System.exit(3);
-            return; // Dumb compiler
-        }
+            System.exit(2);
+        } 
 
-        if(parser.errors != 0){
-            logger.log("%d errors found\n", parser.errors);
-            System.exit(3);
-        }
-
-        logger.log("No syntactic errors found");
-        System.exit(0);
-    }
-
-    public static void main(String[] args) {
-        new ArgsParser(args);
-
-        if(ArgsParser.step == ArgsParser.LEXICAL){
-            runLexicalAnalysis();
-        }
-
-        if(ArgsParser.step == ArgsParser.SYNTACTIC){
-            runSyntacticAnalysis();
-        }
-
-        // TODO
+        if(Scanner.errors != 0)
+            logger.log("%d lexical error%s found\n", Scanner.errors, (Scanner.errors > 1 ? "s" : ""));
+        if(Parser.errors != 0)
+            logger.log("%d syntactic error%s found\n", Parser.errors, (Parser.errors > 1) ? "s" : "");
+        if(Scanner.errors != 0 || Parser.errors != 0)
+            System.exit(2);
+        
+        logger.log("No errors found");
     }
 }

@@ -3,12 +3,16 @@ package compilador;
 import java.io.IOException;
 
 public class Parser {
-    Logger logger;
+    private Logger logger;
     private Scanner scanner;
     private Token currentToken;
-    public int errors;
+
+    public static int errors;
 
     private void handleUnexpectedToken() {
+        if(ArgsParser.step < ArgsParser.SYNTACTIC)
+            return;
+        
         logger.error("Unexpected '%s' at line %d column %d\n", currentToken.spelling, currentToken.line,
             currentToken.column);
         if(ArgsParser.stopAtFirstError)
@@ -23,6 +27,7 @@ public class Parser {
         accept(Kind.IDENTIFIER);
         accept(Kind.SEMICOLON);
         parseCorpo();
+        accept(Kind.DOT);
     }
 
     // <corpo> ::= <declarações> <comando-composto>
@@ -224,7 +229,7 @@ public class Parser {
     private void accept(Kind expectedKind) {
         logger.debug("accept(%s)\n", expectedKind.toString());
             
-        if(ArgsParser.step >= ArgsParser.LEXICAL && currentToken.kind != expectedKind){
+        if(ArgsParser.step >= ArgsParser.SYNTACTIC && currentToken.kind != expectedKind){
             logger.error("Expected '%s' but '%s' was found at line %d column %d\n", Token.spellings[expectedKind.ordinal()],
                 currentToken.spelling, currentToken.line, currentToken.column);
             if(ArgsParser.stopAtFirstError){
