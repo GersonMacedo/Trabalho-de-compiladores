@@ -1,8 +1,8 @@
 package compilador;
 
 enum Kind{
-    IDENTIFIER, INTLITERAL, TRUE, FALSE, BEGIN, END, IF, THEN, ELSE, VAR, COLON, SEMICOLON, LPAREN, RPAREN,
-    DOT, WHILE, DO, COMMA, PLUS, MINUS, OR, MULT, DIV, AND, LESS, GREATER, BECOMES, EQUAL, EOT, ERROR;
+    IDENTIFIER, INTLITERAL, TRUE, FALSE, BEGIN, END, IF, THEN, ELSE, VAR, COLON, SEMICOLON, LPAREN, RPAREN, DOT, WHILE,
+    DO, COMMA, PLUS, MINUS, OR, MULT, DIV, AND, LESS, GREATER, BECOMES, EQUAL, PROGRAM, INTEGER, BOOLEAN, EOT, ERROR;
 }
 
 public class Token {
@@ -10,6 +10,7 @@ public class Token {
     public String spelling;
     public int line;
     public int column;
+
     public Token(Kind kind, String spelling, int line, int column) {
         this.kind = kind;
         this.spelling = spelling;
@@ -33,6 +34,53 @@ public class Token {
         logger.debug(toString());
     }
 
+    public boolean isOpAd() {
+        switch (kind) {
+        case PLUS:
+        case MINUS:
+        case OR:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    public boolean isOpMul() {
+        switch (kind) {
+        case MULT:
+        case DIV:
+        case AND:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    public boolean isOpRel() {
+        switch (kind) {
+        case LESS:
+        case GREATER:
+        case EQUAL:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    public boolean isOperator() {
+        return isOpAd() || isOpMul() || isOpRel();
+    }
+
+    public boolean isSimpleType() {
+        switch (kind) {
+        case INTEGER:
+        case BOOLEAN:
+            return true;
+        default:
+            return false;
+        }
+    }
+
     public String toString(){
         if(kind.ordinal() <= Kind.INTLITERAL.ordinal())
             return String.format("Token(\"%s\", %d, %d)", spelling, line, column);
@@ -42,6 +90,7 @@ public class Token {
     // Spellings of different kinds of token (must correspond to the token kinds above):
     public final static String[] spellings = {
         "<identifier>", "<integer-literal>", "true", "false", "begin", "end", "if", "then", "else", "var", ":", ";",
-        "(", ")", ".", "while", "do", ",", "+", "-", "or", "*", "/", "and", "<", ">", ":=", "=", "<eot>"
+        "(", ")", ".", "while", "do", ",", "+", "-", "or", "*", "/", "and", "<", ">", ":=", "=", "program", "integer",
+        "boolean", "<eot>"
     };
 }

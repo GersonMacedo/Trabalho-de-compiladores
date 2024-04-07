@@ -8,7 +8,7 @@ public class Parser {
     private Token currentToken;
     public int errors;
 
-    private void handleUnexpectedToken(){
+    private void handleUnexpectedToken() {
         logger.error("Unexpected '%s' at line %d column %d\n", currentToken.spelling, currentToken.line,
             currentToken.column);
         if(ArgsParser.stopAtFirstError)
@@ -16,64 +16,96 @@ public class Parser {
         errors++;
     }
 
-    private void parseProgram(){
-        logger.debug("parseProgram()");
-        parseSigleCommand();
+    // <programa> ::= program <id> ; <corpo> .
+    private void parsePrograma() {
+        logger.debug("parsePrograma()");
+        accept(Kind.PROGRAM);
+        accept(Kind.IDENTIFIER);
+        accept(Kind.SEMICOLON);
+        parseCorpo();
     }
 
-    private void parseCommand(){
-        logger.debug("parseCommand()");
-        parseSigleCommand();
-        while (currentToken.kind == Kind.SEMICOLON) {
-            acceptIt();
-            parseSigleCommand();
+    // <corpo> ::= <declarações> <comando-composto>
+    private void parseCorpo() {
+        logger.debug("parseCorpo()");
+        parseDeclaracoes();
+        parseComandoComposto();
+    }
+
+    // <declarações> ::= (<declaração> ;)*
+    private void parseDeclaracoes() {
+        logger.debug("parseDeclaracoes()");
+
+        // declarações are always followed by comando-composto that starts with 'begin'
+        while(currentToken.kind != Kind.BEGIN) {
+            parseDeclaracao();
+            accept(Kind.SEMICOLON);
+        }
+    }
+
+    // <declaração> ::= <declaração-de-variável>
+    private void parseDeclaracao() {
+        logger.debug("parseDeclaracao()");
+        parseDeclaracaoDeVariavel();
+    }
+
+    // <declaração-de-variável> ::= var <id> : <tipo>
+    private void parseDeclaracaoDeVariavel() {
+        accept(Kind.VAR);
+        accept(Kind.IDENTIFIER);
+        accept(Kind.COLON);
+        parseTipo();
+    }
+
+    // TODO? Maybe will change
+    // <tipo> ::= <tipo-simples> 
+    private void parseTipo() {
+        parseTipoSimples();
+    }
+
+    // <tipo-simples> ::= integer | boolean
+    private void parseTipoSimples() {
+        if(!currentToken.isSimpleType())
+            handleUnexpectedToken();
+        
+        acceptIt();
+    }
+
+    // <comando-composto> ::= begin <lista-de-comandos> end
+    private void parseComandoComposto() {
+        logger.debug("parseComandoComposto()");
+        accept(Kind.BEGIN);
+        parseListaDeComandos();
+        accept(Kind.END);
+    }
+
+    // <lista-de-comandos> ::= (<comando> ;)*
+    private void parseListaDeComandos() {
+        logger.debug("parseListaDeComandos()");
+        while (currentToken.kind != Kind.END) {
+            parseComando();
+            accept(Kind.SEMICOLON);
         }
     }
     
-    private void parseSigleCommand(){
-        logger.debug("parseSigleCommand()");
+    // <comando> ::= <atribuição>
+    //             | <conditional>
+    //             | <iterativo>
+    //             | <comando-composto>
+    private void parseComando() {
+        logger.debug("parseComando()");
         switch (currentToken.kind) {
         case IDENTIFIER:
-            parseIdentifier();
-            switch (currentToken.kind) {
-            // case BECOMES:
-            //     acceptIt();
-            //     parseExpression();
-            //     break;
-            case LPAREN:
-                acceptIt();
-                parseExpression();
-                accept(Kind.RPAREN);
-                break;
-            default:
-                handleUnexpectedToken();
-                break;
-            }
+            parseAtribuicao();
             break;
         case IF:
-            acceptIt();
-            parseExpression();
-            accept(Kind.THEN);
-            parseSigleCommand();
-            accept(Kind.ELSE);
-            parseSigleCommand();
+            parseCondicional();
             break;
         case WHILE:
-            acceptIt();
-            parseExpression();
-            accept(Kind.DO);
-            parseSigleCommand();
+            parseIterativo();
             break;
-        // case LET:
-        //     acceptIt();
-        //     parseDeclaration();
-        //     accept(Kind.IN);
-        //     parseSigleCommand();
-        //     break;
         case BEGIN:
-            acceptIt();
-            parseCommand();
-            accept(Kind.END);
+            parseComandoComposto();
             break;
         default:
             handleUnexpectedToken();
@@ -81,87 +113,53 @@ public class Parser {
         }
     }
 
-    private void parseExpression(){
-        logger.debug("parseExpression()");
-        parsePrimaryExpression();
-        // while(currentToken.kind == Kind.OPERATOR){
-        //     acceptIt();
-        //     parsePrimaryExpression();
-        // }
+    // <atribuição> ::= <variável> := <expressão>
+    private void parseAtribuicao() {
+        logger.debug("parseAtribuicao()");
+        parseVariavel();
+        accept(Kind.BECOMES);
+        parseExpressao();
     }
 
-    private void parsePrimaryExpression(){
-        logger.debug("parsePrimaryExpression()");
-        switch (currentToken.kind) {
-        case INTLITERAL:
-            parseIntegerLiteral();
-            break;
-        case IDENTIFIER:
-            acceptIt();
-            break;
-        // case OPERATOR:
-        //     acceptIt();
-        //     parsePrimaryExpression();
-        //     break;
-        case LPAREN:
-            acceptIt();
-            parseExpression();
-            accept(Kind.RPAREN);
-            break;
-        default:
-            handleUnexpectedToken();
-            break;
-        }
-    }
-
-    private void parseDeclaration(){
-        logger.debug("parseDeclaration()");
-        parseSingleDeclaration();
-        while(currentToken.kind == Kind.SEMICOLON){
-            acceptIt();
-            parseSingleDeclaration();
-        }
-    }
-
-    private void parseSingleDeclaration(){
-        logger.debug("parseSingleDeclaration()");
-        switch (currentToken.kind) {
-        // case Kind.CONST:
-        //     acceptIt();
-        //     parseIdentifier();
-        //     accept(Token.IS);
-        //     parseExpression();
-        //     break;
-        // case Kind.VAR:
-        //     acceptIt();
-        //     parseIdentifier();
-        //     accept(Kind.COLON);
-        //     parseTypeDenoter();
-        //     break;
-        default:
-            handleUnexpectedToken();
-            break;
-        }
-    }
-
-    private void parseTypeDenoter(){
-        logger.debug("parseTypeDenoter()");
-        parseIdentifier();
-    }
-
-    private void parseIdentifier(){
-        logger.debug("parseIdentifier()");
+    // <variável> ::= <id>
+    private void parseVariavel() {
+        logger.debug("parseVariavel()");
         accept(Kind.IDENTIFIER);
     }
 
-    private void parseIntegerLiteral(){
-        logger.debug("parseIntegerLiteral()");
-        accept(Kind.INTLITERAL);
+    // <expressão> ::= <expressão-simples> (<op-rel> <expressão-simples> | <vazio>)
+    private void parseExpressao() {
+        logger.debug("parseExpressao()");
+        parseExpressaoSimples();
+        if(!currentToken.isOpRel())
+            return;
+        acceptIt();
+        parseExpressaoSimples();
     }
 
-    @SuppressWarnings("unused")
-    private void parseOperator(){
-        logger.debug("parseOperator()");
+    // <expressão-simples> ::= <termo> (<op-ad> <termo>)*
+    private void parseExpressaoSimples() {
+        logger.debug("parseExpressaoSimples()");
+        parseTermo();
+        while(currentToken.isOpAd()) {
+            acceptIt();
+            parseTermo();
+        }
+    }
+
+    private void parseTermo() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'parseTermo'");
+    }
+
+    private void parseCondicional() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'parseCondicional'");
+    }
+
+    private void parseIterativo() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'parseIterativo'");
     }
 
     private void acceptIt() {
@@ -186,10 +184,11 @@ public class Parser {
 
     public void parse(){
         currentToken = scanner.scan();
-        parseProgram();
-        if (currentToken.kind != Kind.EOT) {
+        parsePrograma();
+
+        while (currentToken.kind != Kind.EOT) {
             handleUnexpectedToken();
-            System.exit(3);
+            acceptIt();
         }
     }
 
