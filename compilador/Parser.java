@@ -147,19 +147,73 @@ public class Parser {
         }
     }
 
+    // <termo> ::= <fator> (<op-mul> <fator>)*
     private void parseTermo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'parseTermo'");
+        logger.debug("parseTermo()");
+        parseFator();
+        while(currentToken.isOpMul()) {
+            acceptIt();
+            parseFator();
+        }
     }
 
+    // <fator> ::= <variável>
+    //           | <literal>
+    //           | "(" <expressão> ")"
+    private void parseFator() {
+        logger.debug("parseFator()");
+        if(currentToken.kind == Kind.IDENTIFIER){
+            parseVariavel();
+            return;
+        }
+
+        if(currentToken.isLiteral()){
+            parseLiteral();
+            return;
+        }
+
+        if(currentToken.kind == Kind.LPAREN){
+            acceptIt();
+            parseExpressao();
+            accept(Kind.RPAREN);
+            return;
+        }
+
+        handleUnexpectedToken();
+    }
+
+    // <literal> ::= <bool-lit> | <int-lit> 
+    private void parseLiteral() {
+        logger.debug("parseLiteral()");
+        if(!currentToken.isLiteral()){
+            handleUnexpectedToken();
+            return;
+        }
+
+        acceptIt();
+    }
+    
+    // <condicional> ::= if <expressão> then <comando> ( else <comando> | <vazio> )
     private void parseCondicional() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'parseCondicional'");
+        logger.debug("parseCondicional()");
+        accept(Kind.IF);
+        parseExpressao();
+        accept(Kind.THEN);
+        parseComando();
+        if(currentToken.kind != Kind.ELSE)
+            return;
+        
+        acceptIt();
+        parseComando();
     }
 
+    // <iterativo> ::= while <expressão> do <comando>
     private void parseIterativo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'parseIterativo'");
+        logger.debug("parseIterativo()");
+        accept(Kind.WHILE);
+        parseExpressao();
+        accept(Kind.DO);
+        parseComando();
     }
 
     private void acceptIt() {
@@ -168,7 +222,7 @@ public class Parser {
     }
 
     private void accept(Kind expectedKind) {
-        logger.debug("accept(%d)\n", expectedKind);
+        logger.debug("accept(%s)\n", expectedKind.toString());
             
         if(ArgsParser.step >= ArgsParser.LEXICAL && currentToken.kind != expectedKind){
             logger.error("Expected '%s' but '%s' was found at line %d column %d\n", Token.spellings[expectedKind.ordinal()],
@@ -193,7 +247,7 @@ public class Parser {
     }
 
     public Parser() throws IOException {
-        logger = new Logger("Parser");
+        logger = new Logger("Parser", false);
         scanner = new Scanner();
         logger.debug("Parser()");
     }

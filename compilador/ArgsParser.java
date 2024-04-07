@@ -5,12 +5,14 @@ public class ArgsParser {
     public static byte loglevel = Logger.ERROR;
     public static byte step = ArgsParser.LEXICAL;
     public static boolean stopAtFirstError = false;
+    public static boolean disableScannerLogs = false;
 
     private static void printHelp(){
         System.out.println("To compile some file, pass the souce code file name followed by the optional args");
         System.out.println("\t-l <loglevel>: set the loglevel to ERROR(default), INFO, DEBUG or TRACE");
         System.out.println("\t-s <step>: set the to go until LEXICAL(default), SYNTATIC, TREE, CONTENT or BUILD");
         System.out.println("\t--stop-at-first-error to stop when some error is found");
+        System.out.println("\t--disble-scanner-logs");
     }
 
     public ArgsParser(String[] args) {
@@ -45,6 +47,7 @@ public class ArgsParser {
                         System.out.println("Invalid loglevel, run without any parameters to see the accepted ones");
                         System.exit(1);;
                 }
+                continue;
             }
 
             if(args[i].equals("-s")){
@@ -74,11 +77,21 @@ public class ArgsParser {
                         System.out.println("Invalid step, run without any parameters to see the accepted ones");
                         System.exit(1);
                 }
+                continue;
             }
 
             if(args[i].equals("--stop-at-first-error")){
                 stopAtFirstError = true;
+                continue;
             }
+
+            if(args[i].equals("--disble-scanner-logs")){
+                disableScannerLogs = true;
+                continue;
+            }
+
+            System.out.printf("Invalid arg '%s', run without any parameters to see the accepted ones\n", args[i]);
+            System.exit(1);
         }
     }
 

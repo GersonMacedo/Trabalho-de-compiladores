@@ -17,7 +17,7 @@ public class Token {
         this.line = line;
         this.column = column;
 
-        Logger logger = new Logger("Token");
+        Logger logger = new Logger("Token", false);
         if (kind != Kind.IDENTIFIER){
             logger.debug(toString());
             return;
@@ -25,10 +25,10 @@ public class Token {
 
         // If kind is IDENTIFIER and spelling matches one
         // of the keywords, change the token's kind accordingly:
-        for (int k = Kind.BEGIN.ordinal(); k <= Kind.WHILE.ordinal(); k++){
+        for (int k = Kind.BEGIN.ordinal(); k < Kind.EOT.ordinal(); k++){
             if (spelling.equals(spellings[k])) {
                 this.kind = Kind.values()[k];
-                return;
+                break;
             }
         }
         logger.debug(toString());
@@ -81,9 +81,20 @@ public class Token {
         }
     }
 
+    public boolean isLiteral() {
+        switch (kind) {
+        case INTLITERAL:
+        case TRUE:
+        case FALSE:
+            return true;
+        default:
+            return false;
+        }
+    }
+
     public String toString(){
-        if(kind.ordinal() <= Kind.INTLITERAL.ordinal())
-            return String.format("Token(\"%s\", %d, %d)", spelling, line, column);
+        if(kind.ordinal() > Kind.INTLITERAL.ordinal())
+            return String.format("Token(%s, %d, %d)", spellings[kind.ordinal()], line, column);
         return String.format("Token(%s, \"%s\", %d, %d)", spellings[kind.ordinal()], spelling, line, column);
     }
     
@@ -91,6 +102,6 @@ public class Token {
     public final static String[] spellings = {
         "<identifier>", "<integer-literal>", "true", "false", "begin", "end", "if", "then", "else", "var", ":", ";",
         "(", ")", ".", "while", "do", ",", "+", "-", "or", "*", "/", "and", "<", ">", ":=", "=", "program", "integer",
-        "boolean", "<eot>"
+        "boolean", "<eot>", "<error>"
     };
 }

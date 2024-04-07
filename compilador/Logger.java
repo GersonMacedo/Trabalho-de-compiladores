@@ -1,22 +1,29 @@
 package compilador;
 
 public class Logger {
-    public String className;
+    private String className;
+    private boolean disable;
 
     public Logger(){
         className = "";
+        disable = false;
         debug("Logger started with loglevel: %d\n", ArgsParser.loglevel);
     }
 
-    public Logger(String className){
+    public Logger(String className, boolean disble){
         this.className = className + "::";
+        this.disable = disble;
     }
 
     public void log(String string){
+        if(disable)
+            return;
         System.out.println(className + string);
     }
 
     public void log(String format, Object... args){
+        if(disable)
+            return;
         System.out.printf(className + format, args);
     }
 

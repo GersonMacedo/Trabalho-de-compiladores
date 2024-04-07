@@ -164,6 +164,8 @@ public class Scanner{
         }
         
         currentChar = (charCode == -1 ? '\0' : (char) charCode);
+        if(currentChar >= 'A' && currentChar <= 'Z')
+            currentChar -= ('A' - 'a');
         logger.debug("Current char is '%s' (Line %d, Column %d)\n",
             printableChar(currentChar), currentLine, currentColumn);
     }
@@ -194,7 +196,7 @@ public class Scanner{
     }
 
     public Scanner() throws IOException {
-        logger = new Logger("Scanner");
+        logger = new Logger("Scanner", ArgsParser.disableScannerLogs);
         logger.debug("Scanner()");
 
         bufferedReader = new BufferedReader(new FileReader(ArgsParser.fileName));
