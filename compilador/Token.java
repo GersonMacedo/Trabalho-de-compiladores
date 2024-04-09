@@ -1,40 +1,8 @@
 package compilador;
 
-enum Kind{
-    IDENTIFIER,  // <id>
-    INTLITERAL,  // <int-lit>
-    TRUE,        // true
-    FALSE,       // false
-    BEGIN,       // begin
-    END,         // end
-    IF,          // if
-    THEN,        // then
-    ELSE,        // else
-    VAR,         // var
-    COLON,       // :
-    SEMICOLON,   // ;
-    LPAREN,      // (
-    RPAREN,      // )
-    DOT,         // .
-    WHILE,       // while
-    DO,          // do
-    COMMA,       // ,
-    PLUS,        // +
-    MINUS,       // -
-    OR,          // or
-    MULT,        // *
-    DIV,         // /
-    AND,         // and
-    LESS,        // <
-    GREATER,     // >
-    BECOMES,     // :=
-    EQUAL,       // =
-    PROGRAM,     // program
-    INTEGER,     // integer
-    BOOLEAN,     // boolean
-    EOT,         // <eot>
-    ERROR;       // <error>
-}
+import compilador.ast.Expressao;
+import compilador.ast.ExpressaoBool;
+import compilador.ast.ExpressaoInt;
 
 public class Token {
     public Kind kind;
@@ -44,7 +12,7 @@ public class Token {
 
     public Token(Kind kind, String spelling, int line, int column) {
         this.kind = kind;
-        this.spelling = spelling;
+        this.spelling = spelling.toLowerCase();
         this.line = line;
         this.column = column;
 
@@ -57,7 +25,7 @@ public class Token {
         // If kind is IDENTIFIER and spelling matches one
         // of the keywords, change the token's kind accordingly:
         for (int k = Kind.BEGIN.ordinal(); k < Kind.EOT.ordinal(); k++){
-            if (spelling.equals(spellings[k])) {
+            if (this.spelling.equals(spellings[k])) {
                 this.kind = Kind.values()[k];
                 break;
             }
@@ -135,4 +103,17 @@ public class Token {
         "(", ")", ".", "while", "do", ",", "+", "-", "or", "*", "/", "and", "<", ">", ":=", "=", "program", "integer",
         "boolean", "<eot>", "<error>"
     };
+
+    Expressao toExpressao(){
+        switch (kind) {
+        case TRUE:
+            return new ExpressaoBool(true);
+        case FALSE:
+            return new ExpressaoBool(false);
+        case INTLITERAL:
+            return new ExpressaoInt(Integer.parseInt(spelling));
+        default:
+            return null;
+        }
+    }
 }

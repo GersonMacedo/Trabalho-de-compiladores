@@ -7,7 +7,7 @@ public class Scanner{
     private Logger logger;
     private int currentLine = 1;
     private int currentColumn = 0;
-    private char currentChar = '\000';
+    private char currentChar = '\0';
     private Kind currentKind;
     private StringBuffer currentSpelling;
 
@@ -164,8 +164,6 @@ public class Scanner{
         }
         
         currentChar = (charCode == -1 ? '\0' : (char) charCode);
-        if(currentChar >= 'A' && currentChar <= 'Z')
-            currentChar -= ('A' - 'a');
         logger.debug("Current char is '%s' (Line %d, Column %d)\n",
             printableChar(currentChar), currentLine, currentColumn);
     }

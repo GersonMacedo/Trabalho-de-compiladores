@@ -1,6 +1,6 @@
 package compilador;
 
-import java.io.IOException;
+import compilador.ast.*;
 
 public class Parser {
     private Logger logger;
@@ -21,212 +21,261 @@ public class Parser {
     }
 
     // <programa> ::= program <id> ; <corpo> .
-    private void parsePrograma() {
+    private Programa parsePrograma() {
         logger.debug("parsePrograma()");
+        Programa p;
         accept(Kind.PROGRAM);
         accept(Kind.IDENTIFIER);
         accept(Kind.SEMICOLON);
-        parseCorpo();
+        p = parseCorpo();
         accept(Kind.DOT);
+        return p;
     }
 
     // <corpo> ::= <declarações> <comando-composto>
-    private void parseCorpo() {
+    private Programa parseCorpo() {
         logger.debug("parseCorpo()");
-        parseDeclaracoes();
-        parseComandoComposto();
+        Programa p = new Programa();
+        p.d = parseDeclaracoes();
+        p.c = parseComandoComposto();
+        return p;
     }
 
     // <declarações> ::= (<declaração> ;)*
-    private void parseDeclaracoes() {
+    private Declaracao parseDeclaracoes() {
         logger.debug("parseDeclaracoes()");
+        Declaracao pd = null, ud = null;
 
-        // declarações are always followed by comando-composto that starts with 'begin'
         while(currentToken.kind != Kind.BEGIN) {
-            parseDeclaracao();
+            Declaracao d = parseDeclaracao();
             accept(Kind.SEMICOLON);
+            if(pd == null)
+                pd = d;
+            else
+                ud.d = d;
+            ud = d;
         }
+        return pd;
     }
 
     // <declaração> ::= <declaração-de-variável>
-    private void parseDeclaracao() {
+    private Declaracao parseDeclaracao() {
         logger.debug("parseDeclaracao()");
-        parseDeclaracaoDeVariavel();
+        return parseDeclaracaoDeVariavel();
     }
 
     // <declaração-de-variável> ::= var <id> : <tipo>
-    private void parseDeclaracaoDeVariavel() {
+    private Declaracao parseDeclaracaoDeVariavel() {
+        logger.debug("parseDeclaracaoDeVariavel()");
+        Declaracao d = new Declaracao();
         accept(Kind.VAR);
-        accept(Kind.IDENTIFIER);
+        d.i = new Identificador(accept(Kind.IDENTIFIER));
         accept(Kind.COLON);
-        parseTipo();
+        d.t = parseTipo();
+        return d;
     }
 
     // TODO? Maybe will change
     // <tipo> ::= <tipo-simples> 
-    private void parseTipo() {
-        parseTipoSimples();
+    private Kind parseTipo() {
+        logger.debug("parseTipo()");
+        return parseTipoSimples();
     }
 
     // <tipo-simples> ::= integer | boolean
-    private void parseTipoSimples() {
+    private Kind parseTipoSimples() {
+        logger.debug("parseTipoSimples()");
         if(!currentToken.isSimpleType())
             handleUnexpectedToken();
         
-        acceptIt();
+        return acceptIt().kind;
     }
 
     // <comando-composto> ::= begin <lista-de-comandos> end
-    private void parseComandoComposto() {
+    private Comando parseComandoComposto() {
         logger.debug("parseComandoComposto()");
+        Comando c;
         accept(Kind.BEGIN);
-        parseListaDeComandos();
+        c = parseListaDeComandos();
         accept(Kind.END);
+        return c;
     }
 
     // <lista-de-comandos> ::= (<comando> ;)*
-    private void parseListaDeComandos() {
+    private Comando parseListaDeComandos() {
         logger.debug("parseListaDeComandos()");
+        Comando pc = null, uc = null;
         while (currentToken.kind != Kind.END) {
-            parseComando();
+            Comando c = parseComando();
             accept(Kind.SEMICOLON);
+            if(pc == null)
+                pc = c;
+            else
+                uc.pc = c;
+            uc = c;
         }
+        return pc;
     }
     
     // <comando> ::= <atribuição>
     //             | <conditional>
     //             | <iterativo>
     //             | <comando-composto>
-    private void parseComando() {
+    private Comando parseComando() {
         logger.debug("parseComando()");
         switch (currentToken.kind) {
         case IDENTIFIER:
-            parseAtribuicao();
-            break;
+            return parseAtribuicao();
         case IF:
-            parseCondicional();
-            break;
+            return parseCondicional();
         case WHILE:
-            parseIterativo();
-            break;
+            return parseIterativo();
         case BEGIN:
-            parseComandoComposto();
-            break;
+            return parseComandoComposto();
         default:
             handleUnexpectedToken();
-            break;
+            return null;
         }
     }
 
     // <atribuição> ::= <variável> := <expressão>
-    private void parseAtribuicao() {
+    private Comando parseAtribuicao() {
         logger.debug("parseAtribuicao()");
-        parseVariavel();
+        ComandoAtribuicao c = new ComandoAtribuicao();
+        c.i = parseVariavel();
         accept(Kind.BECOMES);
-        parseExpressao();
+        c.e = parseExpressao();
+        return c;
     }
 
     // <variável> ::= <id>
-    private void parseVariavel() {
+    private Identificador parseVariavel() {
         logger.debug("parseVariavel()");
-        accept(Kind.IDENTIFIER);
+        return new Identificador(accept(Kind.IDENTIFIER));
     }
 
     // <expressão> ::= <expressão-simples> (<op-rel> <expressão-simples> | <vazio>)
-    private void parseExpressao() {
+    private Expressao parseExpressao() {
         logger.debug("parseExpressao()");
-        parseExpressaoSimples();
+        Expressao e1 = parseExpressaoSimples();
         if(!currentToken.isOpRel())
-            return;
-        acceptIt();
-        parseExpressaoSimples();
+            return e1;
+        Kind op = acceptIt().kind;
+        Expressao e2 = parseExpressaoSimples();
+        return new ExpressaoSimples(e1, op, e2);
     }
 
     // <expressão-simples> ::= <termo> (<op-ad> <termo>)*
-    private void parseExpressaoSimples() {
+    private Expressao parseExpressaoSimples() {
         logger.debug("parseExpressaoSimples()");
-        parseTermo();
+        ExpressaoSimples pe = null, le = null;
+        Expressao e1 = parseTermo();
         while(currentToken.isOpAd()) {
-            acceptIt();
-            parseTermo();
+            Kind op = acceptIt().kind;
+            Expressao e2 = parseTermo();
+            if(pe == null){
+                pe = le = new ExpressaoSimples(e1, op, e2);
+                continue;
+            }
+            ExpressaoSimples ne = new ExpressaoSimples(le.e2, op, e2);
+            le.e2 = ne;
+            le = ne;
         }
+
+        return (pe == null ? e1 : pe);
     }
 
     // <termo> ::= <fator> (<op-mul> <fator>)*
-    private void parseTermo() {
+    private Expressao parseTermo() {
         logger.debug("parseTermo()");
-        parseFator();
+        ExpressaoSimples pe = null, le = null;
+        Expressao e1 = parseFator();
         while(currentToken.isOpMul()) {
-            acceptIt();
-            parseFator();
+            Kind op = acceptIt().kind;
+            Expressao e2 = parseFator();
+            if(pe == null){
+                pe = le = new ExpressaoSimples(e1, op, e2);
+                continue;
+            }
+            ExpressaoSimples ne = new ExpressaoSimples(le.e2, op, e2);
+            le.e2 = ne;
+            le = ne;
         }
+
+        return (pe == null ? e1 : pe);
+
     }
 
     // <fator> ::= <variável>
     //           | <literal>
     //           | "(" <expressão> ")"
-    private void parseFator() {
+    private Expressao parseFator() {
         logger.debug("parseFator()");
         if(currentToken.kind == Kind.IDENTIFIER){
-            parseVariavel();
-            return;
+            return new ExpressaoId(parseVariavel());
         }
 
         if(currentToken.isLiteral()){
-            parseLiteral();
-            return;
+            return parseLiteral();
         }
 
-        if(currentToken.kind == Kind.LPAREN){
-            acceptIt();
-            parseExpressao();
-            accept(Kind.RPAREN);
-            return;
+        if(currentToken.kind != Kind.LPAREN){
+            handleUnexpectedToken();
+            return null;
         }
 
-        handleUnexpectedToken();
+        acceptIt();
+        Expressao e = parseExpressao();
+        accept(Kind.RPAREN);
+        return e;
     }
 
     // <literal> ::= <bool-lit> | <int-lit> 
-    private void parseLiteral() {
+    private Expressao parseLiteral() {
         logger.debug("parseLiteral()");
         if(!currentToken.isLiteral()){
             handleUnexpectedToken();
-            return;
+            return null;
         }
 
-        acceptIt();
+        return acceptIt().toExpressao();
     }
     
     // <condicional> ::= if <expressão> then <comando> ( else <comando> | <vazio> )
-    private void parseCondicional() {
+    private Comando parseCondicional() {
         logger.debug("parseCondicional()");
+        ComandoCondicional c = new ComandoCondicional();
         accept(Kind.IF);
-        parseExpressao();
+        c.e = parseExpressao();
         accept(Kind.THEN);
-        parseComando();
+        c.v = parseComando();
         if(currentToken.kind != Kind.ELSE)
-            return;
+            return c;
         
         acceptIt();
-        parseComando();
+        c.f = parseComando();
+        return c;
     }
 
     // <iterativo> ::= while <expressão> do <comando>
-    private void parseIterativo() {
+    private Comando parseIterativo() {
         logger.debug("parseIterativo()");
+        ComandoIterativo c = new ComandoIterativo();
         accept(Kind.WHILE);
-        parseExpressao();
+        c.e = parseExpressao();
         accept(Kind.DO);
-        parseComando();
+        c.c = parseComando();
+        return c;
     }
 
-    private void acceptIt() {
+    private Token acceptIt() {
         logger.debug("acceptIt()");
+        Token previousToken = currentToken;
         currentToken = scanner.scan();
+        return previousToken;
     }
 
-    private void accept(Kind expectedKind) {
+    private Token accept(Kind expectedKind) {
         logger.debug("accept(%s)\n", expectedKind.toString());
             
         if(ArgsParser.step >= ArgsParser.SYNTACTIC && currentToken.kind != expectedKind){
@@ -238,17 +287,21 @@ public class Parser {
             errors++;
         }
         
+        Token previousToken = currentToken;
         currentToken = scanner.scan();
+        return previousToken;
     }
 
-    public void parse(){
+    public Programa parse(){
         currentToken = scanner.scan();
-        parsePrograma();
+        Programa p = parsePrograma();
 
         while (currentToken.kind != Kind.EOT) {
             handleUnexpectedToken();
             acceptIt();
         }
+
+        return p;
     }
 
     public Parser() {

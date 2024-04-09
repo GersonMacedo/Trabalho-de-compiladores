@@ -1,5 +1,7 @@
 package compilador;
 
+import compilador.ast.Programa;
+
 public class Main {
     private static String getStepMessage(){
         switch (ArgsParser.step) {
