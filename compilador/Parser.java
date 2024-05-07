@@ -104,15 +104,22 @@ public class Parser {
     // <lista-de-comandos> ::= (<comando> ;)*
     private Comando parseListaDeComandos() {
         logger.debug("parseListaDeComandos()");
-        Comando pc = null, uc = null;
+        ComandoLista pc = new ComandoLista();
+        ComandoLista uc = pc;
         while (currentToken.kind != Kind.END) {
             Comando c = parseComando();
             accept(Kind.SEMICOLON);
-            if(pc == null)
-                pc = c;
-            else
-                uc.pc = c;
-            uc = c;
+            if(pc.c1 == null) {
+                pc.c1 = c;
+                continue;
+            }
+            if(uc.c2 == null) {
+                uc.c2 = c;
+                continue;
+            }
+            ComandoLista nc = new ComandoLista(uc.c2, c);
+            uc.c2 = nc;
+            uc = nc;
         }
         return pc;
     }
@@ -168,18 +175,16 @@ public class Parser {
     // <expressão-simples> ::= <termo> (<op-ad> <termo>)*
     private Expressao parseExpressaoSimples() {
         logger.debug("parseExpressaoSimples()");
-        ExpressaoSimples pe = null, le = null;
+        ExpressaoSimples pe = null;
         Expressao e1 = parseTermo();
         while(currentToken.isOpAd()) {
             Kind op = acceptIt().kind;
             Expressao e2 = parseTermo();
             if(pe == null){
-                pe = le = new ExpressaoSimples(e1, op, e2);
+                pe = new ExpressaoSimples(e1, op, e2);
                 continue;
             }
-            ExpressaoSimples ne = new ExpressaoSimples(le.e2, op, e2);
-            le.e2 = ne;
-            le = ne;
+            pe = new ExpressaoSimples(pe, op, e2);
         }
 
         return (pe == null ? e1 : pe);

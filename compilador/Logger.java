@@ -14,6 +14,11 @@ public class Logger {
         this.className = className + "::";
         this.disable = ArgsParser.disableLog.contains(className.toLowerCase());
     }
+    
+    public void log(int t){
+        String s = new String(new char[4 * t]).replace('\0', ' ');
+        log(s, 1);
+    }
 
     public void log(String string){
         if(disable)
@@ -41,10 +46,20 @@ public class Logger {
         if(ArgsParser.loglevel >= Logger.INFO)
             log(string);
     }
+    
+    public void log(int t, String string) {
+        log(t);
+        log(string);
+    }
 
     public void info(String format, Object... args){
         if(ArgsParser.loglevel >= Logger.INFO)
             log(format, args);
+    }
+    
+    public void log(int t, String format, Object... args) {
+        log(t);
+        log(format, args);
     }
 
     public void debug(String string){
