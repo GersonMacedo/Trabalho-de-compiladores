@@ -1,5 +1,6 @@
 package compilador.ast;
 
+import compilador.Visitor;
+
 public abstract class Expressao extends AST{
-    public abstract void print(int t);
 }

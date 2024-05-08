@@ -1,6 +1,6 @@
 package compilador.ast;
 
-import compilador.Logger;
+import compilador.Visitor;
 
 public class ExpressaoInt extends Expressao{
     public int i;
@@ -8,9 +8,8 @@ public class ExpressaoInt extends Expressao{
     public ExpressaoInt(int i){
         this.i = i;
     }
-    
-    public void print(int t) {
-        Logger logger = new Logger();
-        logger.log(t, "%d\n", i);
+
+    public void visit(Visitor v){
+        v.visitExpressaoInt(this);
     }
 }

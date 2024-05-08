@@ -2,12 +2,18 @@ package compilador;
 
 public class Logger {
     private String className;
+    private boolean displayClass;
     private boolean disable;
 
     public Logger(){
         className = "";
+        displayClass = true;
         disable = false;
         debug("Logger started with loglevel: %d\n", ArgsParser.loglevel);
+    }
+
+    public void setDisplayClass(boolean value){
+        displayClass = value;
     }
 
     public Logger(String className){
@@ -23,13 +29,13 @@ public class Logger {
     public void log(String string){
         if(disable)
             return;
-        System.out.println(className + string);
+        System.out.println((displayClass ? className : "") + string);
     }
 
     public void log(String format, Object... args){
         if(disable)
             return;
-        System.out.printf(className + format, args);
+        System.out.printf((displayClass ? className : "") + format, args);
     }
 
     public void error(String string){

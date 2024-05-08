@@ -1,6 +1,6 @@
 package compilador.ast;
 
-import compilador.Logger;
+import compilador.Visitor;
 
 public class ComandoIterativo extends Comando {
     public Expressao e;
@@ -10,11 +10,7 @@ public class ComandoIterativo extends Comando {
         c = null;
     }
 
-    public void print(int t) {
-        Logger logger = new Logger();
-        logger.log(t, "while");
-        e.print(t + 1);
-        logger.log(t, "do");
-        c.print(t + 1);
+    public void visit(Visitor v){
+        v.visitComandoIterativo(this);
     }
 }

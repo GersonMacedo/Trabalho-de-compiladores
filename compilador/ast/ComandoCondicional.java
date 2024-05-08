@@ -1,6 +1,6 @@
 package compilador.ast;
 
-import compilador.Logger;
+import compilador.Visitor;
 
 public class ComandoCondicional extends Comando {
     public Expressao e;
@@ -10,15 +10,7 @@ public class ComandoCondicional extends Comando {
         v = f = null;
     }
 
-    public void print(int t) {
-        Logger logger = new Logger();
-        logger.log(t, "if");
-        e.print(t + 1);
-        logger.log(t, "then");
-        v.print(t + 1);
-        if (f == null)
-            return;
-        logger.log(t, "else");
-        f.print(t + 1);
+    public void visit(Visitor v){
+        v.visitComandoCondicional(this);
     }
 }

@@ -1,14 +1,12 @@
 package compilador.ast;
 
-import compilador.Logger;
+import compilador.Visitor;
 
 public class ComandoAtribuicao extends Comando {
     public Identificador i;
     public Expressao e;
-    
-    public void print(int t) {
-        Logger logger = new Logger();
-        logger.log(t, "%s :=\n", i.n);
-        e.print(t + 1);
+
+    public void visit(Visitor v){
+        v.visitComandoAtribuicao(this);
     }
 }

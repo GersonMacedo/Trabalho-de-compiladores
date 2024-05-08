@@ -29,6 +29,13 @@ public class Main {
         if(Scanner.errors != 0 || Parser.errors != 0)
             System.exit(2);
         logger.log("No errors found");
-        p.print();
+
+        if(ArgsParser.step <= ArgsParser.LEXICAL)
+            return;
+        Printer printer = new Printer();
+        printer.print(p);
+
+        if(ArgsParser.step == ArgsParser.TREE)
+            return;
     }
 }
