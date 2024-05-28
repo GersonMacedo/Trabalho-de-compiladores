@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         new ArgsParser(args);
         Logger logger = new Logger();
-        logger.log("\n%s at %s\n", getStepMessage(), ArgsParser.fileName);
+        // logger.log("\n%s at %s\n", getStepMessage(), ArgsParser.fileName);
 
         Parser parser = new Parser();
         Programa p = parser.parse();

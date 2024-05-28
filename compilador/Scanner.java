@@ -14,7 +14,7 @@ public class Scanner{
     public static int errors;
 
     private String printableChar(char c){
-        if(c == '\n')
+        if(c == '\n' || c== '\r')
             return "EOL";
         if(c == '\0')
             return "EOF";
@@ -138,6 +138,7 @@ public class Scanner{
                 break;
             case ' ':
             case '\n':
+            case '\r':
                 takeIt();
                 break;
         }
@@ -172,7 +173,7 @@ public class Scanner{
         logger.debug("scan()");
 
         while(true){
-            while (currentChar == '!' || currentChar == ' ' || currentChar == '\n')
+            while (currentChar == '!' || currentChar == ' ' || currentChar == '\n'|| currentChar == '\r')
                 scanSeparator();
             currentSpelling = new StringBuffer("");
             currentKind = scanToken();
