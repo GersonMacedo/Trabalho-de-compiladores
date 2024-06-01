@@ -9,7 +9,7 @@ public class ExpressaoBool extends Expressao{
         this.b = b;
     }
 
-    public void visit(Visitor v){
-        v.visitExpressaoBool(this);
+    public void visit(Visitor v, Object... args){
+        v.visitExpressaoBool(this, args);
     }
 }

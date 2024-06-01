@@ -13,7 +13,7 @@ public class ExpressaoSimples extends Expressao{
         this.e2 = e2;
     }
 
-    public void visit(Visitor v){
-        v.visitExpressaoSimples(this);
+    public void visit(Visitor v, Object... args){
+        v.visitExpressaoSimples(this, args);
     }
 }

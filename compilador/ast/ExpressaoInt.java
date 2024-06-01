@@ -9,7 +9,7 @@ public class ExpressaoInt extends Expressao{
         this.i = i;
     }
 
-    public void visit(Visitor v){
-        v.visitExpressaoInt(this);
+    public void visit(Visitor v, Object... args){
+        v.visitExpressaoInt(this, args);
     }
 }

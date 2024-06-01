@@ -10,7 +10,7 @@ public class Identificador extends AST {
         this.n = t.spelling;
     }
 
-    public void visit(Visitor v){
-        v.visitIdentificador(this);
+    public void visit(Visitor v, Object... args){
+        v.visitIdentificador(this, args);
     }
 }

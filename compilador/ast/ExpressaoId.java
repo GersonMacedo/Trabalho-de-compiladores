@@ -9,7 +9,7 @@ public class ExpressaoId extends Expressao{
         this.i = i;
     }
 
-    public void visit(Visitor v){
-        v.visitExpressaoId(this);
+    public void visit(Visitor v, Object... args){
+        v.visitExpressaoId(this, args);
     }
 }

@@ -13,7 +13,7 @@ public class Declaracao extends AST {
         d = null;
     }
 
-    public void visit(Visitor v){
-        v.visitDeclaracao(this);
+    public void visit(Visitor v, Object... args){
+        v.visitDeclaracao(this, args);
     }
 }

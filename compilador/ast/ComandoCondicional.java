@@ -10,7 +10,7 @@ public class ComandoCondicional extends Comando {
         v = f = null;
     }
 
-    public void visit(Visitor v){
-        v.visitComandoCondicional(this);
+    public void visit(Visitor v, Object... args){
+        v.visitComandoCondicional(this, args);
     }
 }
