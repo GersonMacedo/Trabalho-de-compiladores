@@ -25,3 +25,9 @@ replay_pid*
 
 #vs code folder
 .vscode
+
+#build folder
+build
+
+#test script outputs
+testScripts/outputs

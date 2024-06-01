@@ -1,0 +1,31 @@
+! -s LEXICAL -l DEBUG --enable-logs token
+! Has all valid tokens, should correctly idenfify all of them
+true
+false
+begin
+end
+if
+then
+else
+var
+:
+;
+(
+)
+.
+while
+do
+,
++
+-
+or
+*
+/
+and
+<
+>
+:=
+=
+program
+integer
+boolean

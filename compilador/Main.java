@@ -6,9 +6,15 @@ public class Main {
     private static String getStepMessage(){
         switch (ArgsParser.step) {
         case ArgsParser.LEXICAL:
-            return "Performing only lexical analysis";
+            return "only lexical analysis";
         case ArgsParser.SYNTACTIC:
-            return "Performing up to syntactic analysis";
+            return "up to syntactic analysis";
+        case ArgsParser.TREE:
+            return "up to syntactic analysis and printing the AST tree";
+        case ArgsParser.CONTENT:
+            return "up to content analysis";
+        case ArgsParser.BUILD:
+            return "content analysis and build generation";
         default:
             throw new UnsupportedOperationException("Unimplemented step " + ArgsParser.step);
         }
@@ -17,7 +23,7 @@ public class Main {
     public static void main(String[] args) {
         new ArgsParser(args);
         Logger logger = new Logger();
-        // logger.log("\n%s at %s\n", getStepMessage(), ArgsParser.fileName);
+        logger.log("\nPerforming %s at %s\n", getStepMessage(), ArgsParser.fileName);
 
         Parser parser = new Parser();
         Programa p = parser.parse();

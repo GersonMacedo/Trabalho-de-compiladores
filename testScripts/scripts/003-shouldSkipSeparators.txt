@@ -1,0 +1,14 @@
+! -s LEXICAL -l DEBUG --enable-logs token
+! Has all valid separators, should correctly skip them
++      +   	                    +
+
+
+   !+    +
+        	
+
+		
+
+     			 +
+
+
+            

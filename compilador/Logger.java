@@ -2,23 +2,22 @@ package compilador;
 
 public class Logger {
     private String className;
-    private boolean displayClass;
+    private boolean displayClass = true;
     private boolean disable;
 
     public Logger(){
         className = "";
         displayClass = true;
         disable = false;
-        debug("Logger started with loglevel: %d\n", ArgsParser.loglevel);
-    }
-
-    public void setDisplayClass(boolean value){
-        displayClass = value;
     }
 
     public Logger(String className){
         this.className = className + "::";
-        this.disable = ArgsParser.disableLog.contains(className.toLowerCase());
+        this.disable = ArgsParser.disableLog.contains(className.toLowerCase()) ^ ArgsParser.invertDisableLog;
+    }
+
+    public void setDisplayClass(boolean value){
+        displayClass = value;
     }
     
     public void log(int t){

@@ -46,7 +46,7 @@ public class Parser {
         logger.debug("parseDeclaracoes()");
         Declaracao pd = null, ud = null;
 
-        while(currentToken.kind != Kind.BEGIN) {
+        while(currentToken.kind != Kind.BEGIN && currentToken.kind != Kind.EOT) {
             Declaracao d = parseDeclaracao();
             accept(Kind.SEMICOLON);
             if(pd == null)
@@ -106,7 +106,7 @@ public class Parser {
         logger.debug("parseListaDeComandos()");
         ComandoLista pc = new ComandoLista();
         ComandoLista uc = pc;
-        while (currentToken.kind != Kind.END) {
+        while (currentToken.kind != Kind.END && currentToken.kind != Kind.EOT) {
             Comando c = parseComando();
             accept(Kind.SEMICOLON);
             if(pc.c1 == null) {
@@ -275,6 +275,9 @@ public class Parser {
 
     private Token acceptIt() {
         logger.debug("acceptIt()");
+        if(currentToken.kind == Kind.EOT)
+            return currentToken;
+
         Token previousToken = currentToken;
         currentToken = scanner.scan();
         return previousToken;
@@ -292,6 +295,9 @@ public class Parser {
             errors++;
         }
         
+        if(currentToken.kind == Kind.EOT)
+            return currentToken;
+
         Token previousToken = currentToken;
         currentToken = scanner.scan();
         return previousToken;

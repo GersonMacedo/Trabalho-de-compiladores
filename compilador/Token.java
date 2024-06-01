@@ -24,7 +24,7 @@ public class Token {
 
         // If kind is IDENTIFIER and spelling matches one
         // of the keywords, change the token's kind accordingly:
-        for (int k = Kind.BEGIN.ordinal(); k < Kind.EOT.ordinal(); k++){
+        for (int k = Kind.TRUE.ordinal(); k < Kind.EOT.ordinal(); k++){
             if (this.spelling.equals(spellings[k])) {
                 this.kind = Kind.values()[k];
                 break;

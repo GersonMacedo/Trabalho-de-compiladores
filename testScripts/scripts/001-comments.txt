@@ -1,0 +1,2 @@
+! -s LEXICAL
+! Has only comments, should not trigger any lexical errors

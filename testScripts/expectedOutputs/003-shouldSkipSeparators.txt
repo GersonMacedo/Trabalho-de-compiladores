@@ -1,0 +1,8 @@
+
+Performing only lexical analysis at testScripts/scripts/003-shouldSkipSeparators.txt
+Token::Token(+, 3, 1)
+Token::Token(+, 3, 8)
+Token::Token(+, 3, 33)
+Token::Token(+, 11, 10)
+Token::Token(<eot>, 15, 1)
+No errors found

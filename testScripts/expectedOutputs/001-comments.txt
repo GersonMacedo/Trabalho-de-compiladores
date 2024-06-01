@@ -1,0 +1,3 @@
+
+Performing only lexical analysis at testScripts/scripts/001-comments.txt
+No errors found

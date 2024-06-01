@@ -1,0 +1,19 @@
+
+Performing only lexical analysis at testScripts/scripts/004-invalidChars.txt
+Scanner::Invalid char ''' at line 3 column 1
+Scanner::Invalid char '"' at line 3 column 2
+Scanner::Invalid char '@' at line 3 column 3
+Scanner::Invalid char '#' at line 3 column 4
+Scanner::Invalid char '$' at line 3 column 5
+Scanner::Invalid char '%' at line 3 column 6
+Scanner::Invalid char '&' at line 3 column 7
+Scanner::Invalid char '{' at line 3 column 8
+Scanner::Invalid char '}' at line 3 column 9
+Scanner::Invalid char '[' at line 3 column 10
+Scanner::Invalid char ']' at line 3 column 11
+Scanner::Invalid char '{' at line 3 column 12
+Scanner::Invalid char '}' at line 3 column 13
+Scanner::Invalid char '|' at line 3 column 14
+Scanner::Invalid char '\' at line 3 column 15
+Scanner::Invalid char '?' at line 3 column 16
+16 lexical errors found

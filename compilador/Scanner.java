@@ -18,6 +18,8 @@ public class Scanner{
             return "EOL";
         if(c == '\0')
             return "EOF";
+        if(c == '\t')
+            return "TAB";
         return String.format("%c", c);
     }
 
@@ -120,6 +122,9 @@ public class Scanner{
             case ',':
                 takeIt();
                 return Kind.COMMA;
+            case '=':
+                takeIt();
+                return Kind.EQUAL;
             case '\0':
                 return Kind.EOT;
             default:
@@ -137,6 +142,7 @@ public class Scanner{
                     takeIt();
                 break;
             case ' ':
+            case '\t':
             case '\n':
             case '\r':
                 takeIt();
@@ -146,8 +152,12 @@ public class Scanner{
 
     private void readNextChar(){
         logger.debug("readNextChar()");
+        if(currentChar == '\r'){
+            logger.log("HERE");
+            System.exit(3);
+        }
 
-        if(currentChar == '\n'){
+        if(currentChar == '\n' || currentChar == '\r'){
             currentLine++;
             currentColumn = 1;
         }else{
@@ -173,7 +183,7 @@ public class Scanner{
         logger.debug("scan()");
 
         while(true){
-            while (currentChar == '!' || currentChar == ' ' || currentChar == '\n'|| currentChar == '\r')
+            while (currentChar == '!' || currentChar == ' ' || currentChar == '\t' || currentChar == '\n' || currentChar == '\r')
                 scanSeparator();
             currentSpelling = new StringBuffer("");
             currentKind = scanToken();

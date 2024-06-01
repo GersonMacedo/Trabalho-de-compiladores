@@ -1,7 +1,6 @@
 package compilador.ast;
 
 import compilador.Kind;
-import compilador.Logger;
 import compilador.Visitor;
 
 public class Declaracao extends AST {

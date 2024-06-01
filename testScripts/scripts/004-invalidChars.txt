@@ -1,0 +1,4 @@
+! -s LEXICAL --continue-after-first-error
+! Should complain about all the invalid chars outside the comments
+'"@#$%&{}[]{}|\?
+!'"@#$%&{}[]{}|\?
