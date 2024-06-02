@@ -1,0 +1,8 @@
+! -s SYNTACTIC
+! should accept an if command
+program p ;
+begin
+    if false then
+        a := true
+    ;
+end .

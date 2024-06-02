@@ -1,0 +1,11 @@
+! -s SYNTACTIC
+! should complain about extra else
+program p ;
+begin
+    if false then
+        a := true
+    ;
+    else
+        b := false
+    ;
+end .

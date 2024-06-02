@@ -246,7 +246,7 @@ public class Parser {
             return e;
         }
 
-        handleUnexpectedTokenWithMessage("'<fator>'");
+        handleUnexpectedTokenWithMessage("'<expressao>'");
         return null;
     }
 

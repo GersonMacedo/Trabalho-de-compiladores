@@ -1,0 +1,8 @@
+! -s SYNTACTIC
+! should complain about missing then token
+program p ;
+begin
+    if false
+        a := true
+    ;
+end .

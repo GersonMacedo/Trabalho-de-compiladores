@@ -1,0 +1,28 @@
+! -s SYNTACTIC
+! should accept nested if else commands
+program p ;
+begin
+    if a then
+        if b then
+            if c then
+                t := 3
+            else
+                t := 2
+        else
+            if c then
+                t := 2
+            else
+                t := 1
+    else
+        if b then
+            if c then
+                t := 2
+            else
+                t := 1
+        else
+            if c then
+                t := 1
+            else
+                t := 0
+    ;
+end .

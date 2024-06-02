@@ -1,0 +1,9 @@
+! -s SYNTACTIC
+! should complain about missing command for the else
+program p ;
+begin
+    if false then
+        a := true
+    else
+    ;
+end .

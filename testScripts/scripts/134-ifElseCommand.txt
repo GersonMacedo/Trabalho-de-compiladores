@@ -1,0 +1,10 @@
+! -s SYNTACTIC
+! should accept if else command
+program p ;
+begin
+    if false then
+        a := true
+    else
+        a := false
+    ;
+end .
