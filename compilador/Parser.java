@@ -200,22 +200,19 @@ public class Parser {
     // <termo> ::= <fator> (<op-mul> <fator>)*
     private Expressao parseTermo() {
         logger.debug("parseTermo()");
-        ExpressaoSimples pe = null, le = null;
+        ExpressaoSimples pe = null;
         Expressao e1 = parseFator();
         while(currentToken.isOpMul()) {
             Kind op = acceptIt().kind;
             Expressao e2 = parseFator();
             if(pe == null){
-                pe = le = new ExpressaoSimples(e1, op, e2);
+                pe = new ExpressaoSimples(e1, op, e2);
                 continue;
             }
-            ExpressaoSimples ne = new ExpressaoSimples(le.e2, op, e2);
-            le.e2 = ne;
-            le = ne;
+            pe = new ExpressaoSimples(pe, op, e2);
         }
 
         return (pe == null ? e1 : pe);
-
     }
 
     // <fator> ::= <variável>

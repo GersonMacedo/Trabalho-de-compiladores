@@ -1,0 +1,27 @@
+
+Performing up to syntactic analysis and printing the AST tree at testScripts/scripts/211-relationalExpressionsAST.txt
+No errors found
+
+Programa 'p'
+Declarações:
+    'b1': BOOLEAN
+    'b2': BOOLEAN
+    'i1': INTEGER
+    'i2': INTEGER
+Corpo:
+    'b1' :=
+        LESS
+            'i1'
+            'i2'
+    'b1' :=
+        GREATER
+            'i1'
+            'i2'
+    'b2' :=
+        EQUAL
+            'i1'
+            'i2'
+    'b2' :=
+        EQUAL
+            'b1'
+            'b2'

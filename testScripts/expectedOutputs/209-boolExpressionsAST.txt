@@ -1,0 +1,59 @@
+
+Performing up to syntactic analysis and printing the AST tree at testScripts/scripts/209-boolExpressionsAST.txt
+No errors found
+
+Programa 'p'
+Declarações:
+    'b1': BOOLEAN
+    'b2': BOOLEAN
+    'b3': BOOLEAN
+    'b4': BOOLEAN
+Corpo:
+    'b1' :=
+        AND
+            'b1'
+            'b2'
+    'b1' :=
+        AND
+            AND
+                AND
+                    'b1'
+                    'b2'
+                'b3'
+            'b4'
+    'b1' :=
+        OR
+            'b2'
+            'b1'
+    'b1' :=
+        OR
+            OR
+                OR
+                    'b4'
+                    'b3'
+                'b2'
+            'b1'
+    'b1' :=
+        OR
+            AND
+                'b1'
+                'b2'
+            'b3'
+    'b1' :=
+        AND
+            'b1'
+            OR
+                'b2'
+                'b3'
+    'b1' :=
+        OR
+            'b1'
+            AND
+                'b2'
+                'b3'
+    'b1' :=
+        AND
+            OR
+                'b1'
+                'b2'
+            'b3'

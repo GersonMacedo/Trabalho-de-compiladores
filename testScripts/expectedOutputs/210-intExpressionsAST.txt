@@ -1,0 +1,168 @@
+
+Performing up to syntactic analysis and printing the AST tree at testScripts/scripts/210-intExpressionsAST.txt
+No errors found
+
+Programa 'p'
+Declarações:
+    'i1': INTEGER
+    'i2': INTEGER
+    'i3': INTEGER
+    'i4': INTEGER
+    'i5': INTEGER
+Corpo:
+    'i1' :=
+        PLUS
+            'i1'
+            'i2'
+    'i1' :=
+        PLUS
+            PLUS
+                'i1'
+                'i2'
+            'i3'
+    'i1' :=
+        MINUS
+            'i1'
+            'i2'
+    'i1' :=
+        MINUS
+            MINUS
+                'i1'
+                'i2'
+            'i3'
+    'i2' :=
+        MINUS
+            PLUS
+                MINUS
+                    PLUS
+                        'i1'
+                        'i2'
+                    'i3'
+                'i4'
+            'i5'
+    'i1' :=
+        MULT
+            'i1'
+            'i2'
+    'i1' :=
+        MULT
+            MULT
+                'i1'
+                'i2'
+            'i3'
+    'i1' :=
+        DIV
+            'i1'
+            'i2'
+    'i1' :=
+        DIV
+            DIV
+                'i1'
+                'i2'
+            'i3'
+    'i2' :=
+        DIV
+            MULT
+                DIV
+                    MULT
+                        'i1'
+                        'i2'
+                    'i3'
+                'i4'
+            'i5'
+    'i1' :=
+        PLUS
+            MULT
+                'i1'
+                'i2'
+            'i3'
+    'i1' :=
+        MULT
+            'i1'
+            PLUS
+                'i2'
+                'i3'
+    'i1' :=
+        MINUS
+            MULT
+                'i1'
+                'i2'
+            'i3'
+    'i1' :=
+        MULT
+            'i1'
+            MINUS
+                'i2'
+                'i3'
+    'i1' :=
+        PLUS
+            DIV
+                'i1'
+                'i2'
+            'i3'
+    'i1' :=
+        DIV
+            'i1'
+            PLUS
+                'i2'
+                'i3'
+    'i1' :=
+        MINUS
+            DIV
+                'i1'
+                'i2'
+            'i3'
+    'i1' :=
+        DIV
+            'i1'
+            MINUS
+                'i2'
+                'i3'
+    'i2' :=
+        PLUS
+            'i1'
+            MULT
+                'i2'
+                'i3'
+    'i2' :=
+        MULT
+            PLUS
+                'i1'
+                'i2'
+            'i3'
+    'i2' :=
+        MINUS
+            'i1'
+            MULT
+                'i2'
+                'i3'
+    'i2' :=
+        MULT
+            MINUS
+                'i1'
+                'i2'
+            'i3'
+    'i2' :=
+        PLUS
+            'i1'
+            DIV
+                'i2'
+                'i3'
+    'i2' :=
+        DIV
+            PLUS
+                'i1'
+                'i2'
+            'i3'
+    'i2' :=
+        MINUS
+            'i1'
+            DIV
+                'i2'
+                'i3'
+    'i2' :=
+        DIV
+            MINUS
+                'i1'
+                'i2'
+            'i3'

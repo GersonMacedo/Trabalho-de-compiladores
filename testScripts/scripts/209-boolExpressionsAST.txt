@@ -1,0 +1,20 @@
+! -s TREE
+! should print correctly the AST with the bool expressions
+program p ;
+    var b1 : boolean;
+    var b2 : boolean;
+    var b3 : boolean;
+    var b4 : boolean;
+begin
+    b1 := b1 and b2;
+    b1 := b1 and b2 and b3 and b4;
+    
+    b1 := b2 or b1;
+    b1 := b4 or b3 or b2 or b1;
+
+    b1 := b1 and b2 or b3;
+    b1 := b1 and (b2 or b3);
+
+    b1 := b1 or b2 and b3;
+    b1 := (b1 or b2) and b3;
+end .

@@ -1,0 +1,13 @@
+! -s TREE
+! should print correctly the AST with the relational expressions
+program p ;
+    var b1 : boolean;
+    var b2 : boolean;
+    var i1 : integer;
+    var i2 : integer;
+begin
+    b1 := i1 < i2;
+    b1 := i1 > i2;
+    b2 := i1 = i2;
+    b2 := b1 = b2;
+end .
