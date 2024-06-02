@@ -1,3 +1,0 @@
-
-Performing up to syntactic analysis at testScripts/scripts/136-nestedIfCommands.txt
-No errors found

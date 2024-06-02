@@ -1,0 +1,8 @@
+! -s SYNTACTIC
+! should complain about missing expression
+program p ;
+begin
+    while do
+        a := a + 1
+    ;
+end .

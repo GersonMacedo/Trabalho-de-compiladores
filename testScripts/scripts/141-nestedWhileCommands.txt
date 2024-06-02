@@ -1,0 +1,11 @@
+! -s SYNTACTIC
+! should accept nested while commands
+program p ;
+begin
+    while a do
+        while b do
+            while c do
+                while d do
+                    a := 0 / 0
+    ;
+end .

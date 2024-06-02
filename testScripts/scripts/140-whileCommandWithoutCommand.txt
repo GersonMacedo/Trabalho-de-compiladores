@@ -1,0 +1,7 @@
+! -s SYNTACTIC
+! should complain about missing command
+program p ;
+begin
+    while false do
+    ;
+end .

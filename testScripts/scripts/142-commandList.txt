@@ -1,0 +1,8 @@
+! -s SYNTACTIC
+! should accept list of commands
+program p ;
+begin
+    a := 0;
+    b := 1;
+    c := 2;
+end .

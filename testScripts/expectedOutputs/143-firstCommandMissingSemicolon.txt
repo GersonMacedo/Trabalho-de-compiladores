@@ -1,0 +1,3 @@
+
+Performing up to syntactic analysis at testScripts/scripts/143-firstCommandMissingSemicolon.txt
+Parser::Expected ';' but 'b' was found at line 6 column 5

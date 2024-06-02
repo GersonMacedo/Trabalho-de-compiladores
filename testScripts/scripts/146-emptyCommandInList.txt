@@ -1,0 +1,6 @@
+! -s SYNTACTIC
+! should complain about missing ; in the last command
+program p ;
+begin
+    ;
+end .

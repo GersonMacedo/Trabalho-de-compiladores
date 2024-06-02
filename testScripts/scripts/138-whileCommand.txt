@@ -1,0 +1,8 @@
+! -s SYNTACTIC
+! should accept while command
+program p ;
+begin
+    while true do
+        a := a + 1
+    ;
+end .

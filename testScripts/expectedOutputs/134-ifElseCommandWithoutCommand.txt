@@ -1,3 +1,0 @@
-
-Performing up to syntactic analysis at testScripts/scripts/134-ifElseCommandWithoutCommand.txt
-Parser::Expected <comando> but ';' was found at line 8 column 5

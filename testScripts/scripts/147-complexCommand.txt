@@ -1,0 +1,35 @@
+! -s SYNTACTIC
+! should accept a mix of all types of commands
+program p ;
+begin
+    begin
+        begin
+            a := false;
+            if true then
+                while false do
+                    b := b + 1
+            else
+                while false do
+                    b := b - 1
+            ;
+            while t do
+                a := a and a
+            ;
+        end ;
+        a := true;
+    end ;
+    c := 5;
+    if false then
+        while t do
+        begin
+            a := true;
+            b := 4;
+        end
+    ;
+    while k do
+        if t then
+            a := false
+        else
+            a := true
+    ;
+end .
