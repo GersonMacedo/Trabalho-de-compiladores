@@ -1,0 +1,3 @@
+
+Performing up to syntactic analysis at testScripts/scripts/108-emptyProgram.txt
+Parser::The file ended but is missing 'program'

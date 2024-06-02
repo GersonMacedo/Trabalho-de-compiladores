@@ -1,0 +1,2 @@
+! -s SYNTACTIC
+! should complain about the file ending without program token

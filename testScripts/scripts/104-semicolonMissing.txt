@@ -1,0 +1,5 @@
+! -s SYNTACTIC
+! should complain about missing ;
+program p
+begin
+end .

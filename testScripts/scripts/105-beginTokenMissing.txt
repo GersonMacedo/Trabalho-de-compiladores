@@ -1,0 +1,4 @@
+! -s SYNTACTIC
+! should complain about missing begin token
+program p ;
+end .

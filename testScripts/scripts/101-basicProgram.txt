@@ -1,0 +1,5 @@
+! -s SYNTACTIC
+! should accept the basic program
+program p ;
+begin
+end .

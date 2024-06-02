@@ -1,0 +1,3 @@
+
+Performing up to syntactic analysis at testScripts/scripts/105-beginTokenMissing.txt
+Parser::Expected 'var' or 'begin' but 'end' was found at line 4 column 1

@@ -36,7 +36,7 @@ public class Main {
             System.exit(2);
         logger.log("No errors found");
 
-        if(ArgsParser.step <= ArgsParser.LEXICAL)
+        if(ArgsParser.step <= ArgsParser.SYNTACTIC)
             return;
         Printer printer = new Printer();
         printer.print(p);

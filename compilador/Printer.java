@@ -1,6 +1,5 @@
 package compilador;
 
-import compilador.ast.Comando;
 import compilador.ast.ComandoAtribuicao;
 import compilador.ast.ComandoCondicional;
 import compilador.ast.ComandoIterativo;
@@ -110,6 +109,7 @@ public class Printer implements Visitor {
         if(p.d != null)
             p.d.visit(this, t + 1);;
         logger.log(t, "Corpo:");
-        p.c.visit(this, t + 1);
+        if(p.c != null)
+            p.c.visit(this, t + 1);
     }
 }

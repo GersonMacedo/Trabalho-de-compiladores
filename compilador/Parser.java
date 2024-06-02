@@ -9,6 +9,21 @@ public class Parser {
 
     public static int errors;
 
+    private void handleUnexpectedTokenWithMessage(String s) {
+        if(ArgsParser.step < ArgsParser.SYNTACTIC)
+            return;
+        
+        if(currentToken.kind == Kind.EOT){
+            logger.error("The file ended but is missing %s", s);
+        }else{
+            logger.error("Expected %s but '%s' was found at line %d column %d\n", s, currentToken.spelling,
+                currentToken.line, currentToken.column);
+        }
+        if(ArgsParser.stopAtFirstError)
+            System.exit(3);
+        errors++;
+    }
+
     private void handleUnexpectedToken() {
         if(ArgsParser.step < ArgsParser.SYNTACTIC)
             return;
@@ -107,7 +122,7 @@ public class Parser {
         ComandoLista pc = new ComandoLista();
         ComandoLista uc = pc;
         while (currentToken.kind != Kind.END && currentToken.kind != Kind.EOT) {
-            Comando c = parseComando();
+            Comando c = parseComando(true);
             accept(Kind.SEMICOLON);
             if(pc.c1 == null) {
                 pc.c1 = c;
@@ -121,14 +136,14 @@ public class Parser {
             uc.c2 = nc;
             uc = nc;
         }
-        return pc;
+        return pc.c2 == null ? pc.c1 : pc;
     }
     
     // <comando> ::= <atribuição>
     //             | <conditional>
     //             | <iterativo>
     //             | <comando-composto>
-    private Comando parseComando() {
+    private Comando parseComando(boolean insideList) {
         logger.debug("parseComando()");
         switch (currentToken.kind) {
         case IDENTIFIER:
@@ -140,7 +155,7 @@ public class Parser {
         case BEGIN:
             return parseComandoComposto();
         default:
-            handleUnexpectedToken();
+            handleUnexpectedTokenWithMessage(insideList ? "'<comando>' or 'end'" : "<comando>");
             return null;
         }
     }
@@ -253,12 +268,12 @@ public class Parser {
         accept(Kind.IF);
         c.e = parseExpressao();
         accept(Kind.THEN);
-        c.v = parseComando();
+        c.v = parseComando(false);
         if(currentToken.kind != Kind.ELSE)
             return c;
         
         acceptIt();
-        c.f = parseComando();
+        c.f = parseComando(false);
         return c;
     }
 
@@ -269,7 +284,7 @@ public class Parser {
         accept(Kind.WHILE);
         c.e = parseExpressao();
         accept(Kind.DO);
-        c.c = parseComando();
+        c.c = parseComando(false);
         return c;
     }
 
@@ -287,12 +302,14 @@ public class Parser {
         logger.debug("accept(%s)\n", expectedKind.toString());
             
         if(ArgsParser.step >= ArgsParser.SYNTACTIC && currentToken.kind != expectedKind){
-            logger.error("Expected '%s' but '%s' was found at line %d column %d\n", Token.spellings[expectedKind.ordinal()],
-                currentToken.spelling, currentToken.line, currentToken.column);
-            if(ArgsParser.stopAtFirstError){
-                System.exit(3);
+            String s;
+            if(expectedKind == Kind.VAR){
+                s = "'var' or 'begin'";
+            }else{
+                s = "'" + Token.spellings[expectedKind.ordinal()] + "'";
             }
-            errors++;
+
+            handleUnexpectedTokenWithMessage(s);
         }
         
         if(currentToken.kind == Kind.EOT)
