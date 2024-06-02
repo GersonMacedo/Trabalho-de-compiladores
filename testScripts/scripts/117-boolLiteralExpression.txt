@@ -1,0 +1,7 @@
+! -s SYNTACTIC
+! should accept bool literal as expression
+program p ;
+begin
+    a := false;
+    a := true;
+end .

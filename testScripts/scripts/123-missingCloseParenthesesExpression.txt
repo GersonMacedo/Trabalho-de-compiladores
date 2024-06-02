@@ -1,0 +1,6 @@
+! -s SYNTACTIC
+! should complain about missing )
+program p ;
+begin
+    a := (true;
+end .

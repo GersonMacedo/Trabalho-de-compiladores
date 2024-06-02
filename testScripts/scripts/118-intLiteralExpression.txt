@@ -1,0 +1,6 @@
+! -s SYNTACTIC
+! should accept int literal as expression
+program p ;
+begin
+    a := 1;
+end .

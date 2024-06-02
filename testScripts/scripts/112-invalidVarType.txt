@@ -1,0 +1,6 @@
+! -s SYNTACTIC
+! should complain about invalid var type
+program p ;
+    var a : int ;
+begin
+end .

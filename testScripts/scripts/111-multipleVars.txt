@@ -1,0 +1,11 @@
+! -s SYNTACTIC
+! should accept multiple vars
+program p ;
+    var a : integer ;
+    var b : boolean ;
+    var c : boolean ;
+    var d : integer ;
+    var e : integer ;
+    var f : boolean ;
+begin
+end .

@@ -1,0 +1,6 @@
+! -s SYNTACTIC
+! should accept expression with multiple parenteses
+program p ;
+begin
+    a := ((true));
+end .

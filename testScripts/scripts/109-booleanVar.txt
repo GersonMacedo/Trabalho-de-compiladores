@@ -1,0 +1,6 @@
+! -s SYNTACTIC
+! should accept a boolean var
+program p ;
+    var a : boolean ;
+begin
+end .

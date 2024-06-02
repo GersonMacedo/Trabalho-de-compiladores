@@ -1,0 +1,8 @@
+! -s SYNTACTIC
+! should accept mix of all the operations and parenteses
+program p ;
+begin
+    a := (a + 3 * 5 - b / 8) < ((a * c * d / 4 - 0 + 0) * 48);
+    b := ((a < b) = (b > d)) and (a + c = b - d) or (a / 7 > b);
+    c := a + b + c - d < (3 * d / 4) + 5;
+end .

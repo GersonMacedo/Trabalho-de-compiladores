@@ -1,0 +1,6 @@
+! -s SYNTACTIC
+! should complain about missing factor
+program p ;
+begin
+    a := ;
+end .

@@ -1,0 +1,8 @@
+! -s SYNTACTIC
+! should accept expressions with opRel
+program p ;
+begin
+    a := 0 > 99;
+    a := 3 < 54;
+    a := 9 = 13;
+end .

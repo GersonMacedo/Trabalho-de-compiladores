@@ -1,0 +1,6 @@
+! -s SYNTACTIC
+! should complain about missing ; after declaration
+program p ;
+    var a : boolean
+begin
+end .

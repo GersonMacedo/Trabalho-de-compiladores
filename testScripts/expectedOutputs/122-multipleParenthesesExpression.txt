@@ -1,0 +1,3 @@
+
+Performing up to syntactic analysis at testScripts/scripts/122-multipleParenthesesExpression.txt
+No errors found

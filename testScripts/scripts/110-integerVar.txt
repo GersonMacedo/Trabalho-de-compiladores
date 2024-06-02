@@ -1,0 +1,6 @@
+! -s SYNTACTIC
+! should accept a integer var
+program p ;
+    var a : integer ;
+begin
+end .

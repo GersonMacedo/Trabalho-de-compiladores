@@ -1,0 +1,12 @@
+! -s SYNTACTIC
+! should accept expressions with opAd
+program p ;
+begin
+    a := c + 39;
+    a := 9 - a;
+    a := false or true;
+    a := 99 + a + 5 + 0;
+    a := 1001 - 4 - c - 10;
+    a := a + 49 - c + 0 - 3;
+    a := false or t or true or j;
+end .

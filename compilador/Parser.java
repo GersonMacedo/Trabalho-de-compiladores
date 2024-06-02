@@ -90,7 +90,7 @@ public class Parser {
         return d;
     }
 
-    // TODO? Maybe will change
+    // TODO: remove?
     // <tipo> ::= <tipo-simples> 
     private Kind parseTipo() {
         logger.debug("parseTipo()");
@@ -101,7 +101,7 @@ public class Parser {
     private Kind parseTipoSimples() {
         logger.debug("parseTipoSimples()");
         if(!currentToken.isSimpleType())
-            handleUnexpectedToken();
+            handleUnexpectedTokenWithMessage("'<tipo>'");
         
         return acceptIt().kind;
     }
@@ -239,15 +239,15 @@ public class Parser {
             return parseLiteral();
         }
 
-        if(currentToken.kind != Kind.LPAREN){
-            handleUnexpectedToken();
-            return null;
+        if(currentToken.kind == Kind.LPAREN){
+            acceptIt();
+            Expressao e = parseExpressao();
+            accept(Kind.RPAREN);
+            return e;
         }
 
-        acceptIt();
-        Expressao e = parseExpressao();
-        accept(Kind.RPAREN);
-        return e;
+        handleUnexpectedTokenWithMessage("'<fator>'");
+        return null;
     }
 
     // <literal> ::= <bool-lit> | <int-lit> 

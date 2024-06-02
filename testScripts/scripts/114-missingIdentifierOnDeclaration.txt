@@ -1,0 +1,6 @@
+! -s SYNTACTIC
+! should complain about missing identifier token
+program p ;
+    var : boolean ;
+begin
+end .
