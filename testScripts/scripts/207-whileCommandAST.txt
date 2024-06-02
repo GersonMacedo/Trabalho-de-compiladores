@@ -1,0 +1,20 @@
+! -s TREE
+! should print correctly the AST with the if else commands
+program p ;
+    var b1 : boolean;
+    var b2 : boolean;
+    var b3 : boolean;
+    var i1 : integer;
+    var i2 : integer;
+    var i3 : integer;
+    var i4 : integer;
+begin
+    while b1 do
+        i1 := i2
+    ;
+
+    while b2 do
+        while b3 do
+            i3 := i4
+    ;
+end .

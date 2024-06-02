@@ -1,0 +1,64 @@
+
+Performing up to syntactic analysis and printing the AST tree at testScripts/scripts/208-mixedCommandsAST.txt
+No errors found
+
+Programa 'p'
+Declarações:
+    'b1': BOOLEAN
+    'b2': BOOLEAN
+    'b3': BOOLEAN
+    'i1': INTEGER
+    'i2': INTEGER
+    'i3': INTEGER
+    'i4': INTEGER
+Corpo:
+    if
+        'b1'
+    then
+        while
+            'b2'
+        do
+            'i1' :=
+                'i2'
+            'i3' :=
+                'i4'
+            if
+                'b2'
+            then
+                while
+                    'b1'
+                do
+                    'b2' :=
+                        false
+            else
+                while
+                    'b2'
+                do
+                    'b1' :=
+                        true
+    else
+        while
+            'b3'
+        do
+            'i2' :=
+                'i1'
+            'i4' :=
+                'i3'
+            if
+                'b1'
+            then
+                while
+                    'b2'
+                do
+                    'b1' :=
+                        true
+            else
+                while
+                    'b1'
+                do
+                    'b2' :=
+                        false
+    'i3' :=
+        4
+    'i4' :=
+        3

@@ -1,0 +1,27 @@
+
+Performing up to syntactic analysis and printing the AST tree at testScripts/scripts/207-whileCommandAST.txt
+No errors found
+
+Programa 'p'
+Declarações:
+    'b1': BOOLEAN
+    'b2': BOOLEAN
+    'b3': BOOLEAN
+    'i1': INTEGER
+    'i2': INTEGER
+    'i3': INTEGER
+    'i4': INTEGER
+Corpo:
+    while
+        'b1'
+    do
+        'i1' :=
+            'i2'
+    while
+        'b2'
+    do
+        while
+            'b3'
+        do
+            'i3' :=
+                'i4'
