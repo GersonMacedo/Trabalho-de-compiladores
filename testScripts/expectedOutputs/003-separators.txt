@@ -1,5 +1,5 @@
 
-Performing only lexical analysis at testScripts/scripts/003-shouldSkipSeparators.txt
+Performing only lexical analysis at testScripts/scripts/003-separators.txt
 Token::Token(+, 3, 1)
 Token::Token(+, 3, 8)
 Token::Token(+, 3, 33)

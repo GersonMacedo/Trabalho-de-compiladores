@@ -1,0 +1,3 @@
+
+Performing only lexical analysis at testScripts/scripts/004-invalidChar.txt
+Scanner::Invalid char ''' at line 4 column 1

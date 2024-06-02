@@ -1,5 +1,5 @@
 
-Performing only lexical analysis at testScripts/scripts/004-invalidChars.txt
+Performing only lexical analysis at testScripts/scripts/005-allInvalidChars.txt
 Scanner::Invalid char ''' at line 3 column 1
 Scanner::Invalid char '"' at line 3 column 2
 Scanner::Invalid char '@' at line 3 column 3

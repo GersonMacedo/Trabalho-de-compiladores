@@ -1,5 +1,5 @@
 
-Performing only lexical analysis at testScripts/scripts/005-identifiers.txt
+Performing only lexical analysis at testScripts/scripts/006-identifiersAndNumbers.txt
 Token::Token(var, 3, 1)
 Token::Token(<identifier>, "abcdefghijklmnopqrstuvwxyz", 3, 5)
 Token::Token(<identifier>, "var3", 3, 32)

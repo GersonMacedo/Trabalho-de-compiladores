@@ -1,0 +1,4 @@
+! -s LEXICAL
+! Should stop at the first invalid char outside the comments
+!'"@#$%&{}[]{}|\?
+'"@#$%&{}[]{}|\?
