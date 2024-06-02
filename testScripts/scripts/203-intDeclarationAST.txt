@@ -1,0 +1,6 @@
+! -s TREE
+! should print correctly the AST with the int var
+program p ;
+    var b : integer;
+begin
+end .

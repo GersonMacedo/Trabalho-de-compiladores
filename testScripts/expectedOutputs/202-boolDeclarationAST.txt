@@ -1,0 +1,8 @@
+
+Performing up to syntactic analysis and printing the AST tree at testScripts/scripts/202-boolDeclarationAST.txt
+No errors found
+
+Programa 'p1'
+Declarações:
+    'a': BOOLEAN
+Corpo:

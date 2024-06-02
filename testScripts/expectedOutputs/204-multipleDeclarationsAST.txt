@@ -1,0 +1,13 @@
+
+Performing up to syntactic analysis and printing the AST tree at testScripts/scripts/204-multipleDeclarationsAST.txt
+No errors found
+
+Programa 'p'
+Declarações:
+    'a': INTEGER
+    'b': BOOLEAN
+    'c': BOOLEAN
+    'd': INTEGER
+    'e': INTEGER
+    'f': BOOLEAN
+Corpo:

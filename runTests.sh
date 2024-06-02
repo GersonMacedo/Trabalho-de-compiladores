@@ -32,6 +32,9 @@ for script in $testScripts; do
         ((passed++))
     else
         echo -e "${RED}Test failed${NC}\n"
+        if [ "$1" != "-a" ]; then
+            exit 1
+        fi
         ((failed++))
     fi
 done
@@ -41,4 +44,5 @@ if [ $passed -ne 0 ]; then
 fi
 if [ $failed -ne 0 ]; then
     echo -e "${RED}$failed failed tests${NC}"
+    exit 1
 fi

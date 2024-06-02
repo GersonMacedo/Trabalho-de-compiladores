@@ -18,6 +18,7 @@ public class Printer implements Visitor {
     public void print(Programa p){
         logger.debug("Printing AST");
         logger.setDisplayClass(false);
+        logger.log("");
         p.visit(this, 0);
         logger.setDisplayClass(true);
     }
@@ -30,7 +31,7 @@ public class Printer implements Visitor {
     @Override
     public void visitComandoAtribuicao(ComandoAtribuicao c, Object... args) {
         int t = (int) args[0];
-        logger.log(t, "%s :=\n", c.i.n);
+        logger.log(t, "'%s' :=\n", c.i.n);
         c.e.visit(this, t + 1);
     }
 
@@ -80,8 +81,7 @@ public class Printer implements Visitor {
 
     @Override
     public void visitExpressaoId(ExpressaoId e, Object... args) {
-        int t = (int) args[0];
-        logger.log(t, "$%s\n", e.i.n);
+        e.i.visit(this, args);
     }
 
     @Override
@@ -100,11 +100,14 @@ public class Printer implements Visitor {
 
     @Override
     public void visitIdentificador(Identificador i, Object... args) {
+        int t = (int) args[0];
+        logger.log(t, "'%s'\n", i.n);
     }
 
     @Override
     public void visitPrograma(Programa p, Object... args) {
         int t = (int) args[0];
+        logger.log(t, "Programa '%s'\n", p.i);
         logger.log(t, "Declarações:");
         if(p.d != null)
             p.d.visit(this, t + 1);;

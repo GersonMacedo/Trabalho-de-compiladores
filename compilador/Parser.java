@@ -35,24 +35,16 @@ public class Parser {
         errors++;
     }
 
-    // <programa> ::= program <id> ; <corpo> .
+    // <programa> ::= program <id> ; <declarações> <comando-composto> .
     private Programa parsePrograma() {
         logger.debug("parsePrograma()");
-        Programa p;
-        accept(Kind.PROGRAM);
-        accept(Kind.IDENTIFIER);
-        accept(Kind.SEMICOLON);
-        p = parseCorpo();
-        accept(Kind.DOT);
-        return p;
-    }
-
-    // <corpo> ::= <declarações> <comando-composto>
-    private Programa parseCorpo() {
-        logger.debug("parseCorpo()");
         Programa p = new Programa();
+        accept(Kind.PROGRAM);
+        p.i = accept(Kind.IDENTIFIER).spelling;
+        accept(Kind.SEMICOLON);
         p.d = parseDeclaracoes();
         p.c = parseComandoComposto();
+        accept(Kind.DOT);
         return p;
     }
 

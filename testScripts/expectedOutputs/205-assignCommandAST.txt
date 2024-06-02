@@ -1,0 +1,23 @@
+
+Performing up to syntactic analysis and printing the AST tree at testScripts/scripts/205-assignCommandAST.txt
+No errors found
+
+Programa 'p'
+Declarações:
+    'b1': BOOLEAN
+    'b2': BOOLEAN
+    'i1': INTEGER
+    'i2': INTEGER
+Corpo:
+    'b1' :=
+        false
+    'b2' :=
+        true
+    'b1' :=
+        'b2'
+    'i1' :=
+        1
+    'i2' :=
+        3
+    'i2' :=
+        'i1'

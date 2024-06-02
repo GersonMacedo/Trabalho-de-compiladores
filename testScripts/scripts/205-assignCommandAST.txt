@@ -1,0 +1,16 @@
+! -s TREE
+! should print correctly the AST with assign command
+program p ;
+    var b1 : boolean;
+    var b2 : boolean;
+    var i1 : integer;
+    var i2 : integer;
+begin
+    b1 := false;
+    b2 := true;
+    b1 := b2;
+
+    i1 := 1;
+    i2 := 3;
+    i2 := i1;
+end .

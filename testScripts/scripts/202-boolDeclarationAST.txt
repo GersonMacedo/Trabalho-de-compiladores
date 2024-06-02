@@ -1,0 +1,6 @@
+! -s TREE
+! should print correctly the AST with the bool var
+program p1 ;
+    var a : boolean;
+begin
+end .

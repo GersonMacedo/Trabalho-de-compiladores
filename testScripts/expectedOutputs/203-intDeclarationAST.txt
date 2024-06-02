@@ -1,0 +1,8 @@
+
+Performing up to syntactic analysis and printing the AST tree at testScripts/scripts/203-intDeclarationAST.txt
+No errors found
+
+Programa 'p'
+Declarações:
+    'b': INTEGER
+Corpo:

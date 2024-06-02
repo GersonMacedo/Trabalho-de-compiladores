@@ -3,6 +3,7 @@ package compilador.ast;
 import compilador.Visitor;
 
 public class Programa extends AST {
+    public String i;
     public Declaracao d;
     public Comando c;
 

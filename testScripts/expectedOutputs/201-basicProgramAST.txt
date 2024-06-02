@@ -1,0 +1,7 @@
+
+Performing up to syntactic analysis and printing the AST tree at testScripts/scripts/201-basicProgramAST.txt
+No errors found
+
+Programa 'p'
+Declarações:
+Corpo:
