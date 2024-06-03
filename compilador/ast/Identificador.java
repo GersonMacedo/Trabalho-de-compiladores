@@ -8,6 +8,7 @@ public class Identificador extends AST {
 
     public Identificador(Token t){
         this.n = t.spelling;
+        setPosition(t);
     }
 
     public void visit(Visitor v, Object... args){

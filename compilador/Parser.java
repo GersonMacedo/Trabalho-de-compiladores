@@ -39,6 +39,7 @@ public class Parser {
     private Programa parsePrograma() {
         logger.debug("parsePrograma()");
         Programa p = new Programa();
+        p.setPosition(currentToken);
         accept(Kind.PROGRAM);
         p.i = accept(Kind.IDENTIFIER).spelling;
         accept(Kind.SEMICOLON);
@@ -76,6 +77,7 @@ public class Parser {
         logger.debug("parseDeclaracaoDeVariavel()");
         Declaracao d = new Declaracao();
         accept(Kind.VAR);
+        d.setPosition(currentToken);
         d.i = new Identificador(accept(Kind.IDENTIFIER));
         accept(Kind.COLON);
         d.t = parseTipo();
@@ -156,6 +158,7 @@ public class Parser {
     private Comando parseAtribuicao() {
         logger.debug("parseAtribuicao()");
         ComandoAtribuicao c = new ComandoAtribuicao();
+        c.setPosition(currentToken);
         c.i = parseVariavel();
         accept(Kind.BECOMES);
         c.e = parseExpressao();
@@ -174,7 +177,7 @@ public class Parser {
         Expressao e1 = parseExpressaoSimples();
         if(!currentToken.isOpRel())
             return e1;
-        Kind op = acceptIt().kind;
+        Token op = acceptIt();
         Expressao e2 = parseExpressaoSimples();
         return new ExpressaoSimples(e1, op, e2);
     }
@@ -185,7 +188,7 @@ public class Parser {
         ExpressaoSimples pe = null;
         Expressao e1 = parseTermo();
         while(currentToken.isOpAd()) {
-            Kind op = acceptIt().kind;
+            Token op = acceptIt();
             Expressao e2 = parseTermo();
             if(pe == null){
                 pe = new ExpressaoSimples(e1, op, e2);
@@ -203,7 +206,7 @@ public class Parser {
         ExpressaoSimples pe = null;
         Expressao e1 = parseFator();
         while(currentToken.isOpMul()) {
-            Kind op = acceptIt().kind;
+            Token op = acceptIt();
             Expressao e2 = parseFator();
             if(pe == null){
                 pe = new ExpressaoSimples(e1, op, e2);

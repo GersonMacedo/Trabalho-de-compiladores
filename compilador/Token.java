@@ -105,15 +105,21 @@ public class Token {
     };
 
     Expressao toExpressao(){
+        Expressao e;
         switch (kind) {
         case TRUE:
-            return new ExpressaoBool(true);
+            e = new ExpressaoBool(true);
+            break;
         case FALSE:
-            return new ExpressaoBool(false);
+            e = new ExpressaoBool(false);
+            break;
         case INTLITERAL:
-            return new ExpressaoInt(Integer.parseInt(spelling));
+            e = new ExpressaoInt(Integer.parseInt(spelling));
+            break;
         default:
             return null;
         }
+        e.setPosition(this);
+        return e;
     }
 }
