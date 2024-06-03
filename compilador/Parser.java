@@ -258,6 +258,7 @@ public class Parser {
         logger.debug("parseCondicional()");
         ComandoCondicional c = new ComandoCondicional();
         accept(Kind.IF);
+        c.setPosition(currentToken);
         c.e = parseExpressao();
         accept(Kind.THEN);
         c.v = parseComando(false);
@@ -274,6 +275,7 @@ public class Parser {
         logger.debug("parseIterativo()");
         ComandoIterativo c = new ComandoIterativo();
         accept(Kind.WHILE);
+        c.setPosition(currentToken);
         c.e = parseExpressao();
         accept(Kind.DO);
         c.c = parseComando(false);

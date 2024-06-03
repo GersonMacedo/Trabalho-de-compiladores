@@ -19,7 +19,7 @@ public class ContexAnalyser implements Visitor {
 
     @Override
     public Object visitComandoAtribuicao(ComandoAtribuicao c, Object... args) {
-        logger.log("visitComandoAtribuicao()");
+        logger.debug("visitComandoAtribuicao()");
         Declaracao d = it.get(c.i.n);
         if(d == null){
             logger.error("var '%s' at line %d column %d was never declared\n", c.i.n, c.line, c.column);
@@ -27,7 +27,7 @@ public class ContexAnalyser implements Visitor {
         }
         Kind t = (Kind) c.e.visit(this);
         if(t != d.t){
-            logger.error("var '%s' at line %d column %d expects a type %s, but expression has a type %s",
+            logger.error("var '%s' at line %d column %d expects a type %s, but expression has a type %s\n",
                 c.i.n, c.line, c.column, d.t.toString(), t.toString());
             System.exit(4);
         }
@@ -36,19 +36,38 @@ public class ContexAnalyser implements Visitor {
 
     @Override
     public Object visitComandoCondicional(ComandoCondicional c, Object... args) {
-        //TODO
+        logger.debug("visitComandoCondicional()");
+        Kind t = (Kind) c.e.visit(this);
+        if(t != Kind.BOOLEAN){
+            logger.error("if requires a %s expression at line %d column %d, but expression has a type %s\n",
+                Kind.BOOLEAN.toString(),c.line, c.column, t.toString());
+            System.exit(4);  
+        }
+        c.v.visit(this);
+        if(c.f != null)
+            c.f.visit(this);
         return null;
     }
 
     @Override
     public Object visitComandoIterativo(ComandoIterativo c, Object... args) {
-        //TODO
+        logger.debug("visitComandoIterativo()");
+        Kind t = (Kind) c.e.visit(this);
+        if(t != Kind.BOOLEAN){
+            logger.error("while requires a %s expression at line %d column %d, but expression has a type %s\n",
+                Kind.BOOLEAN.toString(),c.line, c.column, t.toString());
+            System.exit(4);  
+        }
+        c.c.visit(this);
         return null;
     }
 
     @Override
     public Object visitComandoLista(ComandoLista c, Object... args) {
-        //TODO
+        logger.debug("visitComandoLista()");
+        c.c1.visit(this);
+        if(c.c2 != null)
+            c.c2.visit(this);
         return null;
     }
 
