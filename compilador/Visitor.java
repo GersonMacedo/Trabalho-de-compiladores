@@ -1,16 +1,6 @@
 package compilador;
 
-import compilador.ast.ComandoAtribuicao;
-import compilador.ast.ComandoCondicional;
-import compilador.ast.ComandoIterativo;
-import compilador.ast.ComandoLista;
-import compilador.ast.Declaracao;
-import compilador.ast.ExpressaoBool;
-import compilador.ast.ExpressaoId;
-import compilador.ast.ExpressaoInt;
-import compilador.ast.ExpressaoSimples;
-import compilador.ast.Identificador;
-import compilador.ast.Programa;
+import compilador.ast.*;
 
 public interface Visitor {
     public void visitComandoAtribuicao(ComandoAtribuicao c, Object... args);

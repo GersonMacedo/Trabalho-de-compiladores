@@ -43,5 +43,7 @@ public class Main {
 
         if(ArgsParser.step == ArgsParser.TREE)
             return;
+        
+        ContexAnalyser ca = new ContexAnalyser();
     }
 }
