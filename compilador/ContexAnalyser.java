@@ -20,11 +20,7 @@ public class ContexAnalyser implements Visitor {
     @Override
     public Object visitComandoAtribuicao(ComandoAtribuicao c, Object... args) {
         logger.debug("visitComandoAtribuicao()");
-        Declaracao d = it.get(c.i.n);
-        if(d == null){
-            logger.error("var '%s' at line %d column %d was never declared\n", c.i.n, c.line, c.column);
-            System.exit(4);
-        }
+        Declaracao d = (Declaracao) c.i.visit(this);
         Kind t = (Kind) c.e.visit(this);
         if(t != d.t){
             logger.error("var '%s' at line %d column %d expects a type %s, but expression has a type %s\n",
@@ -89,32 +85,67 @@ public class ContexAnalyser implements Visitor {
 
     @Override
     public Object visitExpressaoBool(ExpressaoBool e, Object... args) {
-        //TODO
-        return null;
+        logger.debug("visitExpressaoBool()\n");
+        return Kind.BOOLEAN;
     }
 
     @Override
     public Object visitExpressaoId(ExpressaoId e, Object... args) {
-        //TODO
-        return null;
+        logger.debug("visitExpressaoId()");
+        Declaracao d = (Declaracao) e.i.visit(this);
+        return d.t;
     }
 
     @Override
     public Object visitExpressaoInt(ExpressaoInt e, Object... args) {
-        //TODO
-        return null;
+        logger.debug("visitExpressaoInt()");
+        return Kind.INTEGER;
     }
 
     @Override
     public Object visitExpressaoSimples(ExpressaoSimples e, Object... args) {
-        //TODO
+        logger.debug("visitExpressaoSimples()");
+        Kind t1 = (Kind) e.e1.visit(this);
+        Kind t2 = (Kind) e.e2.visit(this);
+        switch (e.op) {
+            case EQUAL:
+                if(t1 != t2){
+                    logger.error("%s operation at line %d column %d expects two equal types, but left has %s type and right has %s type\n",
+                        e.op.toString(), e.line, e.column, t1.toString(), t2.toString());
+                    System.exit(4);
+                }
+                return t1;
+            case PLUS:
+            case MINUS:
+            case MULT:
+                if(t1 != Kind.INTEGER || t2 != Kind.INTEGER){
+                    logger.error("%s operation at line %d column %d expects two %s types, but left has %s type and right has %s type\n",
+                    e.op.toString(), e.line, e.column, Kind.INTEGER.toString(), t1.toString(), t2.toString());
+                }
+                return Kind.INTEGER;
+            case LESS:
+            case GREATER:
+                if(t1 != Kind.INTEGER || t2 != Kind.INTEGER){
+                    logger.error("%s operation at line %d column %d expects two %s types, but left has %s type and right has %s type\n",
+                    e.op.toString(), e.line, e.column, Kind.BOOLEAN.toString(), t1.toString(), t2.toString());
+                }
+                return Kind.BOOLEAN;
+            default:
+                logger.error("invalid operation %s at line %d column %d\n", e.op.toString(), e.line, e.column);
+                System.exit(4);
+        }
         return null;
     }
 
     @Override
     public Object visitIdentificador(Identificador i, Object... args) {
-        //TODO
-        return null;
+        logger.debug("visitIdentificador()");
+        Declaracao d = it.get(i.n);
+        if(d == null){
+            logger.error("var '%s' at line %d column %d was never declared\n", i.n, i.line, i.column);
+            System.exit(4);
+        }
+        return d;
     }
 
     @Override
