@@ -10,7 +10,7 @@ public class ComandoIterativo extends Comando {
         c = null;
     }
 
-    public void visit(Visitor v, Object... args){
-        v.visitComandoIterativo(this, args);
+    public Object visit(Visitor v, Object... args){
+        return v.visitComandoIterativo(this, args);
     }
 }

@@ -6,7 +6,7 @@ public class ComandoAtribuicao extends Comando {
     public Identificador i;
     public Expressao e;
 
-    public void visit(Visitor v, Object... args){
-        v.visitComandoAtribuicao(this, args);
+    public Object visit(Visitor v, Object... args){
+        return v.visitComandoAtribuicao(this, args);
     }
 }

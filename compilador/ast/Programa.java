@@ -7,7 +7,7 @@ public class Programa extends AST {
     public Declaracao d;
     public Comando c;
 
-    public void visit(Visitor v, Object... args){
-        v.visitPrograma(this, args);
+    public Object visit(Visitor v, Object... args){
+        return v.visitPrograma(this, args);
     }
 }

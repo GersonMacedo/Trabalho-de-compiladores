@@ -19,7 +19,18 @@ public class ContexAnalyser implements Visitor {
 
     @Override
     public Object visitComandoAtribuicao(ComandoAtribuicao c, Object... args) {
-        //TODO
+        logger.log("visitComandoAtribuicao()");
+        Declaracao d = it.get(c.i.n);
+        if(d == null){
+            logger.error("var '%s' at line %d column %d was never declared\n", c.i.n, c.line, c.column);
+            System.exit(4);
+        }
+        Kind t = (Kind) c.e.visit(this);
+        if(t != d.t){
+            logger.error("var '%s' at line %d column %d expects a type %s, but expression has a type %s",
+                c.i.n, c.line, c.column, d.t.toString(), t.toString());
+            System.exit(4);
+        }
         return null;
     }
 

@@ -15,7 +15,7 @@ public class ExpressaoSimples extends Expressao{
         setPosition(op);
     }
 
-    public void visit(Visitor v, Object... args){
-        v.visitExpressaoSimples(this, args);
+    public Object visit(Visitor v, Object... args){
+        return v.visitExpressaoSimples(this, args);
     }
 }

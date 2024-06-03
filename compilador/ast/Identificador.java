@@ -11,7 +11,7 @@ public class Identificador extends AST {
         setPosition(t);
     }
 
-    public void visit(Visitor v, Object... args){
-        v.visitIdentificador(this, args);
+    public Object visit(Visitor v, Object... args){
+        return v.visitIdentificador(this, args);
     }
 }

@@ -11,5 +11,5 @@ public abstract class AST {
         column = t.column;
     }
 
-    public abstract void visit(Visitor v, Object... args);
+    public abstract Object visit(Visitor v, Object... args);
 }

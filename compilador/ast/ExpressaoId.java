@@ -11,7 +11,7 @@ public class ExpressaoId extends Expressao{
         this.column = i.column;
     }
 
-    public void visit(Visitor v, Object... args){
-        v.visitExpressaoId(this, args);
+    public Object visit(Visitor v, Object... args){
+        return v.visitExpressaoId(this, args);
     }
 }

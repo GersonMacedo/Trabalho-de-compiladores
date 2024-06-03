@@ -14,7 +14,7 @@ public class ComandoLista extends Comando {
         this.c2 = c2;
     }
 
-    public void visit(Visitor v, Object... args){
-        v.visitComandoLista(this, args);
+    public Object visit(Visitor v, Object... args){
+        return v.visitComandoLista(this, args);
     }
 }
