@@ -19,83 +19,93 @@ public class Printer implements Visitor {
     }
 
     @Override
-    public void visitComandoAtribuicao(ComandoAtribuicao c, Object... args) {
+    public Object visitComandoAtribuicao(ComandoAtribuicao c, Object... args) {
         int t = (int) args[0];
         logger.log(t, "'%s' :=\n", c.i.n);
         c.e.visit(this, t + 1);
+        return null;
     }
 
     @Override
-    public void visitComandoCondicional(ComandoCondicional c, Object... args) {
+    public Object visitComandoCondicional(ComandoCondicional c, Object... args) {
         int t = (int) args[0];
         logger.log(t, "if");
         c.e.visit(this, t + 1);
         logger.log(t, "then");
         c.v.visit(this, t + 1);
         if (c.f == null)
-            return;
+            return null;
         logger.log(t, "else");
         c.f.visit(this, t + 1);
+        return null;
     }
 
     @Override
-    public void visitComandoIterativo(ComandoIterativo c, Object... args) {
+    public Object visitComandoIterativo(ComandoIterativo c, Object... args) {
         int t = (int) args[0];
         logger.log(t, "while");
         c.e.visit(this, t + 1);
         logger.log(t, "do");
         c.c.visit(this, t + 1);
+        return null;
     }
 
     @Override
-    public void visitComandoLista(ComandoLista c, Object... args) {
+    public Object visitComandoLista(ComandoLista c, Object... args) {
         int t = (int) args[0];
         c.c1.visit(this, t);
         if(c.c2 != null)
             c.c2.visit(this, t);
+        return null;
     }
 
     @Override
-    public void visitDeclaracao(Declaracao d, Object... args) {
+    public Object visitDeclaracao(Declaracao d, Object... args) {
         int t = (int) args[0];
         logger.log(t, "'%s': %s\n", d.i.n, d.t.toString());
         if(d.d != null)
             d.d.visit(this, t);
+        return null;
     }
 
     @Override
-    public void visitExpressaoBool(ExpressaoBool e, Object... args) {
+    public Object visitExpressaoBool(ExpressaoBool e, Object... args) {
         int t = (int) args[0];
         logger.log(t, "%s\n", (e.b ? "true": "false"));
+        return null;
     }
 
     @Override
-    public void visitExpressaoId(ExpressaoId e, Object... args) {
+    public Object visitExpressaoId(ExpressaoId e, Object... args) {
         e.i.visit(this, args);
+        return null;
     }
 
     @Override
-    public void visitExpressaoInt(ExpressaoInt e, Object... args) {
+    public Object visitExpressaoInt(ExpressaoInt e, Object... args) {
         int t = (int) args[0];
         logger.log(t, "%d\n", e.i);
+        return null;
     }
 
     @Override
-    public void visitExpressaoSimples(ExpressaoSimples e, Object... args) {
+    public Object visitExpressaoSimples(ExpressaoSimples e, Object... args) {
         int t = (int) args[0];
         logger.log(t, e.op.toString());
         e.e1.visit(this, t + 1);
         e.e2.visit(this, t + 1);
+        return null;
     }
 
     @Override
-    public void visitIdentificador(Identificador i, Object... args) {
+    public Object visitIdentificador(Identificador i, Object... args) {
         int t = (int) args[0];
         logger.log(t, "'%s'\n", i.n);
+        return null;
     }
 
     @Override
-    public void visitPrograma(Programa p, Object... args) {
+    public Object visitPrograma(Programa p, Object... args) {
         int t = (int) args[0];
         logger.log(t, "Programa '%s'\n", p.i);
         logger.log(t, "Declarações:");
@@ -104,5 +114,6 @@ public class Printer implements Visitor {
         logger.log(t, "Corpo:");
         if(p.c != null)
             p.c.visit(this, t + 1);
+        return null;
     }
 }

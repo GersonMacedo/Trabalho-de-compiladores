@@ -45,5 +45,9 @@ public class Main {
             return;
         
         ContexAnalyser ca = new ContexAnalyser();
+        ca.analyse(p);
+
+        if(ArgsParser.step == ArgsParser.CONTENT)
+            return;
     }
 }

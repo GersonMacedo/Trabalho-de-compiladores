@@ -18,57 +18,73 @@ public class ContexAnalyser implements Visitor {
     }
 
     @Override
-    public void visitComandoAtribuicao(ComandoAtribuicao c, Object... args) {
+    public Object visitComandoAtribuicao(ComandoAtribuicao c, Object... args) {
         //TODO
+        return null;
     }
 
     @Override
-    public void visitComandoCondicional(ComandoCondicional c, Object... args) {
+    public Object visitComandoCondicional(ComandoCondicional c, Object... args) {
         //TODO
+        return null;
     }
 
     @Override
-    public void visitComandoIterativo(ComandoIterativo c, Object... args) {
+    public Object visitComandoIterativo(ComandoIterativo c, Object... args) {
         //TODO
+        return null;
     }
 
     @Override
-    public void visitComandoLista(ComandoLista c, Object... args) {
+    public Object visitComandoLista(ComandoLista c, Object... args) {
         //TODO
+        return null;
     }
 
     @Override
-    public void visitDeclaracao(Declaracao d, Object... args) {
-        //TODO
+    public Object visitDeclaracao(Declaracao d, Object... args) {
+        logger.debug("visitDeclaracao()");
+
+        return null;
     }
 
     @Override
-    public void visitExpressaoBool(ExpressaoBool e, Object... args) {
+    public Object visitExpressaoBool(ExpressaoBool e, Object... args) {
         //TODO
+        return null;
     }
 
     @Override
-    public void visitExpressaoId(ExpressaoId e, Object... args) {
+    public Object visitExpressaoId(ExpressaoId e, Object... args) {
         //TODO
+        return null;
     }
 
     @Override
-    public void visitExpressaoInt(ExpressaoInt e, Object... args) {
+    public Object visitExpressaoInt(ExpressaoInt e, Object... args) {
         //TODO
+        return null;
     }
 
     @Override
-    public void visitExpressaoSimples(ExpressaoSimples e, Object... args) {
+    public Object visitExpressaoSimples(ExpressaoSimples e, Object... args) {
         //TODO
+        return null;
     }
 
     @Override
-    public void visitIdentificador(Identificador i, Object... args) {
+    public Object visitIdentificador(Identificador i, Object... args) {
         //TODO
+        return null;
     }
 
     @Override
-    public void visitPrograma(Programa p, Object... args) {
-        //TODO
+    public Object visitPrograma(Programa p, Object... args) {
+        logger.debug("visitPrograma()");
+        if(p.d != null)
+            p.d.visit(this);
+        if(p.c != null)
+            p.c.visit(this);
+        return null;
     }
 }
