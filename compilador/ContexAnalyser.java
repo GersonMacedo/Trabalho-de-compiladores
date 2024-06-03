@@ -44,7 +44,16 @@ public class ContexAnalyser implements Visitor {
     @Override
     public Object visitDeclaracao(Declaracao d, Object... args) {
         logger.debug("visitDeclaracao()");
+        Declaracao pd = it.add(d);
+        if(pd != null){
+            logger.error("Var '%s' at line %d column %d was previously declared at line %d column %d\n",
+                d.i.n, d.line, d.column, pd.line, pd.column);
+            System.exit(4);
+        }
 
+        if(d.d != null){
+            d.d.visit(this);
+        }
         return null;
     }
 

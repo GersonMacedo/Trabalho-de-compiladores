@@ -1,0 +1,4 @@
+
+Performing up to content analysis at testScripts/scripts/303-repeatedDeclaration.txt
+No errors found
+ContexAnalyser::Var 'a' at line 5 column 9 was previously declared at line 4 column 9

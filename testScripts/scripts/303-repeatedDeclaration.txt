@@ -1,0 +1,7 @@
+! -s CONTENT --disable-logs printer
+! should complain about repeated names
+program p ;
+    var a : integer;
+    var a : boolean;
+begin
+end .

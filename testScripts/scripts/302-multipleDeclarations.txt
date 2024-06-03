@@ -1,0 +1,13 @@
+! -s CONTENT --disable-logs printer
+! should accept vars with different names
+program p ;
+    var a : integer;
+    var b : integer;
+    var c : boolean;
+    var d : boolean;
+    var e : integer;
+    var f : boolean;
+    var a1 : integer;
+    var aa : integer;
+begin
+end .

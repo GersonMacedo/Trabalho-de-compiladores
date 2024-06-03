@@ -4,7 +4,7 @@ import compilador.Token;
 import compilador.Visitor;
 
 public abstract class AST {
-    int line, column;
+    public int line, column;
 
     public void setPosition(Token t){
         line = t.line;

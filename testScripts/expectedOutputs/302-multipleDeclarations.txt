@@ -1,0 +1,3 @@
+
+Performing up to content analysis at testScripts/scripts/302-multipleDeclarations.txt
+No errors found

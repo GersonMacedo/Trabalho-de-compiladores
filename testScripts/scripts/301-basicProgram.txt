@@ -1,0 +1,5 @@
+! -s CONTENT --disable-logs printer
+! should accept basic programs
+program p ;
+begin
+end .
