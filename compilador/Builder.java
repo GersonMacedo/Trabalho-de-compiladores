@@ -4,7 +4,7 @@ import compilador.ast.*;
 
 public class Builder implements Visitor {
     private Logger logger;
-    private int tagCount;
+    private int labelCount;
     IdentificationTable it;
     public int errors;
 
@@ -14,15 +14,12 @@ public class Builder implements Visitor {
         it = new IdentificationTable();
     }
 
-    public String getTag(){
-        tagCount++;
-        return Integer.toString(tagCount);
-        
+    public String genarateLabel(){
+        labelCount++;
+        return String.format("L%03d", labelCount);
     }
 
     public void build(Programa p){
-        logger.debug("Building the program");
-        logger.setDisplayClass(false);
         p.visit(this);
     }
 
@@ -36,19 +33,18 @@ public class Builder implements Visitor {
 
     @Override
     public Object visitComandoCondicional(ComandoCondicional c, Object... args) {
-        logger.debug("visitComandoCondicional()");
-        String tagG= getTag();
+        String labelG= genarateLabel();
         c.e.visit(this);
-        logger.log("JUMPIF(0) %s\n", tagG);
+        logger.log("JUMPIF(0) %s\n", labelG);
         c.v.visit(this);
         if(c.f != null){
-            String tagH= getTag();
-            logger.log("JUMP %s\n", tagH);
-            logger.log("%s:",tagG);
+            String labelH= genarateLabel();
+            logger.logCommand("JUMP %s\n", labelH);
+            logger.setNextLabel(labelG);
             c.f.visit(this);
-            logger.log("%s:",tagH);
+            logger.setNextLabel(labelH);
         }else{
-            logger.log("%s:",tagG);
+            logger.setNextLabel(labelG);
         }
         return null;
     }
@@ -56,14 +52,14 @@ public class Builder implements Visitor {
     @Override
     public Object visitComandoIterativo(ComandoIterativo c, Object... args) {
         logger.debug("visitComandoIterativo()");
-        String tagG= getTag();
-        String tagH= getTag();
-        logger.log("JUMP %s\n", tagH);
-        logger.log("%s:",tagG);
+        String labelG= genarateLabel();
+        String labelH= genarateLabel();
+        logger.logCommand("JUMP %s\n", labelH);
+        logger.setNextLabel(labelG);
         c.c.visit(this);
-        logger.log("%s:",tagH);
+        logger.setNextLabel(labelH);
         c.e.visit(this, args);
-        logger.log("JUMPIF(1) %s\n", tagG);
+        logger.logCommand("JUMPIF(1) %s\n", labelG);
         return null;
     }
 
@@ -85,7 +81,7 @@ public class Builder implements Visitor {
     @Override
     public Object visitExpressaoBool(ExpressaoBool e, Object... args) {
         logger.debug("visitExpressaoBool()\n");
-        logger.log("LOADL %s\n", e.b?"TRUE":"FALSE");
+        logger.logCommand("LOADL %s\n", e.b?"TRUE":"FALSE");
         return null;
     }
 
@@ -99,7 +95,7 @@ public class Builder implements Visitor {
     @Override
     public Object visitExpressaoInt(ExpressaoInt e, Object... args) {
         logger.debug("visitExpressaoInt()");
-        logger.log("LOADL %d\n", e.i);
+        logger.logCommand("LOADL %d\n", e.i);
         return null;
     }
 
@@ -108,7 +104,7 @@ public class Builder implements Visitor {
         logger.debug("visitExpressaoSimples()");
         e.e1.visit(this);
         e.e2.visit(this);
-        logger.log("CALL %s\n", e.op.toString());
+        logger.logCommand("CALL %s\n", e.op.toString().toLowerCase());
         return null;
     }
 
@@ -117,9 +113,9 @@ public class Builder implements Visitor {
         logger.debug("visitIdentificador()");
         String t=(String) args[0];
         if(t.equals("assign")){
-            logger.log("STORE %s\n", i.n);
+            logger.logCommand("STORE %s\n", i.n);
         }else{
-            logger.log("LOAD %s\n", i.n);
+            logger.logCommand("LOAD %s\n", i.n);
         }
         return null;
     }
@@ -127,10 +123,9 @@ public class Builder implements Visitor {
     @Override
     public Object visitPrograma(Programa p, Object... args) {
         logger.debug("visitPrograma()");
-        if(p.d != null)
-            p.d.visit(this);
         if(p.c != null)
             p.c.visit(this);
+        logger.logCommand("HALT\n");
         return null;
     }
 }

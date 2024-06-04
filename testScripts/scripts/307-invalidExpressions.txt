@@ -13,7 +13,6 @@ begin
     b1 := (1);
 
     i1 := true + 1;
-
     i1 := 1 + true;
     i1 := false + true;
 

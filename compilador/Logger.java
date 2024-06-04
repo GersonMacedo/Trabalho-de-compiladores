@@ -4,6 +4,8 @@ public class Logger {
     private String className;
     private boolean displayClass = true;
     private boolean disable;
+    private String label = "      ";
+    private String file;
 
     public Logger(){
         className = "";
@@ -35,6 +37,18 @@ public class Logger {
         if(disable)
             return;
         System.out.printf((displayClass ? className : "") + format, args);
+    }
+
+    public void setNextLabel(String t){
+        label = t + ": ";
+    }
+
+    public void logCommand(String format, Object... args){
+        if(file == null)
+            System.out.printf(label + format, args);
+        //TODO: Else printar num arquivo
+        if(label.charAt(0) != ' ')
+            label = "      ";
     }
 
     public void error(String string){

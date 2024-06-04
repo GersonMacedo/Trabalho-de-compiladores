@@ -57,6 +57,7 @@ public class Main {
         if(ArgsParser.step == ArgsParser.CONTENT)
             return;
         
+        logger.log("Building the program\n");
         Builder b=new Builder();
         b.build(p);
     }
