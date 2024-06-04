@@ -34,10 +34,12 @@ public class Main {
             logger.log("%d syntactic error%s found\n", Parser.errors, (Parser.errors > 1) ? "s" : "");
         if(Scanner.errors != 0 || Parser.errors != 0)
             System.exit(2);
-        logger.log("No errors found");
-
+        if(ArgsParser.step <= ArgsParser.TREE)
+            logger.log("No errors found");
+        
         if(ArgsParser.step <= ArgsParser.SYNTACTIC)
             return;
+        
         Printer printer = new Printer();
         printer.print(p);
 
@@ -46,6 +48,7 @@ public class Main {
         
         ContexAnalyser ca = new ContexAnalyser();
         ca.analyse(p);
+        logger.log("No errors found");
 
         if(ArgsParser.step == ArgsParser.CONTENT)
             return;

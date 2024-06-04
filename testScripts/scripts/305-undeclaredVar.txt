@@ -1,0 +1,6 @@
+! -s CONTENT --disable-logs printer
+! should complain about undeclared var
+program p ;
+begin
+    a := 1;
+end .

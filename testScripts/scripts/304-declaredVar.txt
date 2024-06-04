@@ -1,0 +1,7 @@
+! -s CONTENT --disable-logs printer
+! should accept the usage of declared vars
+program p ;
+    var a : integer;
+begin
+    a := 1;
+end .

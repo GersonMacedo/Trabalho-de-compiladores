@@ -1,0 +1,3 @@
+
+Performing up to content analysis at testScripts/scripts/305-undeclaredVar.txt
+ContexAnalyser::var 'a' at line 5 column 5 was never declared
