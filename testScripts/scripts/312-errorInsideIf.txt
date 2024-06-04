@@ -1,0 +1,8 @@
+! -s CONTENT --disable-logs printer
+! should complain about errors inside the if
+program p ;
+begin
+    if false then
+        b1 := true
+    ;
+end .

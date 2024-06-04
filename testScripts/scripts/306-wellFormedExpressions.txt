@@ -6,12 +6,15 @@ program p ;
     var i1 : integer;
     var i2 : integer;
 begin
+    i1 := 99;
     i1 := i2;
     i1 := (i2);
     i1 := 1 + 2;
     i1 := 3 * 4;
     i1 := 5 / 6;
 
+    b1 := true;
+    b1 := false;
     b1 := b2;
     b1 := (b2);
     b1 := 1 < 2;

@@ -1,0 +1,8 @@
+! -s CONTENT --disable-logs printer
+! should complain about errors inside the while
+program p ;
+begin
+    while false do
+        b1 := true
+    ;
+end .

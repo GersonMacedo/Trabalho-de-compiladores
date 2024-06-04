@@ -1,0 +1,9 @@
+! -s CONTENT --disable-logs printer
+! should complain about invalid expression in the if
+program p ;
+    var b1 : boolean;
+begin
+    if 1 then
+        b1 := true
+    ;
+end .

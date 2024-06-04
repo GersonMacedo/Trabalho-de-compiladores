@@ -1,0 +1,9 @@
+! -s CONTENT --disable-logs printer
+! should accept a boolean expression in the while
+program p ;
+    var b1 : boolean;
+begin
+    while b1 do
+        b1 := true
+    ;
+end .

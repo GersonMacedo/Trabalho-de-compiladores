@@ -5,16 +5,23 @@ import compilador.ast.*;
 public class ContexAnalyser implements Visitor {
     private Logger logger;
     IdentificationTable it;
-
-    public void analyse(Programa p){
-        logger.debug("Analysing context of the program");
-        p.visit(this);
-    }
+    public int errors;
 
     public ContexAnalyser() {
         logger = new Logger("ContexAnalyser");
         logger.debug("ContexAnalyser()");
         it = new IdentificationTable();
+    }
+
+    private void handleError(){
+        if(ArgsParser.stopAtFirstError)
+            System.exit(4);
+        errors++;
+    }
+
+    public void analyse(Programa p){
+        logger.debug("Analysing context of the program");
+        p.visit(this);
     }
 
     @Override
@@ -23,9 +30,9 @@ public class ContexAnalyser implements Visitor {
         Declaracao d = (Declaracao) c.i.visit(this);
         Kind t = (Kind) c.e.visit(this);
         if(t != d.t){
-            logger.error("var '%s' at line %d column %d expects a type %s, but expression has a type %s\n",
+            logger.error("var '%s' at line %d column %d expects a type %s, but expression has a %s type\n",
                 c.i.n, c.line, c.column, d.t.toString(), t.toString());
-            System.exit(4);
+            handleError();
         }
         return null;
     }
@@ -35,9 +42,9 @@ public class ContexAnalyser implements Visitor {
         logger.debug("visitComandoCondicional()");
         Kind t = (Kind) c.e.visit(this);
         if(t != Kind.BOOLEAN){
-            logger.error("if requires a %s expression at line %d column %d, but expression has a type %s\n",
+            logger.error("if requires a %s expression at line %d column %d, but expression has a %s type\n",
                 Kind.BOOLEAN.toString(),c.line, c.column, t.toString());
-            System.exit(4);  
+            handleError();  
         }
         c.v.visit(this);
         if(c.f != null)
@@ -50,9 +57,9 @@ public class ContexAnalyser implements Visitor {
         logger.debug("visitComandoIterativo()");
         Kind t = (Kind) c.e.visit(this);
         if(t != Kind.BOOLEAN){
-            logger.error("while requires a %s expression at line %d column %d, but expression has a type %s\n",
+            logger.error("while requires a %s expression at line %d column %d, but expression has a %s type\n",
                 Kind.BOOLEAN.toString(),c.line, c.column, t.toString());
-            System.exit(4);  
+            handleError();  
         }
         c.c.visit(this);
         return null;
@@ -74,7 +81,7 @@ public class ContexAnalyser implements Visitor {
         if(pd != null){
             logger.error("var '%s' at line %d column %d was previously declared at line %d column %d\n",
                 d.i.n, d.line, d.column, pd.line, pd.column);
-            System.exit(4);
+            handleError();
         }
 
         if(d.d != null){
@@ -112,7 +119,7 @@ public class ContexAnalyser implements Visitor {
                 if(t1 != t2){
                     logger.error("%s operation at line %d column %d expects two equal types, but left has %s type and right has %s type\n",
                         e.op.toString(), e.line, e.column, t1.toString(), t2.toString());
-                    System.exit(4);
+                    handleError();
                 }
                 return Kind.BOOLEAN;
             case PLUS:
@@ -122,7 +129,7 @@ public class ContexAnalyser implements Visitor {
                 if(t1 != Kind.INTEGER || t2 != Kind.INTEGER){
                     logger.error("%s operation at line %d column %d expects two %s types, but left has %s type and right has %s type\n",
                         e.op.toString(), e.line, e.column, Kind.INTEGER.toString(), t1.toString(), t2.toString());
-                    System.exit(4);
+                    handleError();
                 }
                 return Kind.INTEGER;
             case LESS:
@@ -130,7 +137,7 @@ public class ContexAnalyser implements Visitor {
                 if(t1 != Kind.INTEGER || t2 != Kind.INTEGER){
                     logger.error("%s operation at line %d column %d expects two %s types, but left has %s type and right has %s type\n",
                         e.op.toString(), e.line, e.column, Kind.INTEGER.toString(), t1.toString(), t2.toString());
-                    System.exit(4);
+                    handleError();
                 }
                 return Kind.BOOLEAN;
             case OR:
@@ -138,12 +145,12 @@ public class ContexAnalyser implements Visitor {
                 if(t1 != Kind.BOOLEAN || t2 != Kind.BOOLEAN){
                     logger.error("%s operation at line %d column %d expects two %s types, but left has %s type and right has %s type\n",
                         e.op.toString(), e.line, e.column, Kind.BOOLEAN.toString(), t1.toString(), t2.toString());
-                    System.exit(4);
+                    handleError();
                 }
                 return Kind.BOOLEAN;
             default:
                 logger.error("invalid operation %s at line %d column %d\n", e.op.toString(), e.line, e.column);
-                System.exit(4);
+                handleError();
         }
         return null;
     }
@@ -154,7 +161,7 @@ public class ContexAnalyser implements Visitor {
         Declaracao d = it.get(i.n);
         if(d == null){
             logger.error("var '%s' at line %d column %d was never declared\n", i.n, i.line, i.column);
-            System.exit(4);
+            handleError();
         }
         return d;
     }

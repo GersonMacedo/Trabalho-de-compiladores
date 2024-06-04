@@ -1,0 +1,50 @@
+! -s CONTENT --disable-logs printer --continue-after-first-error
+! should complain about all invalid expressions
+program p ;
+    var b1 : boolean;
+    var i1 : integer;
+begin
+    i1 := true;
+    i1 := false;
+    i1 := b1;
+    i1 := (true);
+    b1 := 1;
+    b1 := i1;
+    b1 := (1);
+
+    i1 := true + 1;
+
+    i1 := 1 + true;
+    i1 := false + true;
+
+    i1 := true - 1;
+    i1 := 1 - true;
+    i1 := false - true;
+
+    i1 := true * 1;
+    i1 := 1 * true;
+    i1 := false * true;
+
+    i1 := true / 1;
+    i1 := 1 / true;
+    i1 := false / true;
+
+    b1 := 1 < true;
+    b1 := true < 1;
+    b1 := false < true;
+
+    b1 := 1 > true;
+    b1 := true > 1;
+    b1 := false > true;
+
+    b1 := 1 and true;
+    b1 := true and 1;
+    b1 := 0 and 1;
+
+    b1 := 1 or true;
+    b1 := true or 1;
+    b1 := 0 or 1;
+
+    b1 := 1 = true;
+    b1 := true = 1;
+end .

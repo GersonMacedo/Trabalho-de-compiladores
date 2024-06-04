@@ -1,0 +1,9 @@
+! -s CONTENT --disable-logs printer
+! should accept a boolean expression in the if
+program p ;
+    var b1 : boolean;
+begin
+    if b1 then
+        b1 := true
+    ;
+end .

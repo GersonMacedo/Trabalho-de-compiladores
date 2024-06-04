@@ -1,0 +1,9 @@
+! -s CONTENT --disable-logs printer
+! should complain about invalid expression in the while
+program p ;
+    var b1 : boolean;
+begin
+    while 1 do
+        b1 := true
+    ;
+end .

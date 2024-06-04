@@ -114,6 +114,7 @@ public class ArgsParser {
                     disableLog.add(args[i].toLowerCase());
                     i++;
                 }
+                i--;
                 continue;
             }
 

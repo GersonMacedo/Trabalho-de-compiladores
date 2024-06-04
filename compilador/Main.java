@@ -48,6 +48,10 @@ public class Main {
         
         ContexAnalyser ca = new ContexAnalyser();
         ca.analyse(p);
+        if(ca.errors != 0){
+            logger.log("%d context errors found\n", ca.errors);
+            System.exit(4);
+        }
         logger.log("No errors found");
 
         if(ArgsParser.step == ArgsParser.CONTENT)
