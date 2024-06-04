@@ -114,20 +114,31 @@ public class ContexAnalyser implements Visitor {
                         e.op.toString(), e.line, e.column, t1.toString(), t2.toString());
                     System.exit(4);
                 }
-                return t1;
+                return Kind.BOOLEAN;
             case PLUS:
             case MINUS:
             case MULT:
+            case DIV:
                 if(t1 != Kind.INTEGER || t2 != Kind.INTEGER){
                     logger.error("%s operation at line %d column %d expects two %s types, but left has %s type and right has %s type\n",
-                    e.op.toString(), e.line, e.column, Kind.INTEGER.toString(), t1.toString(), t2.toString());
+                        e.op.toString(), e.line, e.column, Kind.INTEGER.toString(), t1.toString(), t2.toString());
+                    System.exit(4);
                 }
                 return Kind.INTEGER;
             case LESS:
             case GREATER:
                 if(t1 != Kind.INTEGER || t2 != Kind.INTEGER){
                     logger.error("%s operation at line %d column %d expects two %s types, but left has %s type and right has %s type\n",
-                    e.op.toString(), e.line, e.column, Kind.BOOLEAN.toString(), t1.toString(), t2.toString());
+                        e.op.toString(), e.line, e.column, Kind.INTEGER.toString(), t1.toString(), t2.toString());
+                    System.exit(4);
+                }
+                return Kind.BOOLEAN;
+            case OR:
+            case AND:
+                if(t1 != Kind.BOOLEAN || t2 != Kind.BOOLEAN){
+                    logger.error("%s operation at line %d column %d expects two %s types, but left has %s type and right has %s type\n",
+                        e.op.toString(), e.line, e.column, Kind.BOOLEAN.toString(), t1.toString(), t2.toString());
+                    System.exit(4);
                 }
                 return Kind.BOOLEAN;
             default:

@@ -1,0 +1,26 @@
+! -s CONTENT --disable-logs printer
+! should accept correct expressions
+program p ;
+    var b1 : boolean;
+    var b2 : boolean;
+    var i1 : integer;
+    var i2 : integer;
+begin
+    i1 := i2;
+    i1 := (i2);
+    i1 := 1 + 2;
+    i1 := 3 * 4;
+    i1 := 5 / 6;
+
+    b1 := b2;
+    b1 := (b2);
+    b1 := 1 < 2;
+    b1 := 3 > 4;
+    b1 := 5 = 6;
+    b1 := true = false;
+    b1 := true and false;
+    b1 := false or true;
+
+    i1 := ((i2 + 3) * (i1 - 4) / 5) + 42;
+    b1 := ((5 < 6) and (4 > 3) or (2 = 3)) and b2;
+end .
