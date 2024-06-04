@@ -7,7 +7,7 @@ import java.util.Set;
 public class ArgsParser {
     public static String fileName;
     public static byte loglevel = Logger.ERROR;
-    public static byte step = ArgsParser.CONTENT;
+    public static byte step = ArgsParser.BUILD;
     public static boolean stopAtFirstError = true;
     public static Set<String> disableLog = new HashSet<String>();
     public static boolean invertDisableLog = false;

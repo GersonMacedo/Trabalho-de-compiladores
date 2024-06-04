@@ -1,5 +1,5 @@
 package compilador.type;
 
-public class IntType {
+public class IntType extends Type {
 
 }

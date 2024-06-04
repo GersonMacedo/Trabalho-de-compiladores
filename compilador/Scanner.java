@@ -152,10 +152,6 @@ public class Scanner{
 
     private void readNextChar(){
         logger.debug("readNextChar()");
-        if(currentChar == '\r'){
-            logger.log("HERE");
-            System.exit(3);
-        }
 
         if(currentChar == '\n' || currentChar == '\r'){
             currentLine++;

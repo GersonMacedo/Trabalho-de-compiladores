@@ -1,5 +1,5 @@
 package compilador.type;
 
-public class BoolType {
+public class BoolType extends Type{
 
 }

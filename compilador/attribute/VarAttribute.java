@@ -1,5 +1,5 @@
 package compilador.attribute;
 
-public class VarAttribute {
+public class VarAttribute extends Attribute {
 
 }

@@ -56,5 +56,8 @@ public class Main {
 
         if(ArgsParser.step == ArgsParser.CONTENT)
             return;
+        
+        Builder b=new Builder();
+        b.build(p);
     }
 }
