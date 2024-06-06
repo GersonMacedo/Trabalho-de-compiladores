@@ -76,16 +76,19 @@ public class ContexAnalyser implements Visitor {
 
     @Override
     public Object visitDeclaracao(Declaracao d, Object... args) {
-        logger.debug("visitDeclaracao()");
+        int pos = (int) args[0];
+        logger.debug("visitDeclaracao(%d)\n", pos);
         Declaracao pd = it.add(d);
         if(pd != null){
             logger.error("var '%s' at line %d column %d was previously declared at line %d column %d\n",
                 d.i.n, d.line, d.column, pd.line, pd.column);
             handleError();
         }
+        d.setPosition(0, pos);
+        d.i.d = d;
 
         if(d.d != null){
-            d.d.visit(this);
+            d.d.visit(this, pos + 1);
         }
         return null;
     }
@@ -163,6 +166,7 @@ public class ContexAnalyser implements Visitor {
             logger.error("var '%s' at line %d column %d was never declared\n", i.n, i.line, i.column);
             handleError();
         }
+        i.d = d;
         return d;
     }
 
@@ -170,7 +174,7 @@ public class ContexAnalyser implements Visitor {
     public Object visitPrograma(Programa p, Object... args) {
         logger.debug("visitPrograma()");
         if(p.d != null)
-            p.d.visit(this);
+            p.d.visit(this, 0);
         if(p.c != null)
             p.c.visit(this);
         return null;

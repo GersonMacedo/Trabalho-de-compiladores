@@ -35,11 +35,11 @@ public class Builder implements Visitor {
     public Object visitComandoCondicional(ComandoCondicional c, Object... args) {
         String labelG= genarateLabel();
         c.e.visit(this);
-        logger.log("JUMPIF(0) %s\n", labelG);
+        logger.logCommand("JUMPIF(0) %s\n", labelG);
         c.v.visit(this);
         if(c.f != null){
             String labelH= genarateLabel();
-            logger.logCommand("JUMP %s\n", labelH);
+            logger.logCommand("JUMP  %s\n", labelH);
             logger.setNextLabel(labelG);
             c.f.visit(this);
             logger.setNextLabel(labelH);
@@ -54,7 +54,7 @@ public class Builder implements Visitor {
         logger.debug("visitComandoIterativo()");
         String labelG= genarateLabel();
         String labelH= genarateLabel();
-        logger.logCommand("JUMP %s\n", labelH);
+        logger.logCommand("JUMP  %s\n", labelH);
         logger.setNextLabel(labelG);
         c.c.visit(this);
         logger.setNextLabel(labelH);
@@ -75,13 +75,16 @@ public class Builder implements Visitor {
     @Override
     public Object visitDeclaracao(Declaracao d, Object... args) {
         logger.debug("visitDeclaracao()");
+        d.i.visit(this, "load");
+        if(d.d != null)
+            d.d.visit(this);
         return null;
     }
 
     @Override
     public Object visitExpressaoBool(ExpressaoBool e, Object... args) {
         logger.debug("visitExpressaoBool()\n");
-        logger.logCommand("LOADL %s\n", e.b?"TRUE":"FALSE");
+        logger.logCommand("LOADL %d\n", e.b? 1: 0);
         return null;
     }
 
@@ -104,7 +107,7 @@ public class Builder implements Visitor {
         logger.debug("visitExpressaoSimples()");
         e.e1.visit(this);
         e.e2.visit(this);
-        logger.logCommand("CALL %s\n", e.op.toString().toLowerCase());
+        logger.logCommand("CALL  %s\n", e.op.toString().toLowerCase());
         return null;
     }
 
@@ -113,9 +116,11 @@ public class Builder implements Visitor {
         logger.debug("visitIdentificador()");
         String t=(String) args[0];
         if(t.equals("assign")){
-            logger.logCommand("STORE %s\n", i.n);
+            logger.logCommand("STORE %-20s #%s\n", i.getAddress(0), i.n);
+        }else if(t.equals("fetch")){
+            logger.logCommand("LOAD  %-20s #%s\n", i.getAddress(0), i.n);
         }else{
-            logger.logCommand("LOAD %s\n", i.n);
+            logger.logCommand("LOAD  %-20d #%s\n", 0, i.n);
         }
         return null;
     }
@@ -123,6 +128,8 @@ public class Builder implements Visitor {
     @Override
     public Object visitPrograma(Programa p, Object... args) {
         logger.debug("visitPrograma()");
+        if(p.d != null)
+            p.d.visit(this);
         if(p.c != null)
             p.c.visit(this);
         logger.logCommand("HALT\n");
