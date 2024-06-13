@@ -84,10 +84,10 @@ public class Scanner{
         switch (currentChar) {
             case '+':
                 takeIt();
-                return Kind.PLUS;
+                return Kind.ADD;
             case '-':
                 takeIt();
-                return Kind.MINUS;
+                return Kind.SUB;
             case '*':
                 takeIt();
                 return Kind.MULT;
@@ -96,10 +96,10 @@ public class Scanner{
                 return Kind.DIV;
             case '<':
                 takeIt();
-                return Kind.LESS;
+                return Kind.LT;
             case '>':
                 takeIt();
-                return Kind.GREATER;
+                return Kind.GT;
             case ';':
                 takeIt();
                 return Kind.SEMICOLON;
@@ -124,7 +124,7 @@ public class Scanner{
                 return Kind.COMMA;
             case '=':
                 takeIt();
-                return Kind.EQUAL;
+                return Kind.EQ;
             case '\0':
                 return Kind.EOT;
             default:

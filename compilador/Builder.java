@@ -39,7 +39,7 @@ public class Builder implements Visitor {
         c.v.visit(this);
         if(c.f != null){
             String labelH= genarateLabel();
-            logger.logCommand("JUMP  %s\n", labelH);
+            logger.logCommand("JUMP      %s\n", labelH);
             logger.setNextLabel(labelG);
             c.f.visit(this);
             logger.setNextLabel(labelH);
@@ -54,7 +54,7 @@ public class Builder implements Visitor {
         logger.debug("visitComandoIterativo()");
         String labelG= genarateLabel();
         String labelH= genarateLabel();
-        logger.logCommand("JUMP  %s\n", labelH);
+        logger.logCommand("JUMP      %s\n", labelH);
         logger.setNextLabel(labelG);
         c.c.visit(this);
         logger.setNextLabel(labelH);
@@ -75,40 +75,51 @@ public class Builder implements Visitor {
     @Override
     public Object visitDeclaracao(Declaracao d, Object... args) {
         logger.debug("visitDeclaracao()");
-        d.i.visit(this, "load");
-        if(d.d != null)
-            d.d.visit(this);
+        while(d.d != null)
+            d = d.d;
+        logger.logCommand("PUSH      %d\n", d.pos + Utils.getTypeSize(d.t));
         return null;
     }
 
     @Override
     public Object visitExpressaoBool(ExpressaoBool e, Object... args) {
         logger.debug("visitExpressaoBool()\n");
-        logger.logCommand("LOADL %d\n", e.b? 1: 0);
-        return null;
+        logger.logCommand("LOADL     %d\n", e.b? 1: 0);
+        return Utils.getTypeSize(Kind.BOOLEAN);
     }
 
     @Override
     public Object visitExpressaoId(ExpressaoId e, Object... args) {
         logger.debug("visitExpressaoId()");
-        e.i.visit(this, "fetch");
-        return null;
+        return e.i.visit(this, "fetch");
     }
 
     @Override
     public Object visitExpressaoInt(ExpressaoInt e, Object... args) {
         logger.debug("visitExpressaoInt()");
-        logger.logCommand("LOADL %d\n", e.i);
-        return null;
+        logger.logCommand("LOADL     %d\n", e.i);
+        return Utils.getTypeSize(Kind.INTEGER);
     }
 
     @Override
     public Object visitExpressaoSimples(ExpressaoSimples e, Object... args) {
         logger.debug("visitExpressaoSimples()");
-        e.e1.visit(this);
+        int size = (int) e.e1.visit(this);
         e.e2.visit(this);
-        logger.logCommand("CALL  %s\n", e.op.toString().toLowerCase());
-        return null;
+        switch (e.op) {
+            case EQ:
+                logger.logCommand("CALL(%d)   %s\n", size, e.op.toString().toLowerCase());
+                return Utils.getTypeSize(Kind.BOOLEAN);
+            case ADD:
+            case SUB:
+            case MULT:
+            case DIV:
+                logger.logCommand("CALL      %s\n", e.op.toString().toLowerCase());
+                return Utils.getTypeSize(Kind.INTEGER);
+            default:
+                logger.logCommand("CALL      %s\n", e.op.toString().toLowerCase());
+                return Utils.getTypeSize(Kind.BOOLEAN);
+        }
     }
 
     @Override
@@ -116,13 +127,12 @@ public class Builder implements Visitor {
         logger.debug("visitIdentificador()");
         String t=(String) args[0];
         if(t.equals("assign")){
-            logger.logCommand("STORE %-20s #%s\n", i.getAddress(0), i.n);
-        }else if(t.equals("fetch")){
-            logger.logCommand("LOAD  %-20s #%s\n", i.getAddress(0), i.n);
-        }else{
-            logger.logCommand("LOAD  %-20d #%s\n", 0, i.n);
+            logger.logCommand("STORE(%d)  %-10s #%s\n", Utils.getTypeSize(i.d.t), i.getAddress(0), i.n);
+            return null;
         }
-        return null;
+        
+        logger.logCommand("LOAD(%d)   %-10s #%s\n", Utils.getTypeSize(i.d.t), i.getAddress(0), i.n);
+        return Utils.getTypeSize(i.d.t);
     }
 
     @Override

@@ -35,8 +35,8 @@ public class Token {
 
     public boolean isOpAd() {
         switch (kind) {
-        case PLUS:
-        case MINUS:
+        case ADD:
+        case SUB:
         case OR:
             return true;
         default:
@@ -57,9 +57,9 @@ public class Token {
 
     public boolean isOpRel() {
         switch (kind) {
-        case LESS:
-        case GREATER:
-        case EQUAL:
+        case LT:
+        case GT:
+        case EQ:
             return true;
         default:
             return false;

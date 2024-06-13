@@ -10,18 +10,18 @@ Declarações:
     'i2': INTEGER
 Corpo:
     'b1' :=
-        LESS
+        LT
             'i1'
             'i2'
     'b1' :=
-        GREATER
+        GT
             'i1'
             'i2'
     'b2' :=
-        EQUAL
+        EQ
             'i1'
             'i2'
     'b2' :=
-        EQUAL
+        EQ
             'b1'
             'b2'

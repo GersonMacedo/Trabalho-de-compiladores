@@ -88,7 +88,7 @@ public class ContexAnalyser implements Visitor {
         d.i.d = d;
 
         if(d.d != null){
-            d.d.visit(this, pos + 1);
+            d.d.visit(this, pos + Utils.getTypeSize(d.t));
         }
         return null;
     }
@@ -118,15 +118,15 @@ public class ContexAnalyser implements Visitor {
         Kind t1 = (Kind) e.e1.visit(this);
         Kind t2 = (Kind) e.e2.visit(this);
         switch (e.op) {
-            case EQUAL:
+            case EQ:
                 if(t1 != t2){
                     logger.error("%s operation at line %d column %d expects two equal types, but left has %s type and right has %s type\n",
                         e.op.toString(), e.line, e.column, t1.toString(), t2.toString());
                     handleError();
                 }
                 return Kind.BOOLEAN;
-            case PLUS:
-            case MINUS:
+            case ADD:
+            case SUB:
             case MULT:
             case DIV:
                 if(t1 != Kind.INTEGER || t2 != Kind.INTEGER){
@@ -135,8 +135,8 @@ public class ContexAnalyser implements Visitor {
                     handleError();
                 }
                 return Kind.INTEGER;
-            case LESS:
-            case GREATER:
+            case LT:
+            case GT:
                 if(t1 != Kind.INTEGER || t2 != Kind.INTEGER){
                     logger.error("%s operation at line %d column %d expects two %s types, but left has %s type and right has %s type\n",
                         e.op.toString(), e.line, e.column, Kind.INTEGER.toString(), t1.toString(), t2.toString());

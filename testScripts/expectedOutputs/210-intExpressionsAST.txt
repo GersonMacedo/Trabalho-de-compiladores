@@ -11,30 +11,30 @@ Declarações:
     'i5': INTEGER
 Corpo:
     'i1' :=
-        PLUS
+        ADD
             'i1'
             'i2'
     'i1' :=
-        PLUS
-            PLUS
+        ADD
+            ADD
                 'i1'
                 'i2'
             'i3'
     'i1' :=
-        MINUS
+        SUB
             'i1'
             'i2'
     'i1' :=
-        MINUS
-            MINUS
+        SUB
+            SUB
                 'i1'
                 'i2'
             'i3'
     'i2' :=
-        MINUS
-            PLUS
-                MINUS
-                    PLUS
+        SUB
+            ADD
+                SUB
+                    ADD
                         'i1'
                         'i2'
                     'i3'
@@ -71,7 +71,7 @@ Corpo:
                 'i4'
             'i5'
     'i1' :=
-        PLUS
+        ADD
             MULT
                 'i1'
                 'i2'
@@ -79,11 +79,11 @@ Corpo:
     'i1' :=
         MULT
             'i1'
-            PLUS
+            ADD
                 'i2'
                 'i3'
     'i1' :=
-        MINUS
+        SUB
             MULT
                 'i1'
                 'i2'
@@ -91,11 +91,11 @@ Corpo:
     'i1' :=
         MULT
             'i1'
-            MINUS
+            SUB
                 'i2'
                 'i3'
     'i1' :=
-        PLUS
+        ADD
             DIV
                 'i1'
                 'i2'
@@ -103,11 +103,11 @@ Corpo:
     'i1' :=
         DIV
             'i1'
-            PLUS
+            ADD
                 'i2'
                 'i3'
     'i1' :=
-        MINUS
+        SUB
             DIV
                 'i1'
                 'i2'
@@ -115,54 +115,54 @@ Corpo:
     'i1' :=
         DIV
             'i1'
-            MINUS
+            SUB
                 'i2'
                 'i3'
     'i2' :=
-        PLUS
+        ADD
             'i1'
             MULT
                 'i2'
                 'i3'
     'i2' :=
         MULT
-            PLUS
+            ADD
                 'i1'
                 'i2'
             'i3'
     'i2' :=
-        MINUS
+        SUB
             'i1'
             MULT
                 'i2'
                 'i3'
     'i2' :=
         MULT
-            MINUS
+            SUB
                 'i1'
                 'i2'
             'i3'
     'i2' :=
-        PLUS
+        ADD
             'i1'
             DIV
                 'i2'
                 'i3'
     'i2' :=
         DIV
-            PLUS
+            ADD
                 'i1'
                 'i2'
             'i3'
     'i2' :=
-        MINUS
+        SUB
             'i1'
             DIV
                 'i2'
                 'i3'
     'i2' :=
         DIV
-            MINUS
+            SUB
                 'i1'
                 'i2'
             'i3'

@@ -7,30 +7,30 @@ ContexAnalyser::var 'i1' at line 10 column 5 expects a type INTEGER, but express
 ContexAnalyser::var 'b1' at line 11 column 5 expects a type BOOLEAN, but expression has a INTEGER type
 ContexAnalyser::var 'b1' at line 12 column 5 expects a type BOOLEAN, but expression has a INTEGER type
 ContexAnalyser::var 'b1' at line 13 column 5 expects a type BOOLEAN, but expression has a INTEGER type
-ContexAnalyser::PLUS operation at line 15 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
-ContexAnalyser::PLUS operation at line 17 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
-ContexAnalyser::PLUS operation at line 18 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
-ContexAnalyser::MINUS operation at line 20 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
-ContexAnalyser::MINUS operation at line 21 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
-ContexAnalyser::MINUS operation at line 22 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
-ContexAnalyser::MULT operation at line 24 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
-ContexAnalyser::MULT operation at line 25 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
-ContexAnalyser::MULT operation at line 26 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
-ContexAnalyser::DIV operation at line 28 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
-ContexAnalyser::DIV operation at line 29 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
-ContexAnalyser::DIV operation at line 30 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
-ContexAnalyser::LESS operation at line 32 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
-ContexAnalyser::LESS operation at line 33 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
-ContexAnalyser::LESS operation at line 34 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
-ContexAnalyser::GREATER operation at line 36 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
-ContexAnalyser::GREATER operation at line 37 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
-ContexAnalyser::GREATER operation at line 38 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
-ContexAnalyser::AND operation at line 40 column 13 expects two BOOLEAN types, but left has INTEGER type and right has BOOLEAN type
-ContexAnalyser::AND operation at line 41 column 16 expects two BOOLEAN types, but left has BOOLEAN type and right has INTEGER type
-ContexAnalyser::AND operation at line 42 column 13 expects two BOOLEAN types, but left has INTEGER type and right has INTEGER type
-ContexAnalyser::OR operation at line 44 column 13 expects two BOOLEAN types, but left has INTEGER type and right has BOOLEAN type
-ContexAnalyser::OR operation at line 45 column 16 expects two BOOLEAN types, but left has BOOLEAN type and right has INTEGER type
-ContexAnalyser::OR operation at line 46 column 13 expects two BOOLEAN types, but left has INTEGER type and right has INTEGER type
-ContexAnalyser::EQUAL operation at line 48 column 13 expects two equal types, but left has INTEGER type and right has BOOLEAN type
-ContexAnalyser::EQUAL operation at line 49 column 16 expects two equal types, but left has BOOLEAN type and right has INTEGER type
+ContexAnalyser::ADD operation at line 15 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
+ContexAnalyser::ADD operation at line 16 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
+ContexAnalyser::ADD operation at line 17 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
+ContexAnalyser::SUB operation at line 19 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
+ContexAnalyser::SUB operation at line 20 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
+ContexAnalyser::SUB operation at line 21 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
+ContexAnalyser::MULT operation at line 23 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
+ContexAnalyser::MULT operation at line 24 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
+ContexAnalyser::MULT operation at line 25 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
+ContexAnalyser::DIV operation at line 27 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
+ContexAnalyser::DIV operation at line 28 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
+ContexAnalyser::DIV operation at line 29 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
+ContexAnalyser::LT operation at line 31 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
+ContexAnalyser::LT operation at line 32 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
+ContexAnalyser::LT operation at line 33 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
+ContexAnalyser::GT operation at line 35 column 13 expects two INTEGER types, but left has INTEGER type and right has BOOLEAN type
+ContexAnalyser::GT operation at line 36 column 16 expects two INTEGER types, but left has BOOLEAN type and right has INTEGER type
+ContexAnalyser::GT operation at line 37 column 17 expects two INTEGER types, but left has BOOLEAN type and right has BOOLEAN type
+ContexAnalyser::AND operation at line 39 column 13 expects two BOOLEAN types, but left has INTEGER type and right has BOOLEAN type
+ContexAnalyser::AND operation at line 40 column 16 expects two BOOLEAN types, but left has BOOLEAN type and right has INTEGER type
+ContexAnalyser::AND operation at line 41 column 13 expects two BOOLEAN types, but left has INTEGER type and right has INTEGER type
+ContexAnalyser::OR operation at line 43 column 13 expects two BOOLEAN types, but left has INTEGER type and right has BOOLEAN type
+ContexAnalyser::OR operation at line 44 column 16 expects two BOOLEAN types, but left has BOOLEAN type and right has INTEGER type
+ContexAnalyser::OR operation at line 45 column 13 expects two BOOLEAN types, but left has INTEGER type and right has INTEGER type
+ContexAnalyser::EQ operation at line 47 column 13 expects two equal types, but left has INTEGER type and right has BOOLEAN type
+ContexAnalyser::EQ operation at line 48 column 16 expects two equal types, but left has BOOLEAN type and right has INTEGER type
 33 context errors found

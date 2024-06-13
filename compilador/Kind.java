@@ -19,16 +19,16 @@ public enum Kind{
     WHILE,       // while
     DO,          // do
     COMMA,       // ,
-    PLUS,        // +
-    MINUS,       // -
+    ADD,         // +
+    SUB,         // -
     OR,          // or
     MULT,        // *
     DIV,         // /
     AND,         // and
-    LESS,        // <
-    GREATER,     // >
+    LT,          // <
+    GT,          // >
     BECOMES,     // :=
-    EQUAL,       // =
+    EQ,          // =
     PROGRAM,     // program
     INTEGER,     // integer
     BOOLEAN,     // boolean
