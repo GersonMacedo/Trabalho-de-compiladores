@@ -95,7 +95,7 @@ public class ContexAnalyser implements Visitor {
         d.i.d = d;
 
         if(d.d != null){
-            d.d.visit(this, pos + Utils.getTypeSize(d.t));
+            d.d.visit(this, pos + 1);
         }
         return null;
     }

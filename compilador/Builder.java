@@ -85,15 +85,14 @@ public class Builder implements Visitor {
         logger.debug("visitDeclaracao()");
         while(d.d != null)
             d = d.d;
-        logger.logCommand("PUSH      %d\n", d.pos + Utils.getTypeSize(d.t));
-        return null;
+        return d.pos + 1;
     }
 
     @Override
     public Object visitExpressaoBool(ExpressaoBool e, Object... args) {
         logger.debug("visitExpressaoBool()\n");
         logger.logCommand("LOADL     %d\n", e.b? 1: 0);
-        return Utils.getTypeSize(Kind.BOOLEAN);
+        return null;
     }
 
     @Override
@@ -106,28 +105,16 @@ public class Builder implements Visitor {
     public Object visitExpressaoInt(ExpressaoInt e, Object... args) {
         logger.debug("visitExpressaoInt()");
         logger.logCommand("LOADL     %d\n", e.i);
-        return Utils.getTypeSize(Kind.INTEGER);
+        return null;
     }
 
     @Override
     public Object visitExpressaoSimples(ExpressaoSimples e, Object... args) {
         logger.debug("visitExpressaoSimples()");
-        int size = (int) e.e1.visit(this);
+        e.e1.visit(this);
         e.e2.visit(this);
-        switch (e.op) {
-            case EQ:
-                logger.logCommand("CALL(%d)   %s\n", size, e.op.toString().toLowerCase());
-                return Utils.getTypeSize(Kind.BOOLEAN);
-            case ADD:
-            case SUB:
-            case MULT:
-            case DIV:
-                logger.logCommand("CALL      %s\n", e.op.toString().toLowerCase());
-                return Utils.getTypeSize(Kind.INTEGER);
-            default:
-                logger.logCommand("CALL      %s\n", e.op.toString().toLowerCase());
-                return Utils.getTypeSize(Kind.BOOLEAN);
-        }
+        logger.logCommand("CALL      %s\n", e.op.toString().toLowerCase());
+        return null;
     }
 
     @Override
@@ -135,21 +122,27 @@ public class Builder implements Visitor {
         logger.debug("visitIdentificador()");
         String t=(String) args[0];
         if(t.equals("assign")){
-            logger.logCommand("STORE(%d)  %-10s #%s\n", Utils.getTypeSize(i.d.t), i.getAddress(0), i.n);
+            logger.logCommand("STORE(1)  %-10s #%s\n", i.getAddress(0), i.n);
             return null;
         }
         
-        logger.logCommand("LOAD(%d)   %-10s #%s\n", Utils.getTypeSize(i.d.t), i.getAddress(0), i.n);
-        return Utils.getTypeSize(i.d.t);
+        logger.logCommand("LOAD(1)   %-10s #%s\n", i.getAddress(0), i.n);
+        return null;
     }
 
     @Override
     public Object visitPrograma(Programa p, Object... args) {
         logger.debug("visitPrograma()");
-        if(p.d != null)
-            p.d.visit(this);
+        int t = 0;
+        if(p.d != null){
+            t = (int) p.d.visit(this);
+            logger.logCommand("PUSH      %d\n", t);
+        }
+
         if(p.c != null)
             p.c.visit(this);
+        if(t > 0)
+        logger.logCommand("POP       %d\n", t);
         logger.logCommand("HALT\n");
         return null;
     }
