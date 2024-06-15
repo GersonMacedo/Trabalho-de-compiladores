@@ -1,5 +1,5 @@
 
-Performing build generation and running at testScripts/scripts/502-print.txt
+Performing build generation and running at testScripts/scripts/402-print.txt
 No errors found
 Building the program
 

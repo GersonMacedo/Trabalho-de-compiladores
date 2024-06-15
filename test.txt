@@ -1,21 +1,25 @@
-! Factorial
-program Factorial ;
-    var test: Boolean;
-    var x: Integer;
-    var fact: Integer;
+! Prints all primes up to 100
+program Primes ;
+    var max: Integer;
+    var p: Integer;
+    var i: Integer;
+    var notMult: Boolean;
 begin
-    fact := 1;
-    if true = false then
-        test := (1 + fact * 3) = 4
-    else
-        test := test and false
-    ;
-    x := 10;
-    while x > 0 do begin
-        fact := fact * x;
-        x := x - 1;
-    end;
-    print 1;
-    print x;
-    print test;
+    max := 100;
+    p := 2;
+    while p < max do
+    begin
+        i := 2;
+        notMult := true;
+        while (i < p) and notMult do
+            if p / i * i = p then
+                notMult := false
+            else
+                i := i + 1
+        ;
+        if notMult then
+            print p
+        ;
+        p := p + 1;
+    end ;
 end .

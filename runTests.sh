@@ -9,7 +9,7 @@ NC='\033[0m'
 rm -r build
 mkdir build
 echo "Compiling the program"
-javac -d ./build compilador/Main.java
+javac -d ./build compilador/Main.java TAM/Interpreter.java TAM/Disassembler.java
 if [ $? -ne 0 ]; then
     echo -e "\n${RED}Compilation failed${NC}"
     exit 1

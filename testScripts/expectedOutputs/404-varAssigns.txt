@@ -1,0 +1,28 @@
+
+Performing build generation and running at testScripts/scripts/404-varAssigns.txt
+No errors found
+Building the program
+
+********** TAM Interpreter (Java Version 2.1) **********
+10
+14
+1
+0
+11
+14
+1
+0
+11
+42
+1
+0
+11
+42
+0
+0
+11
+42
+0
+1
+
+Program has halted normally.

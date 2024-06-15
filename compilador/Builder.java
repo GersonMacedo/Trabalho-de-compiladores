@@ -180,6 +180,10 @@ public class Builder implements Visitor {
         e.e1.visit(this);
         e.e2.visit(this);
         int machineOp = Utils.kindToMachineOp(e.op);
+        if(e.op == Kind.EQ){
+            emit(Machine.LOADLop, Machine.CBr, 0, 1);
+            logger.logCommand("LOADL     1\n");
+        }
         emit(Machine.CALLop, Machine.PBr, 0, machineOp);
         logger.logCommand("CALL      %s\n", e.op.toString().toLowerCase());
         return null;

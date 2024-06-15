@@ -1,5 +1,5 @@
 
-Performing build generation and running at testScripts/scripts/501-basicProgram.txt
+Performing build generation and running at testScripts/scripts/401-basicProgram.txt
 No errors found
 Building the program
 

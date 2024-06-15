@@ -1,0 +1,19 @@
+! -s RUN --disable-logs printer builder
+! should correctly calculate all the expressions
+program p ;
+begin
+    print true and true;
+    print false and true;
+    print true and false;
+    print false and false;
+
+    print true or true;
+    print false or true;
+    print true or false;
+    print false or false;
+
+    print true = true;
+    print false = true;
+    print true = false;
+    print false = false;
+end .

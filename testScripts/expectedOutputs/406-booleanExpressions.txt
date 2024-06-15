@@ -1,8 +1,20 @@
 
-Performing build generation and running at testScripts/scripts/503-multipleDeclarations.txt
+Performing build generation and running at testScripts/scripts/406-booleanExpressions.txt
 No errors found
 Building the program
 
 ********** TAM Interpreter (Java Version 2.1) **********
+1
+0
+0
+0
+1
+1
+1
+0
+1
+0
+0
+1
 
 Program has halted normally.

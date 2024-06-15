@@ -1,0 +1,39 @@
+! -s RUN --disable-logs printer builder
+! should correctly calculate all the expressions
+program p ;
+    var i1 : integer;
+    var i2 : integer;
+begin
+    print 1 + 2;
+    print 5 - 3;
+    print 2 - 4;
+    print 3 * 4;
+    print 12 / 3;
+    print 14 / 3;
+    print 15 / 3;
+
+    i1 := 3;
+    i2 := 4;
+    print i1 + i2 * i2;
+    print (i1 + i2) * i2;
+    print i1 * i2 + i2;
+    print i1 * (i2 + i2);
+
+    print i1 - i2 * i2;
+    print (i1 - i2) * i2;
+    print i1 * i2 - i2;
+    print i1 * (i2 - i2);
+
+    print 4 + 4 / 2;
+    print (4 + 4) / 2;
+    print 4 / 4 + 2;
+    print 4 / (4 + 2);
+
+    print 4 - 4 / 2;
+    print (4 - 4) / 2;
+    print 4 / 4 - 2;
+    print 4 / (4 - 2);
+
+    print 3 + 4 - 10 - 2 + 7;
+    print 4 * 5 / 10 * 3 / 2;
+end .

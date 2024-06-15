@@ -1,0 +1,42 @@
+! -s RUN --disable-logs printer builder
+! should correctly hold the values of variables
+program p ;
+    var i1 : integer;
+    var i2 : integer;
+    var b1 : boolean;
+    var b2 : boolean;
+begin
+    i1 := 10;
+    i2 := 14;
+    b1 := true;
+    b2 := false;
+
+    print i1;
+    print i2;
+    print b1;
+    print b2;
+
+    i1 := 11;
+    print i1;
+    print i2;
+    print b1;
+    print b2;
+
+    i2 := 42;
+    print i1;
+    print i2;
+    print b1;
+    print b2;
+
+    b1 := false;
+    print i1;
+    print i2;
+    print b1;
+    print b2;
+
+    b2 := true;
+    print i1;
+    print i2;
+    print b1;
+    print b2;
+end .
