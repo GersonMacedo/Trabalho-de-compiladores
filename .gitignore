@@ -31,3 +31,6 @@ build
 
 #test script outputs
 testScripts/outputs
+
+#tam files
+*.tam
