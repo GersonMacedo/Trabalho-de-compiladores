@@ -1,0 +1,13 @@
+! -s RUN --disable-logs printer builder
+! should run without errors the program with multiple declarations
+program p ;
+    var a : integer;
+    var b : integer;
+    var c : boolean;
+    var d : boolean;
+    var e : integer;
+    var f : boolean;
+    var a1 : integer;
+    var aa : integer;
+begin
+end .

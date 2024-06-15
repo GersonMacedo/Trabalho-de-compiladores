@@ -1,5 +1,6 @@
 package compilador;
 
+import TAM.Interpreter;
 import compilador.ast.Programa;
 
 public class Main {
@@ -15,6 +16,8 @@ public class Main {
             return "up to content analysis";
         case ArgsParser.BUILD:
             return "content analysis and build generation";
+        case ArgsParser.RUN:
+            return "build generation and running";
         default:
             throw new UnsupportedOperationException("Unimplemented step " + ArgsParser.step);
         }
@@ -60,5 +63,10 @@ public class Main {
         logger.log("Building the program\n");
         Builder b=new Builder();
         b.build(p);
+
+        if(ArgsParser.step == ArgsParser.BUILD)
+            return;
+        
+        Interpreter.main(new String[0]);
     }
 }

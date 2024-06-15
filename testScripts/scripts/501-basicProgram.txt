@@ -1,0 +1,5 @@
+! -s RUN --disable-logs printer builder
+! should run without errors the basic program
+program p ;
+begin
+end .

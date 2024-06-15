@@ -44,9 +44,7 @@ public class Logger {
     }
 
     public void logCommand(String format, Object... args){
-        if(file == null)
-            System.out.printf(label + format, args);
-        //TODO: Else printar num arquivo
+        log(label + format, args);
         if(label.charAt(0) != ' ')
             label = "      ";
     }

@@ -1,0 +1,12 @@
+
+Performing build generation and running at testScripts/scripts/502-print.txt
+No errors found
+Building the program
+
+********** TAM Interpreter (Java Version 2.1) **********
+5
+42
+0
+1
+
+Program has halted normally.

@@ -7,7 +7,7 @@ import java.util.Set;
 public class ArgsParser {
     public static String fileName;
     public static byte loglevel = Logger.ERROR;
-    public static byte step = ArgsParser.BUILD;
+    public static byte step = ArgsParser.RUN;
     public static boolean stopAtFirstError = true;
     public static Set<String> disableLog = new HashSet<String>();
     public static boolean invertDisableLog = false;
@@ -17,7 +17,7 @@ public class ArgsParser {
         System.out.println("\t--disable-logs <className>*: disable logs from all the listed <className> class");
         System.out.println("\t--enable-logs <className>*: enable logs only from all the listed <className> class");
         System.out.println("\t-l <loglevel>: set the loglevel to ERROR(default), INFO, DEBUG or TRACE");
-        System.out.println("\t-s <step>: set to go until LEXICAL, SYNTATIC, TREE(default), CONTENT or BUILD");
+        System.out.println("\t-s <step>: set to go until LEXICAL, SYNTATIC, TREE, CONTENT, BUILD o RUN(default)");
         System.out.println("\t--continue-after-first-error to continue executing after the first error");
     }
 
@@ -89,6 +89,9 @@ public class ArgsParser {
                     case "BUILD":
                         step = BUILD;
                         break;
+                    case "RUN":
+                        step = RUN;
+                        break;
                     default:
                         System.out.println("Invalid step, run without any parameters to see the accepted ones");
                         System.exit(1);
@@ -124,5 +127,5 @@ public class ArgsParser {
     }
 
     public final static byte
-        LEXICAL = 0, SYNTACTIC = 1, TREE = 2, CONTENT = 3, BUILD = 4;
+        LEXICAL = 0, SYNTACTIC = 1, TREE = 2, CONTENT = 3, BUILD = 4, RUN = 5;
 }
