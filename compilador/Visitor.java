@@ -7,6 +7,7 @@ public interface Visitor {
     public Object visitComandoCondicional(ComandoCondicional c, Object... args);
     public Object visitComandoIterativo(ComandoIterativo c, Object... args);
     public Object visitComandoLista(ComandoLista c, Object... args);
+    public Object visitComandoPrint(ComandoPrint c, Object... args);
     
     public Object visitDeclaracao(Declaracao d, Object... args);
 

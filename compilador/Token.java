@@ -101,7 +101,7 @@ public class Token {
     public final static String[] spellings = {
         "<identifier>", "<integer-literal>", "true", "false", "begin", "end", "if", "then", "else", "var", ":", ";",
         "(", ")", ".", "while", "do", ",", "+", "-", "or", "*", "/", "and", "<", ">", ":=", "=", "program", "integer",
-        "boolean", "<eot>", "<error>"
+        "boolean", "print", "<eot>", "<error>"
     };
 
     Expressao toExpressao(){

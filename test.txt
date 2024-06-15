@@ -15,4 +15,7 @@ begin
         fact := fact * x;
         x := x - 1;
     end;
+    print 1;
+    print x;
+    print test;
 end .

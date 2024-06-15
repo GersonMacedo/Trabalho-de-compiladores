@@ -60,6 +60,14 @@ public class Printer implements Visitor {
     }
 
     @Override
+    public Object visitComandoPrint(ComandoPrint c, Object... args) {
+        int t = (int) args[0];
+        logger.log(t, "print");
+        c.e.visit(this, t + 1);
+        return null;
+    }
+
+    @Override
     public Object visitDeclaracao(Declaracao d, Object... args) {
         int t = (int) args[0];
         logger.log(t, "'%s': %s\n", d.i.n, d.t.toString());

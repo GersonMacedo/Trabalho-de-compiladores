@@ -29,5 +29,6 @@ Token::Token(=, 28, 1)
 Token::Token(program, 29, 1)
 Token::Token(integer, 30, 1)
 Token::Token(boolean, 31, 1)
-Token::Token(<eot>, 32, 1)
+Token::Token(print, 32, 1)
+Token::Token(<eot>, 33, 1)
 No errors found

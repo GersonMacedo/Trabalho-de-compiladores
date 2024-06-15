@@ -64,6 +64,14 @@ public class Builder implements Visitor {
     }
 
     @Override
+    public Object visitComandoPrint(ComandoPrint c, Object... args) {
+        logger.debug("visitComandoPrint()");
+        c.e.visit(this, args);
+        logger.logCommand("PRINT\n");
+        return null;
+    }
+
+    @Override
     public Object visitComandoLista(ComandoLista c, Object... args) {
         logger.debug("visitComandoLista()");
         c.c1.visit(this);

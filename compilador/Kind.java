@@ -32,6 +32,7 @@ public enum Kind{
     PROGRAM,     // program
     INTEGER,     // integer
     BOOLEAN,     // boolean
+    PRINT,       // print
     EOT,         // <eot>
     ERROR;       // <error>
 }

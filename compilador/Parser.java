@@ -133,13 +133,16 @@ public class Parser {
         return pc.c2 == null ? pc.c1 : pc;
     }
     
-    // <comando> ::= <atribuição>
+    // <comando> ::= <print>
+    //             | <atribuição>
     //             | <conditional>
     //             | <iterativo>
     //             | <comando-composto>
     private Comando parseComando(boolean insideList) {
         logger.debug("parseComando()");
         switch (currentToken.kind) {
+        case PRINT:
+            return parsePrint();
         case IDENTIFIER:
             return parseAtribuicao();
         case IF:
@@ -152,6 +155,16 @@ public class Parser {
             handleUnexpectedTokenWithMessage(insideList ? "'<comando>' or 'end'" : "<comando>");
             return null;
         }
+    }
+
+    // <print> ::= print <expressão>
+    private Comando parsePrint(){
+        logger.debug("parsePrint()");
+        ComandoPrint c = new ComandoPrint();
+        accept(Kind.PRINT);
+        c.setPosition(currentToken);
+        c.e = parseExpressao();
+        return c;
     }
 
     // <atribuição> ::= <variável> := <expressão>

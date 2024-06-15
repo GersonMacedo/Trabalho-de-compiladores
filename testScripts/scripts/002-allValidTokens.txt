@@ -29,3 +29,4 @@ and
 program
 integer
 boolean
+print

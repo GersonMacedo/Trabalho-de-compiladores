@@ -75,6 +75,13 @@ public class ContexAnalyser implements Visitor {
     }
 
     @Override
+    public Object visitComandoPrint(ComandoPrint c, Object... args) {
+        logger.debug("visitComandoPrint()");
+        c.e.visit(this);
+        return null;
+    }
+
+    @Override
     public Object visitDeclaracao(Declaracao d, Object... args) {
         int pos = (int) args[0];
         logger.debug("visitDeclaracao(%d)\n", pos);
