@@ -90,14 +90,16 @@ public class Builder implements Visitor {
             int jumpAddress = nextInstruction;
             emit(Machine.JUMPop, 0, Machine.CBr, 0);
             logger.logCommand("JUMP      %s\n", labelH);
+            patch(ifAddress, nextInstruction);
             logger.setNextLabel(labelG);
             c.f.visit(this);
             patch(jumpAddress, nextInstruction);
             logger.setNextLabel(labelH);
         }else{
             logger.setNextLabel(labelG);
+            patch(ifAddress, nextInstruction);
         }
-        patch(ifAddress, nextInstruction);
+        
         return null;
     }
 
@@ -117,7 +119,7 @@ public class Builder implements Visitor {
 
         logger.setNextLabel(labelH);
         c.e.visit(this, args);
-        emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddress);
+        emit(Machine.JUMPIFop, Machine.CBr, Machine.trueRep, loopAddress);
         logger.logCommand("JUMPIF(1) %s\n", labelG);
         return null;
     }
