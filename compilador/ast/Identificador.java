@@ -19,9 +19,9 @@ public class Identificador extends AST {
         }
 
         if(d.level == 0)
-            return String.format("SB[%d]", d.pos);
+            return String.format("[%d]SB", d.pos);
         if(d.level == currentLevel)
-            return String.format("LB[%d]", d.pos);
+            return String.format("[%d]LB", d.pos);
         return String.format("TODO");
     }
 

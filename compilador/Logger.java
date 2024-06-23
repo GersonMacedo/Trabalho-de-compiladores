@@ -5,7 +5,6 @@ public class Logger {
     private boolean displayClass = true;
     private boolean disable;
     private String label = "      ";
-    private String file;
 
     public Logger(){
         className = "";
@@ -44,9 +43,12 @@ public class Logger {
     }
 
     public void logCommand(String format, Object... args){
+        boolean prev = displayClass;
+        displayClass = false;
         log(label + format, args);
         if(label.charAt(0) != ' ')
             label = "      ";
+        displayClass = prev;
     }
 
     public void error(String string){

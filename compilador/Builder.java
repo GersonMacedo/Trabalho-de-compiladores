@@ -130,7 +130,8 @@ public class Builder implements Visitor {
         c.e.visit(this, args);
         emit(Machine.CALLop, Machine.PBr, 0, Machine.putintDisplacement);
         emit(Machine.CALLop, Machine.PBr, 0, Machine.puteolDisplacement);
-        logger.logCommand("PRINT\n");
+        logger.logCommand("CALL      putint\n");
+        logger.logCommand("CALL      puteol\n");
         return null;
     }
 
