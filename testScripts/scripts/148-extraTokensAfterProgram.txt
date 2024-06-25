@@ -1,0 +1,9 @@
+! -s SYNTACTIC --continue-after-first-error
+! should complain about extra tokens after the program
+program p ;
+begin
+end .
+if a then
+    b := 4;
+while false do
+    c := true;

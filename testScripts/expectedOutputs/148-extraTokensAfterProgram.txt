@@ -1,0 +1,17 @@
+
+Performing up to syntactic analysis at testScripts/scripts/148-extraTokensAfterProgram.txt
+Parser::Unexpected 'if' at line 6 column 1
+Parser::Unexpected 'a' at line 6 column 4
+Parser::Unexpected 'then' at line 6 column 6
+Parser::Unexpected 'b' at line 7 column 5
+Parser::Unexpected ':=' at line 7 column 7
+Parser::Unexpected '4' at line 7 column 10
+Parser::Unexpected ';' at line 7 column 11
+Parser::Unexpected 'while' at line 8 column 1
+Parser::Unexpected 'false' at line 8 column 7
+Parser::Unexpected 'do' at line 8 column 13
+Parser::Unexpected 'c' at line 9 column 5
+Parser::Unexpected ':=' at line 9 column 7
+Parser::Unexpected 'true' at line 9 column 10
+Parser::Unexpected ';' at line 9 column 14
+14 syntactic errors found

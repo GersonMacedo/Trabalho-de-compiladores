@@ -22,18 +22,6 @@ public class Scanner{
             return "TAB";
         return String.format("%c", c);
     }
-
-    // private void take (char expectedChar) throws Exception {
-    //     logger.debug("take(%s)\n", printableChar(expectedChar));
-    //     if (currentChar != expectedChar) {
-    //         throw new Exception(String.format("Expected '%s' but '%s' was found",
-    //             printableChar(expectedChar), printableChar(currentChar)));
-    //     }
-
-    //     currentSpelling.append(currentChar);
-    //     logger.trace("currentSpelling is now: %s\n", currentSpelling);
-    //     readNextChar();
-    // }
     
     private void takeIt () {
         logger.debug("takeit()");
@@ -54,7 +42,7 @@ public class Scanner{
     
     // Returns true if the character c is a graphic.
     private boolean isGraphic (char c) {
-        return c != '\n' && c != '\0';
+        return c != '\n' && c != '\r' && c != '\0';
     }
     
     private Kind scanToken () {
@@ -71,13 +59,6 @@ public class Scanner{
             takeIt();
             while (isDigit (currentChar))
                 takeIt();
-            
-            // TODO? show error if next char is letter
-            // if(isLetter(currentChar)){
-            //     while(isDigit(currentChar) || isLetter(currentChar))
-            //         takeIt();
-            //     show error
-            // }
             return Kind.INTLITERAL;
         }
 

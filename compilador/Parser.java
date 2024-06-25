@@ -84,7 +84,6 @@ public class Parser {
         return d;
     }
 
-    // TODO: remove?
     // <tipo> ::= <tipo-simples> 
     private Kind parseTipo() {
         logger.debug("parseTipo()");
@@ -259,7 +258,7 @@ public class Parser {
     private Expressao parseLiteral() {
         logger.debug("parseLiteral()");
         if(!currentToken.isLiteral()){
-            handleUnexpectedToken();
+            handleUnexpectedTokenWithMessage("<literal>");
             return null;
         }
 
