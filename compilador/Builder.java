@@ -197,11 +197,11 @@ public class Builder implements Visitor {
         if(t.equals("assign")){
             emit(Machine.STOREop, Machine.SBr, 1, i.d.pos);
             logger.logCommand("STORE(1)  %-10s #%s\n", i.getAddress(0), i.n);
-            return null;
+        }else if(t.equals("fetch")){
+            emit(Machine.LOADop, Machine.SBr, 1, i.d.pos);
+            logger.logCommand("LOAD(1)   %-10s #%s\n", i.getAddress(0), i.n);
         }
         
-        emit(Machine.LOADop, Machine.SBr, 1, i.d.pos);
-        logger.logCommand("LOAD(1)   %-10s #%s\n", i.getAddress(0), i.n);
         return null;
     }
 
