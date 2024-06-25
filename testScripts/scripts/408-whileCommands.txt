@@ -1,0 +1,26 @@
+! -s RUN --disable-logs printer
+! should correctly execute the while commands
+program p ;
+    var b: Boolean;
+    var x: Integer;
+begin
+    print 0;
+    while false do
+        print 1
+    ;
+    print 2;
+    b := true;
+    while b do
+    begin
+        print 3;
+        b := false;
+    end ;
+    print 4;
+    x := 5;
+    while x < 10 do
+    begin
+        print x;
+        x := x + 1;
+    end ;
+    print 20;
+end .

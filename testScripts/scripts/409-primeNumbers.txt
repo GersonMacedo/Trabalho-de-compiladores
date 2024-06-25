@@ -1,0 +1,26 @@
+! -s RUN --disable-logs printer
+! Should correctly prints all primes up to 100
+program Primes ;
+    var max: Integer;
+    var p: Integer;
+    var i: Integer;
+    var notMult: Boolean;
+begin
+    max := 100;
+    p := 2;
+    while p < max do
+    begin
+        i := 2;
+        notMult := true;
+        while (i < p) and notMult do
+            if p / i * i = p then
+                notMult := false
+            else
+                i := i + 1
+        ;
+        if notMult then
+            print p
+        ;
+        p := p + 1;
+    end ;
+end .

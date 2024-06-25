@@ -219,7 +219,7 @@ public class Builder implements Visitor {
             p.c.visit(this);
         if(t > 0){
             emit(Machine.POPop, 0, 0, t);
-            logger.logCommand("POP       %d\n", t);
+            logger.logCommand("POP(0)    %d\n", t);
         }
         emit(Machine.HALTop, 0, 0, 0);
         logger.logCommand("HALT\n");

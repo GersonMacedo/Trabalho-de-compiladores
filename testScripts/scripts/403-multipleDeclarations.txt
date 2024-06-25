@@ -1,4 +1,4 @@
-! -s RUN --disable-logs printer builder
+! -s RUN --disable-logs printer
 ! should run without errors the program with multiple declarations
 program p ;
     var a : integer;

@@ -3,6 +3,72 @@ Performing build generation and running at testScripts/scripts/406-booleanExpres
 No errors found
 Building the program
 
+      LOADL     1
+      LOADL     1
+      CALL      and
+      CALL      putint
+      CALL      puteol
+      LOADL     0
+      LOADL     1
+      CALL      and
+      CALL      putint
+      CALL      puteol
+      LOADL     1
+      LOADL     0
+      CALL      and
+      CALL      putint
+      CALL      puteol
+      LOADL     0
+      LOADL     0
+      CALL      and
+      CALL      putint
+      CALL      puteol
+      LOADL     1
+      LOADL     1
+      CALL      or
+      CALL      putint
+      CALL      puteol
+      LOADL     0
+      LOADL     1
+      CALL      or
+      CALL      putint
+      CALL      puteol
+      LOADL     1
+      LOADL     0
+      CALL      or
+      CALL      putint
+      CALL      puteol
+      LOADL     0
+      LOADL     0
+      CALL      or
+      CALL      putint
+      CALL      puteol
+      LOADL     1
+      LOADL     1
+      LOADL     1
+      CALL      eq
+      CALL      putint
+      CALL      puteol
+      LOADL     0
+      LOADL     1
+      LOADL     1
+      CALL      eq
+      CALL      putint
+      CALL      puteol
+      LOADL     1
+      LOADL     0
+      LOADL     1
+      CALL      eq
+      CALL      putint
+      CALL      puteol
+      LOADL     0
+      LOADL     0
+      LOADL     1
+      CALL      eq
+      CALL      putint
+      CALL      puteol
+      HALT
+Builder::Writing object to obj.tam
 ********** TAM Interpreter (Java Version 2.1) **********
 1
 0

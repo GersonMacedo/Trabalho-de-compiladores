@@ -7,7 +7,7 @@ import java.util.Set;
 public class ArgsParser {
     public static String fileName;
     public static byte loglevel = Logger.ERROR;
-    public static byte step = ArgsParser.RUN;
+    public static byte step = ArgsParser.BUILD;
     public static boolean stopAtFirstError = true;
     public static Set<String> disableLog = new HashSet<String>();
     public static boolean invertDisableLog = false;
@@ -17,7 +17,7 @@ public class ArgsParser {
         System.out.println("\t--disable-logs <className>*: disable logs from all the listed <className> class");
         System.out.println("\t--enable-logs <className>*: enable logs only from all the listed <className> class");
         System.out.println("\t-l <loglevel>: set the loglevel to ERROR(default), INFO, DEBUG or TRACE");
-        System.out.println("\t-s <step>: set to go until LEXICAL, SYNTATIC, TREE, CONTENT, BUILD o RUN(default)");
+        System.out.println("\t-s <step>: set to go until LEXICAL, SYNTATIC, TREE, CONTENT, BUILD(default) o RUN");
         System.out.println("\t--continue-after-first-error to continue executing after the first error");
     }
 

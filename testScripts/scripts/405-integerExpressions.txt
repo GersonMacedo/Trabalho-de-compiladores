@@ -1,4 +1,4 @@
-! -s RUN --disable-logs printer builder
+! -s RUN --disable-logs printer
 ! should correctly calculate all the expressions
 program p ;
     var i1 : integer;

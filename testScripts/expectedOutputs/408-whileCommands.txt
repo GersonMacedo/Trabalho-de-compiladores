@@ -1,0 +1,64 @@
+
+Performing build generation and running at testScripts/scripts/408-whileCommands.txt
+No errors found
+Building the program
+
+      PUSH      2
+      LOADL     0
+      CALL      putint
+      CALL      puteol
+      JUMP      L002
+L001: LOADL     1
+      CALL      putint
+      CALL      puteol
+L002: LOADL     0
+      JUMPIF(1) L001
+      LOADL     2
+      CALL      putint
+      CALL      puteol
+      LOADL     1
+      STORE(1)  [0]SB      #b
+      JUMP      L004
+L003: LOADL     3
+      CALL      putint
+      CALL      puteol
+      LOADL     0
+      STORE(1)  [0]SB      #b
+L004: LOAD(1)   [0]SB      #b
+      JUMPIF(1) L003
+      LOADL     4
+      CALL      putint
+      CALL      puteol
+      LOADL     5
+      STORE(1)  [1]SB      #x
+      JUMP      L006
+L005: LOAD(1)   [1]SB      #x
+      CALL      putint
+      CALL      puteol
+      LOAD(1)   [1]SB      #x
+      LOADL     1
+      CALL      add
+      STORE(1)  [1]SB      #x
+L006: LOAD(1)   [1]SB      #x
+      LOADL     10
+      CALL      lt
+      JUMPIF(1) L005
+      LOADL     20
+      CALL      putint
+      CALL      puteol
+      POP(0)    2
+      HALT
+Builder::Writing object to obj.tam
+********** TAM Interpreter (Java Version 2.1) **********
+0
+2
+3
+4
+5
+6
+7
+8
+9
+20
+
+Program has halted normally.

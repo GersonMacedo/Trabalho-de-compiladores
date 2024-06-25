@@ -1,4 +1,4 @@
-! -s RUN --disable-logs printer builder
+! -s RUN --disable-logs printer
 ! should correctly hold the values of variables
 program p ;
     var i1 : integer;

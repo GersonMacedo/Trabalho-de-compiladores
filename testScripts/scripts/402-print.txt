@@ -1,4 +1,4 @@
-! -s RUN --disable-logs printer builder
+! -s RUN --disable-logs printer
 ! should print correctly
 program p ;
 begin

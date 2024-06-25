@@ -3,6 +3,20 @@ Performing build generation and running at testScripts/scripts/402-print.txt
 No errors found
 Building the program
 
+      LOADL     5
+      CALL      putint
+      CALL      puteol
+      LOADL     42
+      CALL      putint
+      CALL      puteol
+      LOADL     0
+      CALL      putint
+      CALL      puteol
+      LOADL     1
+      CALL      putint
+      CALL      puteol
+      HALT
+Builder::Writing object to obj.tam
 ********** TAM Interpreter (Java Version 2.1) **********
 5
 42
